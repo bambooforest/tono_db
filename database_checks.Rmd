@@ -1,0 +1,138 @@
+---
+title: "Tonogenesis datbase checks"
+author: "Steven Moran\n"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+bibliography: 'references.bib'
+output:
+  github_document:
+  pandoc_args: --webtex
+---
+
+# Overview
+
+This is an [R markdown](https://rmarkdown.rstudio.com/) report that does things like check fields in the database, creates tables and graphs of the data, and integrates [Glottolog metadata](https://glottolog.org/meta/downloads).
+
+It's also set up so that we can easily cite references in the [BibTeX biblography](referencs.bib). For example: @Kristoffersen2007 will now appear below in the references section.
+
+First, let's load some useful R libraries.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+We've downloaded the data from the private [Google sheets](https://docs.google.com/spreadsheets/d/1qkmyyNiTWilIxG6bZRDJ8eUef8ox7N_Q7seKCV0WGRo/edit#gid=0) document and placed it in the [data](data) folder.
+
+Let's load the index.
+
+```{r}
+index <- read.csv('data/Tonogenesis - Index.csv')
+```
+
+And let's have a look at it.
+
+```{r}
+kable(index) %>% head()
+```
+
+Currently, we have parentheses in the `Glottocode` column that denote non-leaf nodes. These will be changed in the future, but for now let's strip those out, so that we can merge our index with the Glottolog metadata.
+
+```{r}
+index$Glottocode <- index$Glottocode %>% str_replace("\\(", "")
+index$Glottocode <- index$Glottocode %>% str_replace("\\)", "")
+index$Glottocode
+```
+
+We've now removed the trailing parentheses, but we can see 1) that some Glottocodes have spaces, e.g. " dani1285", and some are empty strings. We need to fix the spaces in the input data (another reason why we don't want to have to maintain multiple columns in different sheets with the same information!). For the time being, we will simply strip the whitespace here, because otherwise when we join in the metadata, " dani1285" will not match Glottolog metadata "dani1285".
+
+```{r}
+index$Glottocode <- index$Glottocode %>% str_trim()
+index$Glottocode
+```
+
+Now it looks good.
+
+Let's load the Glottolog metadata.
+
+```{r}
+glottolog <- read_csv('https://cdstar.shh.mpg.de/bitstreams/EAEA0-D501-DBB8-65C4-0/languages_and_dialects_geo.csv')
+```
+
+And have a look if it downloaded and loaded correctly.
+
+```{r}
+glottolog %>% head() %>% kable()
+```
+
+Let's merge it into our index. We have to use the `by` parameter because the column names are different.
+
+```{r}
+index_glottolog <- left_join(index, glottolog, by=c("Glottocode"="glottocode"))
+```
+
+And have a look.
+
+```{r}
+index_glottolog %>% head() %>% kable()
+```
+
+Glottolog has two different metadata files. This one is for the language name, level, macroareas, and geo-corrdinates. It only contains present day languages, i.e. leaf nodes in the tree, and hence not reconstructed or intermediate level nodes like "Proto-Nordic".
+
+The other Glottolog metadata file is the [languoids file](https://cdstar.shh.mpg.de/bitstreams/EAEA0-D501-DBB8-65C4-0/glottolog_languoid.csv.zip), which needs to be downloaded and unzipped. We have put it in the `data` file for the time being.
+
+Let's have a look at it.
+
+```{r}
+glottolog_languoids <- read_csv('data/languoid.csv')
+glottolog_languoids %>% glimpse()
+```
+
+We can see that it also contains information such as the language family ID, ISO code, etc. It use to contain more information, such as endangerment status, so for now let's just work with our index.
+
+Let's see how our language names differ.
+
+```{r}
+index_glottolog %>% filter(LanguageVariety != name) %>% select(ID, LanguageVariety, name) %>% kable()
+```
+
+Or how our areas differ.
+
+```{r}
+index_glottolog %>% filter(Area != macroarea) %>% select(Area, macroarea) %>% distinct() %>% kable()
+```
+
+Not bad.
+
+Let's have a look at the area distribution. The parameter `exclude = FALSE` will return any NAs in the data.
+
+```{r}
+table(index_glottolog$Area, exclude = FALSE)
+```
+
+Since we're missing some connections with Glottolog, we'll have a few NAs here.
+
+```{r}
+table(index_glottolog$macroarea, exclude = FALSE)
+```
+
+Given the data that do overlap, we can create a quick map. There will be a warning for where we're missing geo-coordinates.
+
+```{r}
+ggplot(data=index_glottolog, aes(x=longitude,y=latitude)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point()
+```
+
+We can also write some tests to make sure that our input data are valid. For example, do all of our Glottocodes follow their format?
+
+```{r}
+library(testthat)
+glottocode <- "([a-z0-9]{4})([0-9]{4})"
+which(!(str_detect(index$Glottocode, glottocode)))
+
+# When the above codes are fixed, then we can uncomment this test -- otherwise the code fails here.
+# expect_equal(length(which(!(str_detect(index$Glottocode, glottocode)))), 0)
+```
+
+
+# References
