@@ -1,4 +1,4 @@
-Tonogenesis datbase checks
+Tonogenesis database checks
 ================
 Steven Moran
 
