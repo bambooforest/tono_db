@@ -1,5 +1,5 @@
 ---
-title: "Tonogenesis datbase checks"
+title: "Tonogenesis database checks"
 author: "Steven Moran\n"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 bibliography: 'references.bib'
