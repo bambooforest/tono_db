@@ -1,0 +1,106 @@
+---
+title: "Tono DB preliminary analyses"
+author: "Steven Moran and Lilja Maria Sæbø"
+date: "2023-06-09"
+output: github_document
+---
+
+```{r, message=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+
+Load the [CLDF data](https://github.com/cldf-datasets/tonodb/).
+
+```{r, message=FALSE}
+values <- 
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/values.csv'))
+languages <- 
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/languages.csv'))
+contributions <- 
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/contributions.csv'))
+parameters <- 
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/parameters.csv'))
+```
+
+We have this many languages in our sample.
+
+```{r}
+nrow(languages)
+```
+
+And this many observations.
+
+```{r}
+nrow(values)
+```
+
+Let's map our data points.
+
+```{r}
+ggplot(data=languages, aes(x=Longitude, y=Latitude)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point() +
+  theme_bw()
+```
+
+Note that 23 data points are removed due to NAs in the data. TODO: fix these by adjusting the Glottocodes in the spreadsheet.
+
+```{r}
+languages %>% filter(is.na(Latitude)) %>% kable()
+```
+
+Here we can add some color by language family.
+
+```{r}
+ggplot(data=languages, aes(x=Longitude, y=Latitude, color=family_id)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point() +
+  theme_bw()
+```
+
+How many data points per macroarea? (Note again several NAs.)
+
+```{r}
+table(languages$Macroarea, exclude=FALSE)
+```
+
+Recreate some of the tables.
+
+First merge the tonodb tables.
+
+```{r}
+tonodb <- left_join(values, languages, by=c("Language_ID"="ID"))
+```
+
+```{r}
+x <- tonodb %>% select(Macroarea, Language_ID) %>% distinct() %>% group_by(Macroarea) %>% summarise(Languages = n())
+y <- tonodb %>% select(Macroarea, family_id) %>% distinct() %>% group_by(Macroarea) %>% summarize(Families = n())
+z <- tonodb %>% select(Macroarea, TriggeringContext) %>% group_by(Macroarea) %>% summarize(`Cases of tonogenesis` = n())
+
+tmp <- left_join(x, y)
+tmp <- left_join(tmp, z)
+
+tmp %>% kable()
+```
+
+Number of languages in different families.
+
+```{r}
+tonodb %>% select(family_id, Language_ID) %>% distinct() %>% group_by(family_id) %>% summarize(Languages = n())
+
+tonodb %>% select(family_id, Language_ID) %>% distinct() %>% arrange(family_id, Language_ID) %>% group_by(family_id) %>% summarize(Languages = str_c(Language_ID, collapse=", ")) %>% kable()
+
+```
+
+
+TODO:
+
+- Triggering context | Cases of tonogenesis | Number of languages
+
+
+TODO: How to recreate tables 4 and 5 from Lilja's poster?
+
+
+

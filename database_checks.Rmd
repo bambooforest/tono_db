@@ -134,5 +134,13 @@ which(!(str_detect(index$Glottocode, glottocode)))
 # expect_equal(length(which(!(str_detect(index$Glottocode, glottocode)))), 0)
 ```
 
+```{r}
+data <- read.csv('data/Tonogenesis - Database.csv')
+```
+
+```{r}
+table(data$TriggeringContext)
+```
+
 
 # References
