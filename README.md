@@ -192,8 +192,139 @@ tonodb %>% select(family_id, Language_ID) %>% distinct() %>% arrange(family_id, 
 | waka1280  | heil1246                                                                                                                                                                 |
 | NA        | NA                                                                                                                                                                       |
 
-TODO:
+Cases of tonogenesis sorted by triggering context.
 
-- Triggering context \| Cases of tonogenesis \| Number of languages
+``` r
+x <- tonodb %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
+y <- tonodb %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n()) %>% arrange()
+contexts <- left_join(x, y)
+```
 
-TODO: How to recreate tables 4 and 5 from Lilja’s poster?
+    ## Joining with `by = join_by(Type)`
+
+``` r
+contexts %>% kable()
+```
+
+| Type              | Cases of tonogenesis | Number of languages |
+|:------------------|---------------------:|--------------------:|
+| coda              |                   53 |                  33 |
+| coda, wordtype    |                    3 |                   3 |
+| nucleus           |                   16 |                  10 |
+| nucleus, onset    |                    1 |                   1 |
+| onset             |                  123 |                  34 |
+| onset, coda       |                    1 |                   1 |
+| other             |                    2 |                   2 |
+| stress            |                    9 |                   7 |
+| wordtype          |                   20 |                  15 |
+| wordtype, nucleus |                    1 |                   1 |
+
+Tonogenesis triggered by onsets in the DoTE.
+
+``` r
+table(tonodb$Onset, tonodb$EffectOnPitch) %>% kable()
+```
+
+|                                                                   | elevating | falling | level | lowering | mid | rising |
+|:------------------------------------------------------------------|----------:|--------:|------:|---------:|----:|-------:|
+| aspirated                                                         |         0 |       0 |     0 |        0 |   0 |      0 |
+| aspirated, fricative                                              |         0 |       0 |     0 |        0 |   0 |      0 |
+| breathy voiced                                                    |         0 |       0 |     0 |        0 |   0 |      1 |
+| cluster                                                           |         0 |       0 |     0 |        0 |   0 |      0 |
+| no aspiration                                                     |         0 |       0 |     0 |        0 |   0 |      0 |
+| other                                                             |         0 |       0 |     0 |        0 |   0 |      0 |
+| sonorant                                                          |         1 |       0 |     0 |        0 |   0 |      0 |
+| voiced                                                            |         0 |       0 |     0 |        3 |   0 |      0 |
+| voiced fricative                                                  |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiced obstruent, other                                           |         0 |       0 |     0 |        1 |   0 |      0 |
+| voiced stop                                                       |         7 |       0 |     0 |       10 |   0 |      0 |
+| voiced stop, sonorant                                             |         0 |       0 |     0 |        1 |   0 |      0 |
+| voiced stop, voiced affricate                                     |         0 |       0 |     0 |        1 |   0 |      0 |
+| voiced unaspirated, voiceless aspirated, prenazalised             |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiced, cluster                                                   |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiced, voiceless                                                 |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless                                                         |         3 |       0 |     0 |        0 |   0 |      0 |
+| voiceless aspirated                                               |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless aspirated stop, preaspirated nasal                      |         2 |       0 |     0 |        0 |   3 |      0 |
+| voiceless aspirated, prenasalized aspirated voiceless stop        |         0 |       0 |     0 |        3 |   0 |      0 |
+| voiceless aspirated, voiceless                                    |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless fricative                                               |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless stop                                                    |         4 |       0 |     0 |        0 |   0 |      0 |
+| voiceless stop, glottalized voiced                                |         0 |       0 |     0 |        0 |   2 |      0 |
+| voiceless stop, preaspirated nasal                                |         0 |       0 |     0 |        3 |   0 |      0 |
+| voiceless stop, preglottalized nasal, prenasalised voiceless stop |         0 |       0 |     0 |        0 |   4 |      0 |
+| voiceless stop, voiced preglottalized stop                        |         3 |       0 |     0 |        0 |   0 |      0 |
+| voiceless stop, voiceless sonorant                                |         1 |       0 |     0 |        0 |   0 |      0 |
+| voiceless unaspirated, voiced                                     |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless, other                                                  |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless, cluster                                                |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless, voiced                                                 |         0 |       0 |     0 |        0 |   0 |      0 |
+
+The effect of voicing on tone in the DoTE (number of languages). TODO:
+double check, Lilja.
+
+``` r
+tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
+table(tmp$Onset, tmp$EffectOnPitch) %>% kable()
+```
+
+|           | elevating | lowering |
+|:----------|----------:|---------:|
+| voiced    |         0 |        3 |
+| voiceless |         3 |        0 |
+
+Tonogenesis triggered by codas in the DoTE (number of cases of
+tonogenesis).
+
+``` r
+table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+```
+
+|                                         | elevating | falling | level | lowering | mid | rising |
+|:----------------------------------------|----------:|--------:|------:|---------:|----:|-------:|
+| /h/                                     |         0 |       0 |     0 |        0 |   0 |      0 |
+| absence of glottalization               |         0 |       0 |     0 |        0 |   0 |      0 |
+| breathy voiced                          |         0 |       1 |     0 |        0 |   0 |      0 |
+| creaky                                  |         0 |       0 |     0 |        0 |   0 |      0 |
+| glottal consonant                       |         0 |       0 |     0 |        0 |   0 |      0 |
+| glottal constriction                    |         0 |       0 |     0 |        0 |   0 |      0 |
+| glottal stop                            |         0 |       0 |     0 |        0 |   0 |      0 |
+| glottalic                               |         0 |       0 |     0 |        0 |   0 |      0 |
+| glottalized                             |         0 |       0 |     0 |        0 |   0 |      0 |
+| laryngeal                               |         0 |       0 |     0 |        0 |   0 |      0 |
+| loss of glottalization                  |         0 |       0 |     0 |        0 |   0 |      0 |
+| no glotalic coda                        |         0 |       0 |     0 |        0 |   0 |      0 |
+| no glottal stop                         |         0 |       0 |     0 |        0 |   0 |      0 |
+| not glottalized                         |         0 |       0 |     0 |        0 |   0 |      0 |
+| obstruent                               |         0 |       0 |     0 |        0 |   0 |      0 |
+| open                                    |         0 |       0 |     0 |        0 |   0 |      0 |
+| open, nasal                             |         0 |       0 |     1 |        0 |   0 |      0 |
+| open, semivowel, sonorant, other        |         0 |       0 |     0 |        0 |   0 |      0 |
+| other                                   |         1 |       0 |     0 |        0 |   0 |      0 |
+| preaspirated, /h/                       |         0 |       0 |     0 |        0 |   0 |      0 |
+| sonorant                                |         0 |       0 |     0 |        0 |   0 |      0 |
+| sonorant, open                          |         0 |       0 |     0 |        0 |   0 |      0 |
+| stop                                    |         0 |       0 |     0 |        0 |   0 |      0 |
+| stop, glottal stop                      |         0 |       0 |     0 |        0 |   0 |      1 |
+| voiced                                  |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless fricative                     |         0 |       1 |     0 |        0 |   0 |      0 |
+| voiceless fricative, voiceless sonorant |         0 |       0 |     0 |        0 |   0 |      0 |
+| voiceless stop                          |         0 |       0 |     0 |        0 |   0 |      0 |
+
+Tonogenesis triggered by vowel quantity in the DoTE. TODO: these are all
+zeros.
+
+``` r
+table(tonodb$`long vowel`, tonodb$EffectOnPitch) %>% kable()
+```
+
+|             | elevating | falling | level | lowering | mid | rising |
+|:------------|----------:|--------:|------:|---------:|----:|-------:|
+| -ATR        |         0 |       0 |     0 |        0 |   0 |      0 |
+| /a/         |         0 |       0 |     0 |        0 |   0 |      0 |
+| +ATR        |         0 |       0 |     0 |        0 |   0 |      0 |
+| high vowel  |         0 |       0 |     0 |        0 |   0 |      0 |
+| long vowel  |         0 |       0 |     0 |        0 |   0 |      0 |
+| low vowel   |         0 |       0 |     0 |        0 |   0 |      0 |
+| other       |         0 |       0 |     0 |        0 |   0 |      0 |
+| short vowel |         0 |       0 |     0 |        0 |   0 |      0 |

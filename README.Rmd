@@ -94,13 +94,39 @@ tonodb %>% select(family_id, Language_ID) %>% distinct() %>% arrange(family_id, 
 
 ```
 
+Cases of tonogenesis sorted by triggering context.
 
-TODO:
+```{r}
+x <- tonodb %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
+y <- tonodb %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n()) %>% arrange()
+contexts <- left_join(x, y)
 
-- Triggering context | Cases of tonogenesis | Number of languages
+contexts %>% kable()
+```
 
+Tonogenesis triggered by onsets in the DoTE.
 
-TODO: How to recreate tables 4 and 5 from Lilja's poster?
+```{r}
+table(tonodb$Onset, tonodb$EffectOnPitch) %>% kable()
+```
 
+The effect of voicing on tone in the DoTE (number of languages). TODO: double check, Lilja.
+
+```{r}
+tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
+table(tmp$Onset, tmp$EffectOnPitch) %>% kable()
+```
+
+Tonogenesis triggered by codas in the DoTE (number of cases of tonogenesis).
+
+```{r}
+table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+```
+
+Tonogenesis triggered by vowel quantity in the DoTE. TODO: these are all zeros.
+
+```{r}
+table(tonodb$`long vowel`, tonodb$EffectOnPitch) %>% kable()
+```
 
 
