@@ -2,7 +2,7 @@ Tonogenesis database checks
 ================
 Steven Moran
 
-10 June, 2023
+01 August, 2023
 
 # Overview
 
@@ -12,8 +12,8 @@ the data, and integrates [Glottolog
 metadata](https://glottolog.org/meta/downloads).
 
 It’s also set up so that we can easily cite references in the [BibTeX
-biblography](referencs.bib). For example: (**Kristoffersen2007?**) will
-now appear below in the references section.
+biblography](referencs.bib). For example: Kristoffersen (2000) will now
+appear below in the references section.
 
 First, let’s load some useful R libraries.
 
@@ -38,12 +38,12 @@ And let’s have a look at it.
 kable(index) %>% head()
 ```
 
-    ## [1] "| ID|LanguageVariety                             |Glottocode  |Family                         |Area          |Reference                                         |"
-    ## [2] "|--:|:-------------------------------------------|:-----------|:------------------------------|:-------------|:-------------------------------------------------|"
-    ## [3] "|  1|Proto-Nordic                                |(nort3160)  |Indoeuropean                   |Europe        |Kristoffersen (2007)                              |"
-    ## [4] "|  2|Yabem                                       |yabe1254    |Austronesian                   |Papunesia     |Kingston (2011)                                   |"
-    ## [5] "|  3|Kammu                                       |khmu1256    |Austroasiatic                  |Asia          |Kingston (2011)                                   |"
-    ## [6] "|  4|Phan Rang Cham                              |east2563    |Austronesian                   |Asia          |Kingston (2011)                                   |"
+    ## [1] "|  ID|LanguageVariety                                           |Glottocode |Family                         |Area          |Notes                                                                  |BibTex                    |"
+    ## [2] "|---:|:---------------------------------------------------------|:----------|:------------------------------|:-------------|:----------------------------------------------------------------------|:-------------------------|"
+    ## [3] "|   1|Proto-Nordic                                              |nort3160   |Indoeuropean                   |Europe        |Glottocode for North Germanic                                          |kristoffersen2000         |"
+    ## [4] "|   2|Yabem                                                     |yabe1254   |Austronesian                   |Papunesia     |                                                                       |kingston2011              |"
+    ## [5] "|   3|Kammu                                                     |khmu1256   |Austroasiatic                  |Asia          |                                                                       |kingston2011              |"
+    ## [6] "|   4|Phan Rang Cham                                            |east2563   |Austronesian                   |Asia          |                                                                       |kingston2011              |"
 
 Currently, we have parentheses in the `Glottocode` column that denote
 non-leaf nodes. These will be changed in the future, but for now let’s
@@ -56,21 +56,23 @@ index$Glottocode <- index$Glottocode %>% str_replace("\\)", "")
 index$Glottocode
 ```
 
-    ##  [1] "nort3160"  "yabe1254"  "khmu1256"  "east2563"  "viet1252"  "sind1278" 
-    ##  [7] "nucl1310"  "lahu1253"  "midd1344"  "cher1273"  "atha1247"  "atha1247" 
-    ## [13] "nort3160"  "cemu1238"  "utsa1239"  "baim1244"  "uuuu1243"  "lugb1240" 
-    ## [19] "khal1275"  "kurt1248"  "moha1257"  "heil1246"  "iraq1241"  "podo1243" 
-    ## [25] "bila1255"  ""          "dzon1239"  "kohu1244"  "kore1280"  "pwon1235" 
-    ## [31] "hmon1333"  "hopi1249"  "mobw1234"  "huuu1240"  "esto1258"  "benc1235" 
-    ## [37] "sout2746"  ""          "shan1277"  ""          "midd1319"  "newc1243" 
-    ## [43] "extr1245"  "taik1256"  "samo1305"  " dani1285" " dani1285" "scot1245" 
-    ## [49] "limb1263"  "tian1238"  "tsat1238"  "thai1261?" "slav1255"  "yeni1252" 
-    ## [55] "bwek1238 " "chey1247"  "kick1244"  "boro1277"  "pwoo1239"  "sgaw1245" 
-    ## [61] "prus1238"  ""          "zhuo1234"  ""          "cent2346"  ""         
-    ## [67] "tuuu1240"  "raja1258"  "matb1237"  "morm1235"  "ires1239"  "east2280" 
-    ## [73] "latv1249"  "lith1251"  "auks1239"  "waig1244"  "can1236"   "nupe1254" 
-    ## [79] "arap1274"  "moha1258"  "cadd1256"  "kere1287"  "take1257"  "quil1240" 
-    ## [85] "geba1237"  "coas1300"  "tlin1245"
+    ##   [1] "nort3160" "yabe1254" "khmu1256" "east2563" "viet1252" "sind1278"
+    ##   [7] "nucl1310" "lahu1253" "midd1344" "cher1273" "atha1247" "atha1247"
+    ##  [13] "nort3160" "cemu1238" "utsa1239" "baim1244" "uuuu1243" "lugb1240"
+    ##  [19] "khal1275" "kurt1248" "moha1257" "heil1246" "iraq1241" "podo1243"
+    ##  [25] "bila1255" "ndak1241" "dzon1239" "kohu1244" "kore1280" "pwon1235"
+    ##  [31] "hmon1333" "hopi1249" ""         "huuu1240" "esto1258" "benc1235"
+    ##  [37] "sout2746" "nort2740" "shan1277" ""         "midd1319" "newc1243"
+    ##  [43] "extr1245" "taik1256" "samo1305" "dani1285" "dani1285" "scot1245"
+    ##  [49] "limb1263" "tian1238" "tsat1238" "thai1261" "slav1255" "yeni1252"
+    ##  [55] "bwek1238" "chey1247" "kick1244" "boro1277" "pwoo1239" "sgaw1245"
+    ##  [61] "prus1238" "walu1241" "zhuo1234" "cent2346" "zhon1235" "tuuu1240"
+    ##  [67] "raja1258" "matb1237" "morm1235" "ires1239" "east2280" "latv1249"
+    ##  [73] "lith1251" "auks1239" "metn1237" "cant1236" "nupe1254" "arap1274"
+    ##  [79] "moha1258" "cadd1256" "kere1287" "take1257" "quil1240" "geba1237"
+    ##  [85] "coas1300" "tlin1245" ""         "mang1393" "moba1244" "brok1248"
+    ##  [91] "kwam1249" "opuu1239" "uspa1245" "moch1257" "yuca1254" "tzot1259"
+    ##  [97] "orej1242" "tere1281" "cube1242" "bara1380" "tatu1247" "hupd1244"
 
 We’ve now removed the trailing parentheses, but we can see 1) that some
 Glottocodes have spaces, e.g. ” dani1285”, and some are empty strings.
@@ -85,21 +87,23 @@ index$Glottocode <- index$Glottocode %>% str_trim()
 index$Glottocode
 ```
 
-    ##  [1] "nort3160"  "yabe1254"  "khmu1256"  "east2563"  "viet1252"  "sind1278" 
-    ##  [7] "nucl1310"  "lahu1253"  "midd1344"  "cher1273"  "atha1247"  "atha1247" 
-    ## [13] "nort3160"  "cemu1238"  "utsa1239"  "baim1244"  "uuuu1243"  "lugb1240" 
-    ## [19] "khal1275"  "kurt1248"  "moha1257"  "heil1246"  "iraq1241"  "podo1243" 
-    ## [25] "bila1255"  ""          "dzon1239"  "kohu1244"  "kore1280"  "pwon1235" 
-    ## [31] "hmon1333"  "hopi1249"  "mobw1234"  "huuu1240"  "esto1258"  "benc1235" 
-    ## [37] "sout2746"  ""          "shan1277"  ""          "midd1319"  "newc1243" 
-    ## [43] "extr1245"  "taik1256"  "samo1305"  "dani1285"  "dani1285"  "scot1245" 
-    ## [49] "limb1263"  "tian1238"  "tsat1238"  "thai1261?" "slav1255"  "yeni1252" 
-    ## [55] "bwek1238"  "chey1247"  "kick1244"  "boro1277"  "pwoo1239"  "sgaw1245" 
-    ## [61] "prus1238"  ""          "zhuo1234"  ""          "cent2346"  ""         
-    ## [67] "tuuu1240"  "raja1258"  "matb1237"  "morm1235"  "ires1239"  "east2280" 
-    ## [73] "latv1249"  "lith1251"  "auks1239"  "waig1244"  "can1236"   "nupe1254" 
-    ## [79] "arap1274"  "moha1258"  "cadd1256"  "kere1287"  "take1257"  "quil1240" 
-    ## [85] "geba1237"  "coas1300"  "tlin1245"
+    ##   [1] "nort3160" "yabe1254" "khmu1256" "east2563" "viet1252" "sind1278"
+    ##   [7] "nucl1310" "lahu1253" "midd1344" "cher1273" "atha1247" "atha1247"
+    ##  [13] "nort3160" "cemu1238" "utsa1239" "baim1244" "uuuu1243" "lugb1240"
+    ##  [19] "khal1275" "kurt1248" "moha1257" "heil1246" "iraq1241" "podo1243"
+    ##  [25] "bila1255" "ndak1241" "dzon1239" "kohu1244" "kore1280" "pwon1235"
+    ##  [31] "hmon1333" "hopi1249" ""         "huuu1240" "esto1258" "benc1235"
+    ##  [37] "sout2746" "nort2740" "shan1277" ""         "midd1319" "newc1243"
+    ##  [43] "extr1245" "taik1256" "samo1305" "dani1285" "dani1285" "scot1245"
+    ##  [49] "limb1263" "tian1238" "tsat1238" "thai1261" "slav1255" "yeni1252"
+    ##  [55] "bwek1238" "chey1247" "kick1244" "boro1277" "pwoo1239" "sgaw1245"
+    ##  [61] "prus1238" "walu1241" "zhuo1234" "cent2346" "zhon1235" "tuuu1240"
+    ##  [67] "raja1258" "matb1237" "morm1235" "ires1239" "east2280" "latv1249"
+    ##  [73] "lith1251" "auks1239" "metn1237" "cant1236" "nupe1254" "arap1274"
+    ##  [79] "moha1258" "cadd1256" "kere1287" "take1257" "quil1240" "geba1237"
+    ##  [85] "coas1300" "tlin1245" ""         "mang1393" "moba1244" "brok1248"
+    ##  [91] "kwam1249" "opuu1239" "uspa1245" "moch1257" "yuca1254" "tzot1259"
+    ##  [97] "orej1242" "tere1281" "cube1242" "bara1380" "tatu1247" "hupd1244"
 
 Now it looks good.
 
@@ -146,14 +150,14 @@ And have a look.
 index_glottolog %>% head() %>% kable()
 ```
 
-|  ID | LanguageVariety | Glottocode | Family        | Area      | Reference            | name         | isocodes | level    | macroarea | latitude | longitude |
-|----:|:----------------|:-----------|:--------------|:----------|:---------------------|:-------------|:---------|:---------|:----------|---------:|----------:|
-|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Kristoffersen (2007) | NA           | NA       | NA       | NA        |       NA |        NA |
-|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia | Kingston (2011)      | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
-|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      | Kingston (2011)      | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
-|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      | Kingston (2011)      | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
-|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      | Kingston (2011)      | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
-|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Yip (2002)           | NA           | NA       | NA       | NA        |       NA |        NA |
+|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | name         | isocodes | level    | macroarea | latitude | longitude |
+|----:|:----------------|:-----------|:--------------|:----------|:------------------------------|:------------------|:-------------|:---------|:---------|:----------|---------:|----------:|
+|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 | NA           | NA       | NA       | NA        |       NA |        NA |
+|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia |                               | kingston2011      | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
+|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      |                               | kingston2011      | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
+|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      |                               | kingston2011      | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
+|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      |                               | kingston2011      | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
+|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           | NA           | NA       | NA       | NA        |       NA |        NA |
 
 Glottolog has two different metadata files. This one is for the language
 name, level, macroareas, and geo-corrdinates. It only contains present
@@ -222,30 +226,45 @@ index_glottolog %>% filter(LanguageVariety != name) %>% select(ID, LanguageVarie
 |  18 | Western Lugbara                   | Lugbara            |
 |  20 | Kurtöp                            | Kurtokha           |
 |  22 | Heiltsuk                          | Heiltsuk-Oowekyala |
+|  26 | Bantu D30                         | Ndaka              |
 |  30 | Phlong                            | Pwo Northern Karen |
 |  31 | White Hmong                       | Hmong Daw          |
-|  33 | Blimaw                            | Mobwa Karen        |
 |  36 | Gimira                            | Bench              |
 |  37 | Nakhon Si Thammarat Thai          | Southern Thai      |
+|  38 | Yung Chiang Kam                   | Northern Thai      |
 |  46 | Zealand Danish                    | Danish             |
 |  47 | East Slesvig                      | Danish             |
 |  48 | Scottish gaelic (Bernera)         | Scottish Gaelic    |
 |  49 | Limburgish                        | Limburgan          |
 |  50 | T’ientsin                         | Tianjin Mandarin   |
 |  51 | Utsat                             | Tsat               |
+|  52 | Proto-Tai                         | Thai               |
 |  55 | Chitabu (bwe)                     | Bwe Karen          |
 |  58 | Shinasha                          | Boro (Ethiopia)    |
 |  60 | Sgaw Karen                        | S’gaw Karen        |
-|  61 | West Baltic (Prussian             | Old Prussian       |
+|  61 | West Baltic (Prussian)            | Old Prussian       |
+|  62 | Tokpe Gola (Tibetan)              | Walungge           |
 |  63 | Zhuoni Tibetan                    | Zhuoni             |
+|  66 | Zhibo Tibetan                     | Zhongu             |
 |  67 | Mongour                           | Tu                 |
 |  69 | Magey Matbat                      | Matbat             |
 |  70 | Moor                              | Mor (Mor Islands)  |
 |  75 | Auktaitian dialects of Lithuanian | Aukshtaitish       |
-|  76 | Ambel                             | Waigeo             |
+|  76 | Metnyo Ambel                      | Metnyo             |
 |  78 | Nupe                              | Nupe-Nupe-Tako     |
 |  85 | Geba                              | Geba Karen         |
 |  87 | Sanya-Henya Tlingit               | Tlingit            |
+|  91 | Brokpa                            | Brokpake           |
+|  92 | Proto-Gwama                       | Gwama              |
+|  93 | Proto-Opo                         | Opo                |
+|  94 | Uspanteko                         | Uspanteco          |
+|  95 | Mocho’                            | Mocho              |
+|  96 | Yucatec                           | Yucatec Maya       |
+|  97 | San Bartolo Tzotzil               | Tzotzil            |
+|  99 | Terena                            | Terena             |
+| 100 | Kubeo                             | Cubeo              |
+| 101 | Barasana                          | Barasana-Eduria    |
+| 103 | Eastern Naduhup                   | Hup                |
 
 Or how our areas differ.
 
@@ -269,7 +288,9 @@ table(index_glottolog$Area, exclude = FALSE)
 
     ## 
     ##        Africa          Asia        Europe North America     Papunesia 
-    ##             9            38            14            16            10
+    ##            13            39            14            20            10 
+    ## South America 
+    ##             6
 
 Since we’re missing some connections with Glottolog, we’ll have a few
 NAs here.
@@ -279,8 +300,10 @@ table(index_glottolog$macroarea, exclude = FALSE)
 ```
 
     ## 
-    ##        Africa       Eurasia North America     Papunesia          <NA> 
-    ##             7            35            12             7            26
+    ##        Africa       Eurasia North America     Papunesia South America 
+    ##            11            40            16             7             6 
+    ##          <NA> 
+    ##            22
 
 Given the data that do overlap, we can create a quick map. There will be
 a warning for where we’re missing geo-coordinates.
@@ -291,7 +314,7 @@ ggplot(data=index_glottolog, aes(x=longitude,y=latitude)) +
   geom_point()
 ```
 
-    ## Warning: Removed 30 rows containing missing values (`geom_point()`).
+    ## Warning: Removed 29 rows containing missing values (`geom_point()`).
 
 ![](database_checks_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
@@ -326,7 +349,7 @@ glottocode <- "([a-z0-9]{4})([0-9]{4})"
 which(!(str_detect(index$Glottocode, glottocode)))
 ```
 
-    ## [1] 26 38 40 62 64 66 77
+    ## [1] 33 40 87
 
 ``` r
 # When the above codes are fixed, then we can uncomment this test -- otherwise the code fails here.
@@ -342,13 +365,19 @@ table(data$TriggeringContext)
 ```
 
     ## 
-    ##                                                                                                                                                                                                                                                                                                                           +ATR 
+    ##                                                                                                                                                                                                                                                                                                            +ATR with high tone 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                                                                           -ATR 
+    ##                                                                                                                                                                                                                                                                                                            -ATR with high tone 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                          -h, -s (< *-hs), preaspiration on the following syllable onset, or a voiceless semivowel or sonorant. 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                         *CVhC  
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                      *VʔC sequences develope a copy vowel V1ʔV1C, then loose the glottal stop  
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                           /s/ + sonorant onset 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                       a high tone developed from PM *VhC sequences and an\ncopy vowel as well as high tone on the first vowel from PM *VʔC sequences, yielding\nYucatec V́1ʔV1C 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                         addition of a syllable 
     ##                                                                                                                                                                                                                                                                                                                              2 
@@ -378,17 +407,17 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                     before preaspirate obstruent OR before /h/ 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                  Case marker dissappears and leads to high tone on the last syllable of the word immediatly preceeding the absolutive argument 
+    ##                                                                                                                                                                                                                                    boundary intonation: high tone at the end of a phrase, becomes lexicalised in some suffixes 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                              cluster Obstuent+voiced obstruent, voiced onset, initial sonorant 
+    ##                                                                                                                                                                                             Case marker "ia" dissappears and leads to high tone on the last syllable of the word immediatly preceeding the absolutive argument 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                          cluster Obstuent+voiced obstruent OR voiced onset OR initial sonorant 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                       coda consonants other than /-r/ and /-l/ 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                depressor consonant + high tone 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                             destressing after loss of syllable 
-    ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                                                    disyllable --> monosyllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                               disyllable that stays disyllabic 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -420,6 +449,8 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                  Glottalized voiced consonant or voiceless stop onset + tona C 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                         H tones are rised when followed by L tones, loss of final vowels leads this rise to become contrastive 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                     heavy penultimate syllable (CVV or CVVC) (indicative mood) 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                   high level tone + high vowel 
@@ -432,10 +463,14 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                        high tone +glottal stop 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                            high tone plus -ATR 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                            high tone plus +ATR 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                 high tone without glottal stop 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                    high vowels 
-    ##                                                                                                                                                                                                                                                                                                                              2 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                        in the default case Heiltsuk assigns stress, normally realized as high tone, to the leftmost vowel or syllabic sonorant 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                             inital aspirated voiceless or unaspirated voiceless + proto-tone B 
@@ -482,12 +517,20 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                     long vowel 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                       long vowel + voiced coda 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                    long vowel + voiceless coda 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                    long vowels 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                       Loss of a coda consonant 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                      loss of a second syllable OR loss of a coda /-r/ or /-l/. 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                               Loss of final ə: Hoppe > hop (developed after the stød contrast) 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                           Loss of glottal stop 
+    ##                                                                                                                                                                                                                                                                                                                              4 
     ##                                                                                                                                                                                                                                                            loss of glottalization in originally stressed constricted syllables 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                              loss of suffix beginning with depressor consonant 
@@ -504,13 +547,11 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                               lower high tone + voiced stop or affricate onset 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                            mid tone + low long vowel, short vowel + /r, ŋ/ OR long high vowel, diphthong or short vowel followed by a sonorant consonant get a falling tone if the next\n syllable has undergone Schwa Apocope 
+    ##                                                                                                                              mid tone + low long vowel, short vowel + /r, ŋ/ OR long high vowel, diphthong or short vowel followed by a sonorant consonant get a falling tone if the next syllable has undergone Schwa Apocope 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                 non-glottalized coda obstruent 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                                                                non-high vowels 
-    ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                                                                 Obstruent coda 
+    ##                                                                                                                                                                                                                                                                                  Obstruent coda OR disyllable --> monosyllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                         obstruent+sonorant cluster OR voiceless onset OR obstruent+voiceless obstruent cluster 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -524,19 +565,35 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                               original bisyllables or words where the loss of an intervocalic consonant turns a bisyllable into a monosyllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                           Originally\nstressed unconstricted syllables developed a rising tone 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                       PAN *-H1 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                   PAN *-R, *-X 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                             penultimate stress 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                    plain voiced continuant, stop or fricative: m, n, ɲ, l,(*b>)p,(*d>)t,(*g>)k,(*ʀ>)j + Tone A 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                    plain voiced continuant, stop or fricative: m, n, ɲ, l,(*b>)p,(*d>)t,(*g>)k,(*ʀ>)j + Tone B 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                    plain voiced continuant, stop or fricative: m, n, ɲ, l,(*b>)p,(*d>)t,(*g>)k,(*ʀ>)j + Tone C 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                       plain voiceless or voiced onset + tone A 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                     prefixed sonorant initials 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                preglottalized, or plain unvoiced stop: (*ɓ>)m,(*ʔm>)m,(*ʔn>)n,(*ɗ>)l,(*ʔʀ>)j, k, t, p + tone A 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                preglottalized, or plain unvoiced stop: (*ɓ>)m,(*ʔm>)m,(*ʔn>)n,(*ɗ>)l,(*ʔʀ>)j, k, t, p + Tone B 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                preglottalized, or plain unvoiced stop: (*ɓ>)m,(*ʔm>)m,(*ʔn>)n,(*ɗ>)l,(*ʔʀ>)j, k, t, p + Tone C 
+    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                 primary stress 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                               rise of distinctive Low tone on initial syllables of “unstressed” word\n forms versus High tone under the stress 
+    ##                                                                                                                                                                                                                                                                                           Probably due to loss of coda  [h ʔ]  
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                 rise of distinctive Low tone on initial syllables of “unstressed” word forms versus High tone under the stress 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                        short syllables (Old Tibetan open and checked) with voiced initial OR  Long syllables (Old Tibetan sonorant coda and contracted disyllables) in most cases, except syllables with non-nasal preradcials 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -551,7 +608,7 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                               Short vowel + stop or sononrant OR long vowel + glottalic stop, stop or sonorant 
     ##                                                                                                                                                                                                                                                                                                                              2 
     ##                                                                                                                                                                                                                                                                                                                   short vowels 
-    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                              2 
     ##                                                                                                                                                                                                                                                                                                                  sonorant coda 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                            sonorant endings (vowels, semi-vowels, nasals, liquids) and Proto-Austronesian *-H2 
@@ -562,7 +619,7 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                       stressed unconstricted syllable (previously rising tone) 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                                    Tendency for high pitch at the end of words 
+    ##                                                                                                                                                                                                                                                   Syllables with H tone not follwed by a L tone on a vowel that was later lost 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                  the absence of glottalization 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -571,6 +628,10 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                              the glottalization of originally stressed constricted syllables was weakened and developed into creaky voice quality, resulting in a falling tone 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                       There is (weak) relationship between tone 3 and words that become (or remain) disyllabic 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                             toneless syllable with high vowels 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                         toneless syllable with non-high vowels 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                      trisyllable > disyllable, disyllable with secondarily lenghtened vowel in second syllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -602,6 +663,10 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                voiced intial stop or affricate 
     ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                   voiced onset 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                               voiced onset + L 
+    ##                                                                                                                                                                                                                                                                                                                              2 
     ##                                                                                                                                                                                                                                                                                                          voiced onset + tone 1 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                          voiced onset + tone 2 
@@ -642,15 +707,17 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                              voiceless aspirated initial, at the beginning of accentual phrase 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                      voiceless aspirated obstruent onsets in checked syllables 
-    ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                                         voiceless aspirated obstruent onsets in open syllables 
-    ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                             voiceless aspirated onset + tone A 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                          voiceless aspirated or plain voiceless onset + tone B 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                voiceless aspirated or plain voiceless onset + tone C (checked) 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                     voiceless continuant, or aspirated stop: (*m̥>)m,(*n̥>)n,(*ɲ̊>)ɲj,(*ŋ̊>)∅, kʰ, tʰ, pʰ + Tone A 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                     voiceless continuant, or aspirated stop: (*m̥>)m,(*n̥>)n,(*ɲ̊>)ɲj,(*ŋ̊>)∅, kʰ, tʰ, pʰ + Tone B 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                     voiceless continuant, or aspirated stop: (*m̥>)m,(*n̥>)n,(*ɲ̊>)ɲj,(*ŋ̊>)∅, kʰ, tʰ, pʰ + Tone C 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                 voiceless geminate consonants become aspirated: reduplication CVCV > CCV > ChV 
     ##                                                                                                                                                                                                                                                                                                                              2 
@@ -669,6 +736,14 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                              voiceless initials with nasal preradical in short syllables OR voiceless initial in long syllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                voiceless intial + falling tone 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                voiceless onset 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                     voiceless onset + [+high +ATR] nucleus + H 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                            voiceless onset + L 
+    ##                                                                                                                                                                                                                                                                                                                              2 
+    ##                                                                                                                                                                                                                                                                                 voiceless onset + not [+high +ATR] nucleus + H 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                       voiceless onset + tone 1 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -705,12 +780,12 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                              voiceless unaspirated or voiceless aspirated onset consonants and modal phonation 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                      Voiceless/ uper register + tone B/C OR voiced/lower register + tone A/B/C 
-    ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                        Voiceless/ uper register + tone B/C, voiced/lower register + tone A/B/C 
-    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                              2 
     ##                                                                                                                                                                                                                                                                                              voiceless/upper register + tone A 
     ##                                                                                                                                                                                                                                                                                                                              2 
     ##                                                                                                                                                                                                                                                                                  vowel deletion, two tones attached to one TBU 
+    ##                                                                                                                                                                                                                                                                                                                              1 
+    ##                                                                                                                                                                                                                                                                                                                  vowel syncope 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                         When the newly stressed syllabic nucleus was constricted, the glottalization was lost in Lithuanian, but not in Latvian, where it was weakened and developed into creaky voice quality 
     ##                                                                                                                                                                                                                                                                                                                              1 
@@ -724,3 +799,14 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1
 
 # References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-kristoffersen2000" class="csl-entry">
+
+Kristoffersen, Gjert. 2000. *The Phonology of Norwegian*. Oxford
+University Press.
+
+</div>
+
+</div>

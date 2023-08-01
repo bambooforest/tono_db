@@ -12,7 +12,7 @@ output:
 
 This is an [R markdown](https://rmarkdown.rstudio.com/) report that does things like check fields in the database, creates tables and graphs of the data, and integrates [Glottolog metadata](https://glottolog.org/meta/downloads).
 
-It's also set up so that we can easily cite references in the [BibTeX biblography](referencs.bib). For example: @Kristoffersen2007 will now appear below in the references section.
+It's also set up so that we can easily cite references in the [BibTeX biblography](referencs.bib). For example: @kristoffersen2000 will now appear below in the references section.
 
 First, let's load some useful R libraries.
 
