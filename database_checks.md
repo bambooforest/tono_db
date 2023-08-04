@@ -2,7 +2,7 @@ Tonogenesis database checks
 ================
 Steven Moran
 
-01 August, 2023
+04 August, 2023
 
 # Overview
 
@@ -38,12 +38,12 @@ And let’s have a look at it.
 kable(index) %>% head()
 ```
 
-    ## [1] "|  ID|LanguageVariety                                           |Glottocode |Family                         |Area          |Notes                                                                  |BibTex                    |"
-    ## [2] "|---:|:---------------------------------------------------------|:----------|:------------------------------|:-------------|:----------------------------------------------------------------------|:-------------------------|"
-    ## [3] "|   1|Proto-Nordic                                              |nort3160   |Indoeuropean                   |Europe        |Glottocode for North Germanic                                          |kristoffersen2000         |"
-    ## [4] "|   2|Yabem                                                     |yabe1254   |Austronesian                   |Papunesia     |                                                                       |kingston2011              |"
-    ## [5] "|   3|Kammu                                                     |khmu1256   |Austroasiatic                  |Asia          |                                                                       |kingston2011              |"
-    ## [6] "|   4|Phan Rang Cham                                            |east2563   |Austronesian                   |Asia          |                                                                       |kingston2011              |"
+    ## [1] "|  ID|LanguageVariety                                           |Glottocode |Family                         |Area          |Notes                                                                  |BibTex                    |X                                                                                                                      |"
+    ## [2] "|---:|:---------------------------------------------------------|:----------|:------------------------------|:-------------|:----------------------------------------------------------------------|:-------------------------|:----------------------------------------------------------------------------------------------------------------------|"
+    ## [3] "|   1|Proto-Nordic                                              |nort3160   |Indoeuropean                   |Europe        |Glottocode for North Germanic                                          |kristoffersen2000         |                                                                                                                       |"
+    ## [4] "|   2|Yabem                                                     |yabe1254   |Austronesian                   |Papunesia     |                                                                       |kingston2011              |                                                                                                                       |"
+    ## [5] "|   3|Kammu                                                     |khmu1256   |Austroasiatic                  |Asia          |                                                                       |kingston2011              |                                                                                                                       |"
+    ## [6] "|   4|Phan Rang Cham                                            |east2563   |Austronesian                   |Asia          |                                                                       |kingston2011              |                                                                                                                       |"
 
 Currently, we have parentheses in the `Glottocode` column that denote
 non-leaf nodes. These will be changed in the future, but for now let’s
@@ -150,14 +150,14 @@ And have a look.
 index_glottolog %>% head() %>% kable()
 ```
 
-|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | name         | isocodes | level    | macroarea | latitude | longitude |
-|----:|:----------------|:-----------|:--------------|:----------|:------------------------------|:------------------|:-------------|:---------|:---------|:----------|---------:|----------:|
-|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 | NA           | NA       | NA       | NA        |       NA |        NA |
-|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia |                               | kingston2011      | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
-|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      |                               | kingston2011      | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
-|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      |                               | kingston2011      | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
-|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      |                               | kingston2011      | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
-|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           | NA           | NA       | NA       | NA        |       NA |        NA |
+|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | X   | name         | isocodes | level    | macroarea | latitude | longitude |
+|----:|:----------------|:-----------|:--------------|:----------|:------------------------------|:------------------|:----|:-------------|:---------|:---------|:----------|---------:|----------:|
+|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 |     | NA           | NA       | NA       | NA        |       NA |        NA |
+|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia |                               | kingston2011      |     | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
+|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      |                               | kingston2011      |     | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
+|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      |                               | kingston2011      |     | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
+|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      |                               | kingston2011      |     | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
+|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           |     | NA           | NA       | NA       | NA        |       NA |        NA |
 
 Glottolog has two different metadata files. This one is for the language
 name, level, macroareas, and geo-corrdinates. It only contains present
@@ -377,7 +377,7 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                           /s/ + sonorant onset 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                       a high tone developed from PM *VhC sequences and an\ncopy vowel as well as high tone on the first vowel from PM *VʔC sequences, yielding\nYucatec V́1ʔV1C 
+    ##                                                                                                                                                                         a high tone developed from PM *VhC sequences and an copy vowel as well as high tone on the first vowel from PM *VʔC sequences, yielding Yucatec V́1ʔV1C 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                         addition of a syllable 
     ##                                                                                                                                                                                                                                                                                                                              2 
@@ -565,7 +565,7 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                               original bisyllables or words where the loss of an intervocalic consonant turns a bisyllable into a monosyllable 
     ##                                                                                                                                                                                                                                                                                                                              1 
-    ##                                                                                                                                                                                                                                                           Originally\nstressed unconstricted syllables developed a rising tone 
+    ##                                                                                                                                                                                                                                                            Originally stressed unconstricted syllables developed a rising tone 
     ##                                                                                                                                                                                                                                                                                                                              1 
     ##                                                                                                                                                                                                                                                                                                                       PAN *-H1 
     ##                                                                                                                                                                                                                                                                                                                              1 

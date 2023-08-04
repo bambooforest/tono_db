@@ -1,103 +1,103 @@
-ID,LanguageVariety,Glottocode,Family,Area,Notes,BibTex
-1,Proto-Nordic,nort3160,Indoeuropean,Europe,Glottocode for North Germanic,kristoffersen2000
-2,Yabem,yabe1254,Austronesian,Papunesia,,kingston2011
-3,Kammu,khmu1256,Austroasiatic,Asia,,kingston2011
-4,Phan Rang Cham,east2563,Austronesian,Asia,,kingston2011
-5,Vietnamese,viet1252,Austroasiatic,Asia,,kingston2011
-6,Punjabi,sind1278,Indoeuropean,Asia,Glottocode for Sindhi-Lahnda ,yip2002
-7,Burmese,nucl1310,Sino-Tibetan,Asia,,hombert1979
-8,Lahu,lahu1253,Sino-Tibetan,Asia,,hombert1979
-9,Middle Chinese,midd1344,Sino-Tibetan,Asia,,hombert1979
-10,Cherokee,cher1273,Iroquian,North America,,julian2010
-11,Proto-Athabaskan (tonal dialects) group one,atha1247,Athabaskan-Eyak-Tlingit,North America,,kingston2011
-12,Proto-Athabaskan (tonal dialects) group two,atha1247,Athabaskan-Eyak-Tlingit,North America,,kingston2011
-13,Central Scandinavian,nort3160,Indoeuropean,Europe,Glottocode for North Germanic,kingston2011
-14,Cem,cemu1238,Austronesian,Papunesia,,ebrey1993
-15,Lhasa Tibetan,utsa1239,Sino-Tibetan,Asia,,"kingston2011, sun2003"
-16,Baima Tibetan,baim1244,Sino-Tibetan,Asia,,sun2003
-17,U,uuuu1243,Austroasiatic,Asia,,kingston2011
-18,Western Lugbara,lugb1240,Central Sudanic - Nilo-Saharan,Africa,,kingston2011
-19,Khaling,khal1275,Sino-Tibetan,Asia,,jacques2016
-20,Kurtöp,kurt1248,Sino-Tibetan,Asia,,hyslop2009
-21,Proto-Mohawk-Oneida,moha1257,Iroquian,North America,,julian2010
-22,Heiltsuk,heil1246,Wakashan,North America,,howe2005
-23,Iraqw,iraq1241,Afroasiatic,Africa,,kiessling2000
-24,Podoko,podo1243,Afroasiatic,Africa,,kiessling2003
-25,Bila,bila1255,Niger-Congo,Africa,,rasmussen2018
-26,Bantu D30,ndak1241,Niger-Congo,Africa,Using Ndaka Glottocode; dissertation is on several Bantu D30 varieties,rasmussen2018
-27,Dzongkha,dzon1239,Sino-Tibetan,Asia,,hyslop2010
-28,Kohumono,kohu1244,Atlantic-Kongo,Africa,,dimmendaal1978
-29,Korean,kore1280,Koreanic,Asia,,bang2018
-30,Phlong,pwon1235,Sino-Tibetan,Asia,,weidert1987
-31,White Hmong,hmon1333,Hmong-Mien,Asia,,ratliff2015
-32,Hopi,hopi1249,Uto-Aztecan,North America,,ratliff2015
-33,Blimaw,,Sino-Tibetan,Asia,No Glottocode,weidert1987
-34,Hu,huuu1240,Austroasiatic,Asia,,ratliff2015
-35,Estonian,esto1258,Uralic,Europe,,ratliff2015
-36,Gimira,benc1235,Omotic,Africa,,ratliff2015
-37,Nakhon Si Thammarat Thai,sout2746,Kra-dai,Asia,Glottocode for Southern Thai,kingston2011
-38,Yung Chiang Kam,nort2740,Kra-Dai?,Asia,Glottocode for Northern Thai,kingston2011
-39,Shan,shan1277,Kra-Dai,Asia,,kingston2011
-40,Szu ta Chai,,,Asia,No Glottocode,kingston2011
-41,Central Franconian,midd1319,Indoeuropean,Europe,,gussenhoven2000
-42,Central North New Caledonian languages,newc1243,Austronesian,Papunesia,Glottocode for New Caledonian ,rivierre1993
-43,Far South New Caledonian langauges,extr1245,Austronesian,Papunesia,,rivierre1993
-44,Kra-Dai languages,taik1256,kra-dai,Asia,,sagart2019
-45,Samoan,samo1305,Austronesian,Papunesia,,
-46,Zealand Danish,dani1285,Indoeuropean,Europe,Glottocode for Danish,iosad2016
-47,East Slesvig,dani1285,Indoeuropean,Europe,Glottocode for Danish,iosad2016
-48,Scottish gaelic (Bernera),scot1245,Indoeuropean,Europe,Glottocode for Scottish Gaelic,iosad2015
-49,Limburgish,limb1263,Indoeuropean,Europe,,hermans2006
-50,T’ientsin,tian1238,Sino-Tibetan,Asia,,teeranon2012
-51,Utsat,tsat1238,Austronesian,Asia,,thurgood1993
-52,Proto-Tai,thai1261,Kra-dai,Asia,Glottocode for Thai,abramson1992
-53,Late Proto-Slavic,slav1255,Indoeuropean,Europe,,kortlandt2010
-54,Pre-proto-Yeniseian,yeni1252,Na-Dene,Asia,Glottocode for Yeniseian,vajda2010
-55,Chitabu (bwe),bwek1238,Sino-Tibetan,Asia,Glottocode for Bwe Karen,weidert1987
-56,Cheyenne,chey1247,Algic,North America,,pappas2017
-57,Kickapoo,kick1244,Algic,North America,,gathercole1983 
-58,Shinasha,boro1277,Omotic,Africa,,tesfaye1994
-59,Pwo Karen,pwoo1239,Sino-Tibetan,Asia,,weidert1987
-60,Sgaw Karen,sgaw1245,Sino-Tibetan,Asia,,weidert1987
-61,West Baltic (Prussian),prus1238,Indoeuropean,Europe,Glottocode for Old Prussian,kortlandt2010
-62,Tokpe Gola (Tibetan),walu1241,Sino-Tibetan,Asia,Glottocode for Walungge (Wiki suggests this is the same language),caplow2009
-63,Zhuoni Tibetan,zhuo1234,Sino-Tibetan,Asia,,sun2003
-65,Rikeze Tibetan,cent2346,Sino-Tibetan,Asia,Glottocode for Central Tibetan,sun2003
-66,Zhibo Tibetan,zhon1235,Sino-Tibetan,Asia,Glottocode for Zhongu,sun2003
-67,Mongour,tuuu1240,Mongolic,Asia,,dwyer2008
-68,Proto-Maˈya,raja1258,Austronesian,Papunesia,,kamholz2014
-69,Magey Matbat,matb1237,Austronesian,Papunesia,,kamholz2014
-70,Moor,morm1235,Austronesian,Papunesia,,kamholz2014
-71,Yerisiam,ires1239,Austronesian,Papunesia,,kamholz2014
-72,East Baltic (Latvian and Lithuanian),east2280,Indoeuropean,Europe,,kortlandt2010
-73,Latvian,latv1249,Indoeuropean,Europe,,kortlandt2010
-74,Lithuanian,lith1251,Indoeuropean,Europe,,kortlandt2010
-75,Auktaitian dialects of Lithuanian,auks1239,Indoeuropean,Europe,,kortlandt2010
-76,Metnyo Ambel,metn1237,Austronesian,Papunesia,,arnold2020
-77,Cantonese,cant1236,Sino-Tibetan,Asia,,yip2002
-78,Nupe,nupe1254,Atlantic-Kongo,Africa,,yip2002
-79,Arapaho,arap1274,Algic,North America,,picard1994
-80,Mohawk,moha1258,Iroquian,North America,,mithun2001
-81,Caddo,cadd1256,Caddoan,North America,,mithun2001
-82,Keres,kere1287,Keresan,North America,Glottocode for Keresan ,mithun2001
-83,Takelma,take1257,Isolate,North America,,mithun2001
-84,Quileute,quil1240,Chimakuan,North America,,mithun2001
-85,Geba,geba1237,Sino-Tibetan,Asia,,weidert1987
-86,Coast Tsimshian,coas1300,Tsimshian,North America,,mithun2001
-87,Sanya-Henya Tlingit,tlin1245,Athabaskan-Eyak-Tlingit,North America,Glottocode for Tlingit,mithun2001
-88,Dong,,Kra-Dai,Asia,Can't find Glottocode,michaud2020
-89,Languages of the  Mangbetu-Asua subgroup with three tones,mang1393,Central-Sudanic,Africa,,michaud2020
-90,Moba,moba1244,Atlantic-Kongo,Africa,,michaud2021
-91,Brokpa,brok1248,Sino-Tibetan,Asia,,RufenachtWaldis2020.pdf
-92,Proto-Gwama,kwam1249,Koman (Nilo-Saharan?),Africa,,Otero2019
-93,Proto-Opo,opuu1239,Koman (Nilo-Saharan?),Africa,,Otero2019
-94,Uspanteko,uspa1245,Mayan,North America,,Bennett_etal2022
-95,Mocho',moch1257,Mayan,North America,,Palosaari2011
-96,Yucatec,yuca1254,Mayan,North America,,Palosaari2011
-97,San Bartolo Tzotzil,tzot1259,Mayan,North America,,KaufmanCazes1972
-98,Maijiki,orej1242,Tucanoan,South America,,CostaChacondeCarvalho2020
-99,Terena ,tere1281,,South America,,CostaChacondeCarvalho2020
-100,Kubeo,cube1242,,South America,,CostaChacondeCarvalho2020
-101,Barasana,bara1380,,South America,,CostaChacondeCarvalho2020
-102,Tatuyo,tatu1247,,South America,,CostaChacondeCarvalho2020
-103,Eastern Naduhup,hupd1244,Naduhup,South America,,CostaChacondeCarvalho2020
+ID,LanguageVariety,Glottocode,Family,Area,Notes,BibTex,
+1,Proto-Nordic,nort3160,Indoeuropean,Europe,Glottocode for North Germanic,kristoffersen2000,
+2,Yabem,yabe1254,Austronesian,Papunesia,,kingston2011,
+3,Kammu,khmu1256,Austroasiatic,Asia,,kingston2011,
+4,Phan Rang Cham,east2563,Austronesian,Asia,,kingston2011,
+5,Vietnamese,viet1252,Austroasiatic,Asia,,kingston2011,
+6,Punjabi,sind1278,Indoeuropean,Asia,Glottocode for Sindhi-Lahnda ,yip2002,
+7,Burmese,nucl1310,Sino-Tibetan,Asia,,hombert1979,
+8,Lahu,lahu1253,Sino-Tibetan,Asia,,hombert1979,
+9,Middle Chinese,midd1344,Sino-Tibetan,Asia,,hombert1979,
+10,Cherokee,cher1273,Iroquian,North America,,julian2010,
+11,Proto-Athabaskan (tonal dialects) group one,atha1247,Athabaskan-Eyak-Tlingit,North America,,kingston2011,
+12,Proto-Athabaskan (tonal dialects) group two,atha1247,Athabaskan-Eyak-Tlingit,North America,,kingston2011,
+13,Central Scandinavian,nort3160,Indoeuropean,Europe,Glottocode for North Germanic,kingston2011,
+14,Cem,cemu1238,Austronesian,Papunesia,,ebrey1993,
+15,Lhasa Tibetan,utsa1239,Sino-Tibetan,Asia,,"kingston2011, sun2003",
+16,Baima Tibetan,baim1244,Sino-Tibetan,Asia,,sun2003,
+17,U,uuuu1243,Austroasiatic,Asia,,kingston2011,
+18,Western Lugbara,lugb1240,Central Sudanic - Nilo-Saharan,Africa,,kingston2011,
+19,Khaling,khal1275,Sino-Tibetan,Asia,,jacques2016,
+20,Kurtöp,kurt1248,Sino-Tibetan,Asia,,hyslop2009,
+21,Proto-Mohawk-Oneida,moha1257,Iroquian,North America,,julian2010,
+22,Heiltsuk,heil1246,Wakashan,North America,,howe2005,
+23,Iraqw,iraq1241,Afroasiatic,Africa,,kiessling2000,
+24,Podoko,podo1243,Afroasiatic,Africa,,kiessling2003,
+25,Bila,bila1255,Niger-Congo,Africa,,rasmussen2018,
+26,Bantu D30,ndak1241,Niger-Congo,Africa,Using Ndaka Glottocode; dissertation is on several Bantu D30 varieties,rasmussen2018,
+27,Dzongkha,dzon1239,Sino-Tibetan,Asia,,hyslop2010,
+28,Kohumono,kohu1244,Atlantic-Kongo,Africa,,dimmendaal1978,
+29,Korean,kore1280,Koreanic,Asia,,bang2018,
+30,Phlong,pwon1235,Sino-Tibetan,Asia,,weidert1987,
+31,White Hmong,hmon1333,Hmong-Mien,Asia,,ratliff2015,
+32,Hopi,hopi1249,Uto-Aztecan,North America,,ratliff2015,
+33,Blimaw,,Sino-Tibetan,Asia,No Glottocode,weidert1987,
+34,Hu,huuu1240,Austroasiatic,Asia,,ratliff2015,
+35,Estonian,esto1258,Uralic,Europe,,ratliff2015,
+36,Gimira,benc1235,Omotic,Africa,,ratliff2015,
+37,Nakhon Si Thammarat Thai,sout2746,Kra-dai,Asia,Glottocode for Southern Thai,kingston2011,
+38,Yung Chiang Kam,nort2740,Kra-Dai?,Asia,Glottocode for Northern Thai,kingston2011,
+39,Shan,shan1277,Kra-Dai,Asia,,kingston2011,
+40,Szu ta Chai,,,Asia,No Glottocode,kingston2011,
+41,Central Franconian,midd1319,Indoeuropean,Europe,,gussenhoven2000,
+42,Central North New Caledonian languages,newc1243,Austronesian,Papunesia,Glottocode for New Caledonian ,rivierre1993,
+43,Far South New Caledonian langauges,extr1245,Austronesian,Papunesia,,rivierre1993,
+44,Kra-Dai languages,taik1256,kra-dai,Asia,,sagart2019,
+45,Samoan,samo1305,Austronesian,Papunesia,,,"Yu, Kristine M. ""Tonal marking of absolutive case in Samoan."" Natural Language & Linguistic Theory 39 (2021): 291-365."
+46,Zealand Danish,dani1285,Indoeuropean,Europe,Glottocode for Danish,iosad2016,
+47,East Slesvig,dani1285,Indoeuropean,Europe,Glottocode for Danish,iosad2016,
+48,Scottish gaelic (Bernera),scot1245,Indoeuropean,Europe,Glottocode for Scottish Gaelic,iosad2015,
+49,Limburgish,limb1263,Indoeuropean,Europe,,hermans2006,
+50,T’ientsin,tian1238,Sino-Tibetan,Asia,,teeranon2012,
+51,Utsat,tsat1238,Austronesian,Asia,,thurgood1993,
+52,Proto-Tai,thai1261,Kra-dai,Asia,Glottocode for Thai,abramson1992,
+53,Late Proto-Slavic,slav1255,Indoeuropean,Europe,,kortlandt2010,
+54,Pre-proto-Yeniseian,yeni1252,Na-Dene,Asia,Glottocode for Yeniseian,vajda2010,
+55,Chitabu (bwe),bwek1238,Sino-Tibetan,Asia,Glottocode for Bwe Karen,weidert1987,
+56,Cheyenne,chey1247,Algic,North America,,pappas2017,
+57,Kickapoo,kick1244,Algic,North America,,gathercole1983 ,
+58,Shinasha,boro1277,Omotic,Africa,,tesfaye1994,
+59,Pwo Karen,pwoo1239,Sino-Tibetan,Asia,,weidert1987,
+60,Sgaw Karen,sgaw1245,Sino-Tibetan,Asia,,weidert1987,
+61,West Baltic (Prussian),prus1238,Indoeuropean,Europe,Glottocode for Old Prussian,kortlandt2010,
+62,Tokpe Gola (Tibetan),walu1241,Sino-Tibetan,Asia,Glottocode for Walungge (Wiki suggests this is the same language),caplow2009,
+63,Zhuoni Tibetan,zhuo1234,Sino-Tibetan,Asia,,sun2003,
+65,Rikeze Tibetan,cent2346,Sino-Tibetan,Asia,Glottocode for Central Tibetan,sun2003,
+66,Zhibo Tibetan,zhon1235,Sino-Tibetan,Asia,Glottocode for Zhongu,sun2003,
+67,Mongour,tuuu1240,Mongolic,Asia,,dwyer2008,
+68,Proto-Maˈya,raja1258,Austronesian,Papunesia,,kamholz2014,
+69,Magey Matbat,matb1237,Austronesian,Papunesia,,kamholz2014,
+70,Moor,morm1235,Austronesian,Papunesia,,kamholz2014,
+71,Yerisiam,ires1239,Austronesian,Papunesia,,kamholz2014,
+72,East Baltic (Latvian and Lithuanian),east2280,Indoeuropean,Europe,,kortlandt2010,
+73,Latvian,latv1249,Indoeuropean,Europe,,kortlandt2010,
+74,Lithuanian,lith1251,Indoeuropean,Europe,,kortlandt2010,
+75,Auktaitian dialects of Lithuanian,auks1239,Indoeuropean,Europe,,kortlandt2010,
+76,Metnyo Ambel,metn1237,Austronesian,Papunesia,,arnold2020,
+77,Cantonese,cant1236,Sino-Tibetan,Asia,,yip2002,
+78,Nupe,nupe1254,Atlantic-Kongo,Africa,,yip2002,
+79,Arapaho,arap1274,Algic,North America,,picard1994,
+80,Mohawk,moha1258,Iroquian,North America,,mithun2001,
+81,Caddo,cadd1256,Caddoan,North America,,mithun2001,
+82,Keres,kere1287,Keresan,North America,Glottocode for Keresan ,mithun2001,
+83,Takelma,take1257,Isolate,North America,,mithun2001,
+84,Quileute,quil1240,Chimakuan,North America,,mithun2001,
+85,Geba,geba1237,Sino-Tibetan,Asia,,weidert1987,
+86,Coast Tsimshian,coas1300,Tsimshian,North America,,mithun2001,
+87,Sanya-Henya Tlingit,tlin1245,Athabaskan-Eyak-Tlingit,North America,Glottocode for Tlingit,mithun2001,
+88,Dong,,Kra-Dai,Asia,Can't find Glottocode,michaud2020,
+89,Languages of the  Mangbetu-Asua subgroup with three tones,mang1393,Central-Sudanic,Africa,,michaud2020,
+90,Moba,moba1244,Atlantic-Kongo,Africa,,michaud2021,
+91,Brokpa,brok1248,Sino-Tibetan,Asia,,RufenachtWaldis2020.pdf,
+92,Proto-Gwama,kwam1249,Koman (Nilo-Saharan?),Africa,,Otero2019,
+93,Proto-Opo,opuu1239,Koman (Nilo-Saharan?),Africa,,Otero2019,
+94,Uspanteko,uspa1245,Mayan,North America,,Bennett_etal2022,
+95,Mocho',moch1257,Mayan,North America,,Palosaari2011,
+96,Yucatec,yuca1254,Mayan,North America,,Palosaari2011,
+97,San Bartolo Tzotzil,tzot1259,Mayan,North America,,KaufmanCazes1972,
+98,Maijiki,orej1242,Tucanoan,South America,,CostaChacondeCarvalho2020,
+99,Terena ,tere1281,,South America,,CostaChacondeCarvalho2020,
+100,Kubeo,cube1242,,South America,,CostaChacondeCarvalho2020,
+101,Barasana,bara1380,,South America,,CostaChacondeCarvalho2020,
+102,Tatuyo,tatu1247,,South America,,CostaChacondeCarvalho2020,
+103,Eastern Naduhup,hupd1244,Naduhup,South America,,CostaChacondeCarvalho2020,
