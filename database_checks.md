@@ -2,7 +2,7 @@ Tonogenesis database checks
 ================
 Steven Moran
 
-04 August, 2023
+13 August, 2023
 
 # Overview
 
@@ -797,6 +797,222 @@ table(data$TriggeringContext)
     ##                                                                                                                                                                                                                                                                                                                              2 
     ## words with an aspirated consonant (or a fricative), not initially but in intervocalic position, generally got a low tone in Cem (first from a mid-high sequence) OR  The vocalic sound [a] would seem to be involved as well in the appearance of the low tone, judging by the number of low-tone monosyllables containing [a] 
     ##                                                                                                                                                                                                                                                                                                                              1
+
+Let’s check values in columns.
+
+``` r
+table(data$Tone, exclude = FALSE)
+```
+
+    ## 
+    ##                                                    extra high 
+    ##                             62                              5 
+    ##                      extra low                        falling 
+    ##                              1                             24 
+    ##                        Falling      falling OR rising-falling 
+    ##                              1                              1 
+    ##                              H                           high 
+    ##                              1                             42 
+    ##                  high (rising)                    high creaky 
+    ##                              1                              1 
+    ##                   high falling                     high level 
+    ##                              5                              4 
+    ##                       high mid                    high rising 
+    ##                              1                              4 
+    ##            High/rising-falling                             HL 
+    ##                              1                              1 
+    ##                          level                             LH 
+    ##                              5                              1 
+    ##                      long high                            low 
+    ##                              1                             36 
+    ##  low creaky or glottal-stopped                    low falling 
+    ##                              1                              5 
+    ##                      low level                        low mid 
+    ##                              2                              1 
+    ## low register version of tone B                     low rising 
+    ##                              1                              3 
+    ##                            mid  mid creaky or glottal-stopped 
+    ##                             11                              1 
+    ##                    mid falling                     mid rising 
+    ##                              1                              1 
+    ##        Mid-falling glottalised         Mid-rising glottalised 
+    ##                              1                              1 
+    ##          not clear from source                         rising 
+    ##                              2                             13 
+    ##                 rising-falling                       toneless 
+    ##                              2                              1 
+    ##            unclear from source 
+    ##                              5
+
+``` r
+table(data$Height, exclude = FALSE)
+```
+
+    ## 
+    ##      high  low  mid 
+    ##  121   61   49   19
+
+``` r
+table(data$Contour, exclude = FALSE)
+```
+
+    ## 
+    ##                       falling          level         rising rising-falling 
+    ##            175             37             14             22              2
+
+``` r
+table(data$EffectOnPitch, exclude = FALSE)
+```
+
+    ## 
+    ##                                 elevating              falling 
+    ##                   25                   84                   31 
+    ##                level             lowering  lowering, elevating 
+    ##                    6                   74                    1 
+    ##                  mid            no change no change, elevating 
+    ##                    7                    3                    1 
+    ##               rising       rising-falling 
+    ##                   17                    1
+
+``` r
+table(data$Type, exclude = FALSE)
+```
+
+    ## 
+    ##                                coda       coda, onset    coda, wordtype 
+    ##                 3                59                 1                 4 
+    ##           nucleus    nucleus, onset             onset       onset, coda 
+    ##                18                 1               128                 1 
+    ##      onset, other             other            stress           stress? 
+    ##                 2                 2                 9                 1 
+    ##          wordtype wordtype, nucleus 
+    ##                20                 1
+
+``` r
+table(data$Onset, exclude = FALSE)
+```
+
+    ## 
+    ##                                                                   
+    ##                                                               128 
+    ##                                                         aspirated 
+    ##                                                                 1 
+    ##                                              aspirated, fricative 
+    ##                                                                 1 
+    ##                                                    breathy voiced 
+    ##                                                                 1 
+    ##                                                           cluster 
+    ##                                                                 1 
+    ##                                                     no aspiration 
+    ##                                                                 2 
+    ##                                              not voiced obstruent 
+    ##                                                                 1 
+    ##                                                             other 
+    ##                                                                 4 
+    ##                                                          sonorant 
+    ##                                                                 2 
+    ##                                                            voiced 
+    ##                                                                25 
+    ##                                                  voiced fricative 
+    ##                                                                 1 
+    ##                                           voiced obstruent, other 
+    ##                                                                 1 
+    ##                                                       voiced stop 
+    ##                                                                17 
+    ##                                             voiced stop, sonorant 
+    ##                                                                 1 
+    ##                                     voiced stop, voiced affricate 
+    ##                                                                 3 
+    ##             voiced unaspirated, voiceless aspirated, prenazalised 
+    ##                                                                 1 
+    ##                                                   voiced, cluster 
+    ##                                                                 1 
+    ##                                                 voiced, voiceless 
+    ##                                                                 1 
+    ##                                                         voiceless 
+    ##                                                                17 
+    ##                                               voiceless aspirated 
+    ##                                                                 3 
+    ##                      voiceless aspirated stop, preaspirated nasal 
+    ##                                                                 5 
+    ##        voiceless aspirated, prenasalized aspirated voiceless stop 
+    ##                                                                 3 
+    ##                                    voiceless aspirated, voiceless 
+    ##                                                                 7 
+    ##                                               voiceless fricative 
+    ##                                                                 1 
+    ##                                                    voiceless stop 
+    ##                                                                 4 
+    ##                                voiceless stop, glottalized voiced 
+    ##                                                                 2 
+    ##                                voiceless stop, preaspirated nasal 
+    ##                                                                 3 
+    ## voiceless stop, preglottalized nasal, prenasalised voiceless stop 
+    ##                                                                 4 
+    ##                        voiceless stop, voiced preglottalized stop 
+    ##                                                                 3 
+    ##                                voiceless stop, voiceless sonorant 
+    ##                                                                 1 
+    ##                                     voiceless unaspirated, voiced 
+    ##                                                                 1 
+    ##                                                 voiceless,  other 
+    ##                                                                 1 
+    ##                                                voiceless, cluster 
+    ##                                                                 1 
+    ##                                                 voiceless, voiced 
+    ##                                                                 2
+
+``` r
+table(data$Coda, exclude = FALSE)
+```
+
+    ## 
+    ##                                                                             /h/ 
+    ##                                     188                                       3 
+    ##                       /h/, glottal stop               absence of glottalization 
+    ##                                       2                                       1 
+    ##                          breathy voiced                                  creaky 
+    ##                                       1                                       2 
+    ##                       glottal consonant                    glottal constriction 
+    ##                                       1                                       1 
+    ##                            glottal stop                               glottalic 
+    ##                                      12                                       2 
+    ##                             glottalized                               laryngeal 
+    ##                                       2                                       6 
+    ##                  loss of glottalization                        no glotalic coda 
+    ##                                       1                                       2 
+    ##                         no glottal stop                         not glottalized 
+    ##                                       1                                       1 
+    ##                               obstruent                                    open 
+    ##                                       2                                       1 
+    ##                             open, nasal        open, semivowel, sonorant, other 
+    ##                                       1                                       1 
+    ##                                   other                       preaspirated, /h/ 
+    ##                                       5                                       1 
+    ##                                sonorant                          sonorant, open 
+    ##                                       2                                       1 
+    ##                                    stop                      stop, glottal stop 
+    ##                                       3                                       1 
+    ##                                  voiced                               voiceless 
+    ##                                       2                                       1 
+    ##                     voiceless fricative voiceless fricative, voiceless sonorant 
+    ##                                       1                                       1 
+    ##                          voiceless stop 
+    ##                                       1
+
+``` r
+table(data$Nucleus, exclude = FALSE)
+```
+
+    ## 
+    ##                        -ATR, non-high vowel                  +ATR 
+    ##                   230                     1                     1 
+    ##      +ATR, high vowel                  -ATR                   /a/ 
+    ##                     1                     1                     1 
+    ##            high vowel            long vowel             low vowel 
+    ##                     4                     4                     2 
+    ##                 other           short vowel 
+    ##                     1                     4
 
 # References
 

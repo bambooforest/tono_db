@@ -142,5 +142,35 @@ data <- read.csv('data/Tonogenesis - Database.csv')
 table(data$TriggeringContext)
 ```
 
+Let's check values in columns.
 
+```{r}
+table(data$Tone, exclude = FALSE)
+```
+
+```{r}
+table(data$Height, exclude = FALSE)
+```
+
+```{r}
+table(data$Contour, exclude = FALSE)
+```
+
+```{r}
+table(data$EffectOnPitch, exclude = FALSE)
+```
+```{r}
+table(data$Type, exclude = FALSE)
+```
+```{r}
+table(data$Onset, exclude = FALSE)
+```
+
+```{r}
+table(data$Coda, exclude = FALSE)
+```
+
+```{r}
+table(data$Nucleus, exclude = FALSE)
+```
 # References
