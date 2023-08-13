@@ -1,15 +1,18 @@
 ---
-title: "Tono DB preliminary analyses"
-author: "Steven Moran and Lilja Maria Sæbø"
-date: "2023-06-09"
+title: "TonoDB analyses"
+author: "Steven Moran and Lilja Maria Sæbø\n"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: github_document
 ---
 
 ```{r, message=FALSE}
 library(tidyverse)
 library(knitr)
+library(kableExtra)
+library(xtable)
 ```
 
+# Data
 
 Load the [CLDF data](https://github.com/cldf-datasets/tonodb/).
 
@@ -24,6 +27,9 @@ parameters <-
   read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/parameters.csv'))
 ```
 
+
+# Descriptive stats
+
 We have this many languages in our sample.
 
 ```{r}
@@ -36,7 +42,7 @@ And this many observations.
 nrow(values)
 ```
 
-Let's map our data points.
+Let's map our data points. We note some rows are removed because the lat/long figures are NA due to them being listed as dialects or language families.
 
 ```{r}
 ggplot(data=languages, aes(x=Longitude, y=Latitude)) + 
@@ -45,10 +51,35 @@ ggplot(data=languages, aes(x=Longitude, y=Latitude)) +
   theme_bw()
 ```
 
-Note that 23 data points are removed due to NAs in the data. TODO: fix these by adjusting the Glottocodes in the spreadsheet.
+These are the missing data points for geographic location.
 
 ```{r}
-languages %>% filter(is.na(Latitude)) %>% kable()
+languages %>% filter(is.na(Latitude)) %>% select(ID, Name, Macroarea, Latitude, Longitude) %>% kable()
+```
+
+We've gone through by hand and added approximate geocoordinates for visualization purposes, e.g., using Glottolog's Swedish latitude and longitude for North Germanic.
+
+Merge in the hand attributed geocoordinates.
+
+```{r}
+# There must be a saner way to do this!
+hc <- read_csv('hand_coordinates.csv')
+tmp <- left_join(languages, hc, by=c("ID"="ID", "Name"="Name"))
+tmp <- tmp %>% mutate(Latitude.x = coalesce(Latitude.x, Latitude.y))
+tmp <- tmp %>% mutate(Longitude.x = coalesce(Longitude.x, Longitude.y))
+tmp <- tmp %>% select(-Latitude.y, Longitude.y)
+tmp <- tmp %>% rename(Latitude = Latitude.x)
+tmp <- tmp %>% rename(Longitude = Longitude.x)
+languages <- tmp
+```
+
+Redo the map.
+
+```{r}
+ggplot(data=languages, aes(x=Longitude, y=Latitude)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point() +
+  theme_bw()
 ```
 
 Here we can add some color by language family.
@@ -66,12 +97,35 @@ How many data points per macroarea? (Note again several NAs.)
 table(languages$Macroarea, exclude=FALSE)
 ```
 
+Some macroareas are missing, e.g., languages that don't have Glottocodes or are family level codes.
+
+```{r}
+languages %>% filter(is.na(Macroarea))
+# tmp <- languages %>% filter(is.na(Macroarea)) %>% select(ID, Name, Macroarea)
+# write_csv(tmp, 'get_macroareas.csv')
+
+# There must be a saner way to do this!
+hc <- read_csv('hand_macroareas.csv')
+tmp <- left_join(languages, hc, by=c("ID"="ID", "Name"="Name"))
+tmp <- tmp %>% mutate(Macroarea.x = coalesce(Macroarea.x, Macroarea.y))
+tmp <- tmp %>% select(-Macroarea.y)
+tmp <- tmp %>% rename(Macroarea = Macroarea.x)
+languages <- tmp
+table(languages$Macroarea, exclude = FALSE)
+```
+
+
+
+
+# Analyses
+
 Recreate some of the tables.
 
 First merge the tonodb tables.
 
 ```{r}
 tonodb <- left_join(values, languages, by=c("Language_ID"="ID"))
+tonodb %>% filter(is.na(family_id))
 ```
 
 ```{r}
@@ -81,17 +135,33 @@ z <- tonodb %>% select(Macroarea, TriggeringContext) %>% group_by(Macroarea) %>%
 
 tmp <- left_join(x, y)
 tmp <- left_join(tmp, z)
-
 tmp %>% kable()
+
+# Still getting some NAs, let's drop them
+table(tonodb$family_id, exclude = FALSE)
+tmp <- tmp %>% filter(!is.na(Macroarea))
+tmp %>% kable()
+
+# TODO: comment this out for the SI
+print(xtable(tmp, type = "latex", caption="Distribution of the languages, families and cases of tonogenesis across different areas"), include.rownames=FALSE)
 ```
 
 Number of languages in different families.
 
-```{r}
-tonodb %>% select(family_id, Language_ID) %>% distinct() %>% group_by(family_id) %>% summarize(Languages = n())
+```{r, warning=FALSE, message=FALSE}
+tmp <- tonodb %>% select(family_id, LanguageVariety) %>% distinct() %>% arrange(family_id, LanguageVariety) %>% group_by(family_id) %>% summarize(`Number of varieties` = n(), Languages = str_c(LanguageVariety, collapse=", "))
 
-tonodb %>% select(family_id, Language_ID) %>% distinct() %>% arrange(family_id, Language_ID) %>% group_by(family_id) %>% summarize(Languages = str_c(Language_ID, collapse=", ")) %>% kable()
+# We need the Glottolog family names
+glottolog <- read_csv('data/languoid.csv')
+families <- glottolog %>% filter(id %in% tmp$family_id) %>% select(id, name)
+tmp <- left_join(tmp, families, by=c("family_id"="id"))
+tmp <- tmp %>% select(name, `Number of varieties`, Languages)
+tmp <- tmp %>% rename(Family = name)
 
+tmp %>% kable()
+
+# TODO: comment this out for the SI
+print(xtable(tmp, type = "latex", caption="Number of languages in different language families"), include.rownames=FALSE)
 ```
 
 Cases of tonogenesis sorted by triggering context.
@@ -99,10 +169,34 @@ Cases of tonogenesis sorted by triggering context.
 ```{r}
 x <- tonodb %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
 y <- tonodb %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n()) %>% arrange()
-contexts <- left_join(x, y)
+tmp <- left_join(x, y)
+tmp %>% kable()
 
-contexts %>% kable()
+# Remove NAs
+tmp <- tmp %>% filter(!is.na(Type))
+tmp %>% kable()
+
+# TODO: comment this out for the SI
+print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
+
+Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents.
+
+```{r}
+table(tonodb$EffectOnPitch)
+table(tonodb$Onset)
+tonodb %>% select(EffectOnPitch, Onset) %>% filter(grepl("voiced", Onset))
+```
+
+
+```{r}
+table(tonodb$Type)
+
+```
+
+
+
+<!-- -------------------------------------------------------------------------- -->
 
 Tonogenesis triggered by onsets in the DoTE.
 
@@ -126,7 +220,76 @@ table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
 Tonogenesis triggered by vowel quantity in the DoTE. TODO: these are all zeros.
 
 ```{r}
-table(tonodb$`long vowel`, tonodb$EffectOnPitch) %>% kable()
+table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 ```
+
+Tables to add:
+
+- Distribution of the languages, families and cases of tonogenesis across different areas
+
+Area
+Number of varieties
+Number of families[1]
+Number of instances of tonogenesis
+Asia
+39
+9
+149
+
+
+- Number of languages in different language families
+
+Family
+Number of varieties
+Languages
+Afroasiatic
+2
+Iraqw, Podoko
+
+- Cases of tonogenesis by category
+
+ 
+Number of cases of tonogenesis
+Number of Languages
+Onset
+126
+37
+
+
+- Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents.[2]
+
+ 
+Higher tone
+Lower tone
+Voiced
+5
+21
+
+- The relative height of voiced, voiceless aspirated and voiceless unaspirated onsets
+
+- The relative height of voiceless aspirated and unaspirated onsets (based on table above)
+
+- Tonogenesis triggered by coda consonants
+
+ 
+Level
+Rising
+Falling
+Glottal stop
+1
+3
+5
+Voiceless fricative (especially /h/)
+2
+ 
+5
+
+
+
+
+
+
+
+
 
 
