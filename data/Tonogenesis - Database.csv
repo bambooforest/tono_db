@@ -1,4 +1,4 @@
-"voiceless, cluster",LanguageVariety,TriggeringContext,Tone ,Extra,Height,Contour,Phonation,ToneDescription,ChaoNumerals,Notes,EffectOnPitch,ResultantSystem,Type,Onset,OnsetManner,OnsetVoicing,OnsetAspiration,Coda,CodaPhonation,CodaGlottal,CodaManner,Stress/quantity,Wordtype,NucleusATR,NucleusLength,NucleusHight,Nucleus
+ID,LanguageVariety,TriggeringContext,Tone ,Extra,Height,Contour,Phonation,ToneDescription,ChaoNumerals,Notes,EffectOnPitch,ResultantSystem,Type,Onset,OnsetManner,OnsetVoicing,OnsetAspiration,Coda,CodaPhonation,CodaGlottal,CodaManner,Stress/quantity,Wordtype,NucleusATR,NucleusLength,NucleusHeight,Nucleus
 5,Vietnamese,Final voiceless fricative,falling,,,falling,,,,Step 1,falling,,coda,,,,,voiceless fricative,voiceless,N/A,fricative,,,,,,
 9,Middle Chinese,final /h/,falling,,,falling,,,,qu sheng,falling,lexical tone,coda,,,,,/h/,N/A,N/A,Fricative,,,,,,
 31,White Hmong,final /h/,falling,,,falling,,,,,falling,,coda,,,,,/h/,N/A,/h/,Fricative,,,,,,
