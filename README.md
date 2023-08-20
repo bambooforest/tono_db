@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-13 August, 2023
+20 August, 2023
 
 ``` r
 library(tidyverse)
@@ -895,7 +895,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Sun Aug 13 14:03:01 2023
+    ## % Sun Aug 20 11:58:21 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1259,7 +1259,7 @@ print(xtable(tmp, type = "latex", caption="Number of languages in different lang
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Sun Aug 13 14:03:01 2023
+    ## % Sun Aug 20 11:58:21 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrl}
@@ -1657,7 +1657,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Sun Aug 13 14:03:01 2023
+    ## % Sun Aug 20 11:58:21 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
