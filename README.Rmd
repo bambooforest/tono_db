@@ -225,70 +225,88 @@ table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 
 Tables to add:
 
-- Distribution of the languages, families and cases of tonogenesis across different areas
+OnsetVoicing by EffectOnPitch
 
-Area
-Number of varieties
-Number of families[1]
-Number of instances of tonogenesis
-Asia
-39
-9
-149
+```{r}
+tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
-
-- Number of languages in different language families
-
-Family
-Number of varieties
-Languages
-Afroasiatic
-2
-Iraqw, Podoko
-
-- Cases of tonogenesis by category
-
- 
-Number of cases of tonogenesis
-Number of Languages
-Onset
-126
-37
+```{r}
+tmp <- tonodb %>% select(CodaManner, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
 
-- Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents.[2]
-
- 
-Higher tone
-Lower tone
-Voiced
-5
-21
-
-- The relative height of voiced, voiceless aspirated and voiceless unaspirated onsets
-
-- The relative height of voiceless aspirated and unaspirated onsets (based on table above)
-
-- Tonogenesis triggered by coda consonants
-
- 
-Level
-Rising
-Falling
-Glottal stop
-1
-3
-5
-Voiceless fricative (especially /h/)
-2
- 
-5
+```{r}
+tmp <- tonodb %>% select(CodaPhonation, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
 
+```{r}
+tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
 
+```{r}
+tmp <- tonodb %>% select(Height, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
 
+```{r}
+tmp <- tonodb %>% select(NucleusLength, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+```{r}
+tmp <- tonodb %>% select(NucleusATR, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+For the second case study, the one about area, we will need:
+
+Number of cases/varieties of different types for each region
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "North America") %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "South America") %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(OnsetAspiration, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaManner, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaPhonation, EffectOnPitch)
+table(tmp) %>% kable()
+```
 
 
 
