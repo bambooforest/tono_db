@@ -2,8 +2,14 @@
 title: "TonoDB analyses"
 author: "Steven Moran and Lilja Maria Sæbø\n"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: github_document
+output:
+  github_document:
+    toc: true
 ---
+
+# Setup
+
+Load the libraries.
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -12,13 +18,11 @@ library(kableExtra)
 library(xtable)
 ```
 
-# Data
-
 Load the [CLDF data](https://github.com/cldf-datasets/tonodb/).
 
 ```{r, message=FALSE}
 values <- 
-  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/values.csv'))
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/values.csv'), na = c("N/A"))
 languages <- 
   read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/languages.csv'))
 contributions <- 
@@ -61,7 +65,7 @@ We've gone through by hand and added approximate geocoordinates for visualizatio
 
 Merge in the hand attributed geocoordinates.
 
-```{r}
+```{r, message=FALSE}
 # There must be a saner way to do this!
 hc <- read_csv('hand_coordinates.csv')
 tmp <- left_join(languages, hc, by=c("ID"="ID", "Name"="Name"))
@@ -94,12 +98,12 @@ ggplot(data=languages, aes(x=Longitude, y=Latitude, color=family_id)) +
 How many data points per macroarea? (Note again several NAs.)
 
 ```{r}
-table(languages$Macroarea, exclude=FALSE)
+table(languages$Area, exclude=FALSE)
 ```
 
 Some macroareas are missing, e.g., languages that don't have Glottocodes or are family level codes.
 
-```{r}
+```{r, message=FALSE}
 languages %>% filter(is.na(Macroarea))
 # tmp <- languages %>% filter(is.na(Macroarea)) %>% select(ID, Name, Macroarea)
 # write_csv(tmp, 'get_macroareas.csv')
@@ -125,7 +129,12 @@ First merge the tonodb tables.
 
 ```{r}
 tonodb <- left_join(values, languages, by=c("Language_ID"="ID"))
-tonodb %>% filter(is.na(family_id))
+
+# Reduce the Contributor table and get the TonoDB Area column
+tmp <- contributions %>% select(ID, Family, Area)
+tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
+
+# tonodb %>% filter(is.na(family_id))
 ```
 
 ```{r}
@@ -183,7 +192,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents.
 
 ```{r}
-table(tonodb$EffectOnPitch)
+# table(tonodb$EffectOnPitch)
 table(tonodb$Onset)
 tonodb %>% select(EffectOnPitch, Onset) %>% filter(grepl("voiced", Onset))
 ```
@@ -191,12 +200,7 @@ tonodb %>% select(EffectOnPitch, Onset) %>% filter(grepl("voiced", Onset))
 
 ```{r}
 table(tonodb$Type)
-
 ```
-
-
-
-<!-- -------------------------------------------------------------------------- -->
 
 Tonogenesis triggered by onsets in the DoTE.
 
@@ -215,6 +219,12 @@ Tonogenesis triggered by codas in the DoTE (number of cases of tonogenesis).
 
 ```{r}
 table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+
+tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),any_vars(!is.na(.)))
+table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
+
+tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),all_vars(!is.na(.)))
+table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
 ```
 
 Tonogenesis triggered by vowel quantity in the DoTE. TODO: these are all zeros.
@@ -223,9 +233,7 @@ Tonogenesis triggered by vowel quantity in the DoTE. TODO: these are all zeros.
 table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 ```
 
-Tables to add:
-
-OnsetVoicing by EffectOnPitch
+OnsetVoicing by EffectOnPitch.
 
 ```{r}
 tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch)
@@ -271,46 +279,61 @@ For the second case study, the one about area, we will need:
 Number of cases/varieties of different types for each region
 
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "North America") %>% select(CodaGlottal, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Africa") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "South America") %>% select(CodaGlottal, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaGlottal, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Europe") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(OnsetAspiration, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "North America") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
-
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaGlottal, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Papunesia") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
-
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaManner, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "South America") %>% select(CodaGlottal, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
-
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(CodaPhonation, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(OnsetAspiration, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
 
 ```{r}
-tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(NucleusHeight, EffectOnPitch)
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaGlottal, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaManner, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaPhonation, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+
+```{r}
+tmp <- tonodb %>% filter(Area == "Asia") %>% select(NucleusHeight, EffectOnPitch)
 table(tmp) %>% kable()
 ```
 
