@@ -12,8 +12,6 @@ output:
 
 This is an [R markdown](https://rmarkdown.rstudio.com/) report that does things like check fields in the database, creates tables and graphs of the data, and integrates [Glottolog metadata](https://glottolog.org/meta/downloads).
 
-It's also set up so that we can easily cite references in the [BibTeX biblography](referencs.bib). For example: @kristoffersen2000 will now appear below in the references section.
-
 First, let's load some useful R libraries.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -26,13 +24,13 @@ We've downloaded the data from the private [Google sheets](https://docs.google.c
 Let's load the index.
 
 ```{r}
-index <- read.csv('data/Tonogenesis - Index.csv')
+index <- read_csv('data/Tonogenesis - Index.csv')
 ```
 
 And let's have a look at it.
 
 ```{r}
-kable(index) %>% head()
+index %>% head() %>% kable()
 ```
 
 Currently, we have parentheses in the `Glottocode` column that denote non-leaf nodes. These will be changed in the future, but for now let's strip those out, so that we can merge our index with the Glottolog metadata.
@@ -173,4 +171,67 @@ table(data$Coda, exclude = FALSE)
 ```{r}
 table(data$Nucleus, exclude = FALSE)
 ```
-# References
+
+Check for consistency in columns.
+
+```{r}
+table(data$OnsetAspiration)
+```
+```{r}
+table(data$OnsetManner)
+```
+
+```{r}
+table(data$OnsetVoicing)
+```
+
+
+```{r}
+table(data$CodaPhonation)
+```
+
+```{r}
+table(data$CodaGlottal)
+```
+```{r}
+table(data$CodaManner)
+```
+```{r}
+table(data$OnsetVoicing)
+```
+
+```{r}
+table(data$NucleusATR, exclude=FALSE)
+```
+
+```{r}
+table(data$Nucleus, exclude=FALSE)
+```
+```{r}
+table(data$NucleusHeight, exclude=FALSE)
+```
+
+```{r}
+table(data$NucleusLength, exclude=FALSE)
+```
+
+```{r}
+table(data$Wordtype, exclude=FALSE)
+```
+
+```{r}
+table(data$EffectOnPitch, exclude=FALSE)
+```
+
+```{r}
+table(data$Coda, exclude=FALSE)
+```
+
+```{r}
+table(data$Tone, exclude=FALSE)
+```
+
+```{r}
+table(data$Contour, exclude=FALSE)
+```
+

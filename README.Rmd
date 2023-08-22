@@ -309,5 +309,8 @@ table(tmp) %>% kable()
 ```
 
 
-
+```{r}
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(NucleusHeight, EffectOnPitch)
+table(tmp) %>% kable()
+```
 

@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-21 August, 2023
+22 August, 2023
 
 ``` r
 library(tidyverse)
@@ -895,7 +895,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Mon Aug 21 11:01:50 2023
+    ## % Tue Aug 22 11:44:32 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1259,7 +1259,7 @@ print(xtable(tmp, type = "latex", caption="Number of languages in different lang
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Mon Aug 21 11:01:50 2023
+    ## % Tue Aug 22 11:44:32 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrl}
@@ -1613,7 +1613,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Mon Aug 21 11:01:50 2023
+    ## % Tue Aug 22 11:44:32 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -7519,6 +7519,113 @@ voiceless
 </td>
 <td style="text-align:right;">
 0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+tmp <- tonodb %>% filter(Macroarea == "Eurasia") %>% select(NucleusHeight, EffectOnPitch)
+table(tmp) %>% kable()
+```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+elevating
+</th>
+<th style="text-align:right;">
+falling
+</th>
+<th style="text-align:right;">
+level
+</th>
+<th style="text-align:right;">
+lowering
+</th>
+<th style="text-align:right;">
+mid
+</th>
+<th style="text-align:right;">
+no change
+</th>
+<th style="text-align:right;">
+no change, elevating
+</th>
+<th style="text-align:right;">
+rising
+</th>
+<th style="text-align:right;">
+rising-falling
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+High
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Low
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 0

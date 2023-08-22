@@ -2,7 +2,7 @@ Tonogenesis database checks
 ================
 Steven Moran
 
-20 August, 2023
+22 August, 2023
 
 # Overview
 
@@ -10,10 +10,6 @@ This is an [R markdown](https://rmarkdown.rstudio.com/) report that does
 things like check fields in the database, creates tables and graphs of
 the data, and integrates [Glottolog
 metadata](https://glottolog.org/meta/downloads).
-
-It’s also set up so that we can easily cite references in the [BibTeX
-biblography](referencs.bib). For example: Kristoffersen (2000) will now
-appear below in the references section.
 
 First, let’s load some useful R libraries.
 
@@ -29,21 +25,32 @@ document and placed it in the [data](data) folder.
 Let’s load the index.
 
 ``` r
-index <- read.csv('data/Tonogenesis - Index.csv')
+index <- read_csv('data/Tonogenesis - Index.csv')
 ```
+
+    ## New names:
+    ## Rows: 102 Columns: 8
+    ## ── Column specification
+    ## ──────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (7): LanguageVariety, Glottocode, Family, Area, Notes, BibTex, ...8 dbl (1): ID
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+    ## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    ## • `` -> `...8`
 
 And let’s have a look at it.
 
 ``` r
-kable(index) %>% head()
+index %>% head() %>% kable()
 ```
 
-    ## [1] "|  ID|LanguageVariety                                           |Glottocode |Family                         |Area          |Notes                                                                  |BibTex                    |X                                                                                                                      |"
-    ## [2] "|---:|:---------------------------------------------------------|:----------|:------------------------------|:-------------|:----------------------------------------------------------------------|:-------------------------|:----------------------------------------------------------------------------------------------------------------------|"
-    ## [3] "|   1|Proto-Nordic                                              |nort3160   |Indoeuropean                   |Europe        |Glottocode for North Germanic                                          |kristoffersen2000         |                                                                                                                       |"
-    ## [4] "|   2|Yabem                                                     |yabe1254   |Austronesian                   |Papunesia     |                                                                       |kingston2011              |                                                                                                                       |"
-    ## [5] "|   3|Kammu                                                     |khmu1256   |Austroasiatic                  |Asia          |                                                                       |kingston2011              |                                                                                                                       |"
-    ## [6] "|   4|Phan Rang Cham                                            |east2563   |Austronesian                   |Asia          |                                                                       |kingston2011              |                                                                                                                       |"
+|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | …8  |
+|----:|:----------------|:-----------|:--------------|:----------|:------------------------------|:------------------|:----|
+|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 | NA  |
+|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia | NA                            | kingston2011      | NA  |
+|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      | NA                            | kingston2011      | NA  |
+|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      | NA                            | kingston2011      | NA  |
+|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      | NA                            | kingston2011      | NA  |
+|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           | NA  |
 
 Currently, we have parentheses in the `Glottocode` column that denote
 non-leaf nodes. These will be changed in the future, but for now let’s
@@ -61,8 +68,8 @@ index$Glottocode
     ##  [13] "nort3160" "cemu1238" "utsa1239" "baim1244" "uuuu1243" "lugb1240"
     ##  [19] "khal1275" "kurt1248" "moha1257" "heil1246" "iraq1241" "podo1243"
     ##  [25] "bila1255" "ndak1241" "dzon1239" "kohu1244" "kore1280" "pwon1235"
-    ##  [31] "hmon1333" "hopi1249" ""         "huuu1240" "esto1258" "benc1235"
-    ##  [37] "sout2746" "nort2740" "shan1277" ""         "midd1319" "newc1243"
+    ##  [31] "hmon1333" "hopi1249" NA         "huuu1240" "esto1258" "benc1235"
+    ##  [37] "sout2746" "nort2740" "shan1277" NA         "midd1319" "newc1243"
     ##  [43] "extr1245" "taik1256" "samo1305" "dani1285" "dani1285" "scot1245"
     ##  [49] "limb1263" "tian1238" "tsat1238" "thai1261" "slav1255" "yeni1252"
     ##  [55] "bwek1238" "chey1247" "kick1244" "boro1277" "pwoo1239" "sgaw1245"
@@ -70,7 +77,7 @@ index$Glottocode
     ##  [67] "raja1258" "matb1237" "morm1235" "ires1239" "east2280" "latv1249"
     ##  [73] "lith1251" "auks1239" "metn1237" "cant1236" "nupe1254" "arap1274"
     ##  [79] "moha1258" "cadd1256" "kere1287" "take1257" "quil1240" "geba1237"
-    ##  [85] "coas1300" "tlin1245" ""         "mang1393" "moba1244" "brok1248"
+    ##  [85] "coas1300" "tlin1245" NA         "mang1393" "moba1244" "brok1248"
     ##  [91] "kwam1249" "opuu1239" "uspa1245" "moch1257" "yuca1254" "tzot1259"
     ##  [97] "orej1242" "tere1281" "cube1242" "bara1380" "tatu1247" "hupd1244"
 
@@ -92,8 +99,8 @@ index$Glottocode
     ##  [13] "nort3160" "cemu1238" "utsa1239" "baim1244" "uuuu1243" "lugb1240"
     ##  [19] "khal1275" "kurt1248" "moha1257" "heil1246" "iraq1241" "podo1243"
     ##  [25] "bila1255" "ndak1241" "dzon1239" "kohu1244" "kore1280" "pwon1235"
-    ##  [31] "hmon1333" "hopi1249" ""         "huuu1240" "esto1258" "benc1235"
-    ##  [37] "sout2746" "nort2740" "shan1277" ""         "midd1319" "newc1243"
+    ##  [31] "hmon1333" "hopi1249" NA         "huuu1240" "esto1258" "benc1235"
+    ##  [37] "sout2746" "nort2740" "shan1277" NA         "midd1319" "newc1243"
     ##  [43] "extr1245" "taik1256" "samo1305" "dani1285" "dani1285" "scot1245"
     ##  [49] "limb1263" "tian1238" "tsat1238" "thai1261" "slav1255" "yeni1252"
     ##  [55] "bwek1238" "chey1247" "kick1244" "boro1277" "pwoo1239" "sgaw1245"
@@ -101,7 +108,7 @@ index$Glottocode
     ##  [67] "raja1258" "matb1237" "morm1235" "ires1239" "east2280" "latv1249"
     ##  [73] "lith1251" "auks1239" "metn1237" "cant1236" "nupe1254" "arap1274"
     ##  [79] "moha1258" "cadd1256" "kere1287" "take1257" "quil1240" "geba1237"
-    ##  [85] "coas1300" "tlin1245" ""         "mang1393" "moba1244" "brok1248"
+    ##  [85] "coas1300" "tlin1245" NA         "mang1393" "moba1244" "brok1248"
     ##  [91] "kwam1249" "opuu1239" "uspa1245" "moch1257" "yuca1254" "tzot1259"
     ##  [97] "orej1242" "tere1281" "cube1242" "bara1380" "tatu1247" "hupd1244"
 
@@ -150,14 +157,14 @@ And have a look.
 index_glottolog %>% head() %>% kable()
 ```
 
-|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | X   | name         | isocodes | level    | macroarea | latitude | longitude |
+|  ID | LanguageVariety | Glottocode | Family        | Area      | Notes                         | BibTex            | …8  | name         | isocodes | level    | macroarea | latitude | longitude |
 |----:|:----------------|:-----------|:--------------|:----------|:------------------------------|:------------------|:----|:-------------|:---------|:---------|:----------|---------:|----------:|
-|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 |     | NA           | NA       | NA       | NA        |       NA |        NA |
-|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia |                               | kingston2011      |     | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
-|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      |                               | kingston2011      |     | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
-|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      |                               | kingston2011      |     | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
-|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      |                               | kingston2011      |     | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
-|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           |     | NA           | NA       | NA       | NA        |       NA |        NA |
+|   1 | Proto-Nordic    | nort3160   | Indoeuropean  | Europe    | Glottocode for North Germanic | kristoffersen2000 | NA  | NA           | NA       | NA       | NA        |       NA |        NA |
+|   2 | Yabem           | yabe1254   | Austronesian  | Papunesia | NA                            | kingston2011      | NA  | Yabem        | jae      | language | Papunesia | -6.67052 |  147.8100 |
+|   3 | Kammu           | khmu1256   | Austroasiatic | Asia      | NA                            | kingston2011      | NA  | Khmu         | kjg      | language | Eurasia   | 20.24630 |  101.6710 |
+|   4 | Phan Rang Cham  | east2563   | Austronesian  | Asia      | NA                            | kingston2011      | NA  | Eastern Cham | cjm      | language | Eurasia   | 11.28530 |  108.4900 |
+|   5 | Vietnamese      | viet1252   | Austroasiatic | Asia      | NA                            | kingston2011      | NA  | Vietnamese   | vie      | language | Eurasia   | 20.68119 |  105.7741 |
+|   6 | Punjabi         | sind1278   | Indoeuropean  | Asia      | Glottocode for Sindhi-Lahnda  | yip2002           | NA  | NA           | NA       | NA       | NA        |       NA |        NA |
 
 Glottolog has two different metadata files. This one is for the language
 name, level, macroareas, and geo-corrdinates. It only contains present
@@ -261,7 +268,6 @@ index_glottolog %>% filter(LanguageVariety != name) %>% select(ID, LanguageVarie
 |  95 | Mocho’                            | Mocho              |
 |  96 | Yucatec                           | Yucatec Maya       |
 |  97 | San Bartolo Tzotzil               | Tzotzil            |
-|  99 | Terena                            | Terena             |
 | 100 | Kubeo                             | Cubeo              |
 | 101 | Barasana                          | Barasana-Eduria    |
 | 103 | Eastern Naduhup                   | Hup                |
@@ -349,7 +355,7 @@ glottocode <- "([a-z0-9]{4})([0-9]{4})"
 which(!(str_detect(index$Glottocode, glottocode)))
 ```
 
-    ## [1] 33 40 87
+    ## integer(0)
 
 ``` r
 # When the above codes are fixed, then we can uncomment this test -- otherwise the code fails here.
@@ -808,41 +814,39 @@ table(data$Tone, exclude = FALSE)
     ##                                                    extra high 
     ##                             62                              5 
     ##                      extra low                        falling 
-    ##                              1                             24 
-    ##                        Falling      falling OR rising-falling 
+    ##                              1                             25 
+    ##      falling OR rising-falling                              H 
     ##                              1                              1 
-    ##                              H                           high 
-    ##                              1                             42 
-    ##                  high (rising)                    high creaky 
-    ##                              1                              1 
-    ##                   high falling                     high level 
-    ##                              5                              4 
-    ##                       high mid                    high rising 
-    ##                              1                              4 
-    ##            High/rising-falling                             HL 
-    ##                              1                              1 
-    ##                          level                             LH 
-    ##                              5                              1 
-    ##                      long high                            low 
-    ##                              1                             36 
-    ##  low creaky or glottal-stopped                    low falling 
+    ##                           high                  high (rising) 
+    ##                             42                              1 
+    ##                    high creaky                   high falling 
     ##                              1                              5 
-    ##                      low level                        low mid 
-    ##                              2                              1 
-    ## low register version of tone B                     low rising 
-    ##                              1                              3 
-    ##                            mid  mid creaky or glottal-stopped 
-    ##                             11                              1 
-    ##                    mid falling                     mid rising 
+    ##                     high level                       high mid 
+    ##                              4                              1 
+    ##                    high rising            high/rising-falling 
+    ##                              4                              1 
+    ##                             HL                          level 
+    ##                              1                              5 
+    ##                             LH                      long high 
     ##                              1                              1 
-    ##        Mid-falling glottalised         Mid-rising glottalised 
+    ##                            low  low creaky or glottal-stopped 
+    ##                             36                              1 
+    ##                    low falling                      low level 
+    ##                              5                              2 
+    ##                        low mid low register version of tone B 
     ##                              1                              1 
-    ##          not clear from source                         rising 
-    ##                              2                             13 
-    ##                 rising-falling                       toneless 
-    ##                              2                              1 
-    ##            unclear from source 
-    ##                              5
+    ##                     low rising                            mid 
+    ##                              3                             11 
+    ##  mid creaky or glottal-stopped                    mid falling 
+    ##                              1                              1 
+    ##                     mid rising        mid-falling glottalized 
+    ##                              1                              1 
+    ##         mid-rising glottalized          not clear from source 
+    ##                              1                              2 
+    ##                         rising                 rising-falling 
+    ##                             13                              2 
+    ##                       toneless            unclear from source 
+    ##                              1                              5
 
 ``` r
 table(data$Height, exclude = FALSE)
@@ -1042,15 +1046,264 @@ table(data$Nucleus, exclude = FALSE)
     ##              short vowel              short, long   short, long, glottalic 
     ##                        4                        2                        3
 
-# References
+Check for consistency in columns.
 
-<div id="refs" class="references csl-bib-body hanging-indent">
+``` r
+table(data$OnsetAspiration)
+```
 
-<div id="ref-kristoffersen2000" class="csl-entry">
+    ## 
+    ##                                     Aspirated Aspirated, unaspirated 
+    ##                    128                     14                      8 
+    ##                Breathy            Unaspirated 
+    ##                      1                     13
 
-Kristoffersen, Gjert. 2000. *The Phonology of Norwegian*. Oxford
-University Press.
+``` r
+table(data$OnsetManner)
+```
 
-</div>
+    ## 
+    ##                                 cluster   cluster, sonorant           fricative 
+    ##                 128                   2                   1                   3 
+    ##               glide           obstruent obstruent, sonorant            sonorant 
+    ##                   1                   5                  14                   1 
+    ##                stop 
+    ##                  30
 
-</div>
+``` r
+table(data$OnsetVoicing)
+```
+
+    ## 
+    ##                            sonorant            Voiced Voiced, voiceless 
+    ##               128                 2                50                10 
+    ##         Voiceless 
+    ##                50
+
+``` r
+table(data$CodaPhonation)
+```
+
+    ## 
+    ##                   breathy       creaky preaspirated       voiced    voiceless 
+    ##          189            1            2            1            2            4
+
+``` r
+table(data$CodaGlottal)
+```
+
+    ## 
+    ##                                                       /h/ 
+    ##                          189                            3 
+    ##            /h/, glottal stop                 glottal stop 
+    ##                            3                           13 
+    ##                  glottalized glottalized, non-glottalized 
+    ##                            7                            2 
+    ##                    laryngeal              non-glottalized 
+    ##                            6                            2
+
+``` r
+table(data$CodaManner)
+```
+
+    ## 
+    ##                               fricative           obstruent obstruent, sonorant 
+    ##                 189                   4                   8                   3 
+    ##                open            sonorant      sonorant, open                stop 
+    ##                   1                   2                   3                  17
+
+``` r
+table(data$OnsetVoicing)
+```
+
+    ## 
+    ##                            sonorant            Voiced Voiced, voiceless 
+    ##               128                 2                50                10 
+    ##         Voiceless 
+    ##                50
+
+``` r
+table(data$NucleusATR, exclude=FALSE)
+```
+
+    ## 
+    ##        -ATR  +ATR  -ATR  <NA> 
+    ##   225     1     2     1    21
+
+``` r
+table(data$Nucleus, exclude=FALSE)
+```
+
+    ## 
+    ##                           -ATR and non-high vowel                     +ATR 
+    ##                      225                        1                        1 
+    ##      +ATR and high vowel                     -ATR               high vowel 
+    ##                        1                        1                        4 
+    ##               long vowel                low vowel                    other 
+    ##                        4                        3                        1 
+    ##              short vowel              short, long   short, long, glottalic 
+    ##                        4                        2                        3
+
+``` r
+table(data$NucleusHeight, exclude=FALSE)
+```
+
+    ## 
+    ##              High      Low Non-high     <NA> 
+    ##      225        5        3        1       16
+
+``` r
+table(data$NucleusLength, exclude=FALSE)
+```
+
+    ## 
+    ##        long short  <NA> 
+    ##   225     4     4    17
+
+``` r
+table(data$Wordtype, exclude=FALSE)
+```
+
+    ## 
+    ##                                                    addition of a syllable 
+    ##                                  231                                    3 
+    ## addition of a syllable, monosyllabic                              apocope 
+    ##                                    1                                    1 
+    ##                    bisyllable, other                           disyllabic 
+    ##                                    1                                    1 
+    ##                   loss of a syllable                         monosyllabic 
+    ##                                    6                                    1 
+    ##                            no change                                other 
+    ##                                    1                                    4
+
+``` r
+table(data$EffectOnPitch, exclude=FALSE)
+```
+
+    ## 
+    ##                                 elevating              falling 
+    ##                   23                   85                   31 
+    ##                level             lowering  lowering, elevating 
+    ##                    6                   75                    1 
+    ##                  mid            no change no change, elevating 
+    ##                    7                    3                    1 
+    ##               rising       rising-falling 
+    ##                   17                    1
+
+``` r
+table(data$Coda, exclude=FALSE)
+```
+
+    ## 
+    ##                                          
+    ##                                      189 
+    ##                                      /h/ 
+    ##                                        3 
+    ##                        /h/, glottal stop 
+    ##                                        3 
+    ##                absence of glottalization 
+    ##                                        1 
+    ##                           breathy voiced 
+    ##                                        1 
+    ##                                   creaky 
+    ##                                        2 
+    ##                        glottal consonant 
+    ##                                        1 
+    ##                     glottal constriction 
+    ##                                        1 
+    ##                             glottal stop 
+    ##                                       12 
+    ##                                glottalic 
+    ##                                        2 
+    ##                 glottalic, non-glottalic 
+    ##                                        2 
+    ##                           glottalization 
+    ##                                        1 
+    ##                              glottalized 
+    ##                                        2 
+    ##                                laryngeal 
+    ##                                        6 
+    ##                          no glottal stop 
+    ##                                        1 
+    ##                          not glottalized 
+    ##                                        1 
+    ##                                obstruent 
+    ##                                        2 
+    ##                                     open 
+    ##                                        1 
+    ##                              open, nasal 
+    ##                                        1 
+    ##         open, semivowel, sonorant, other 
+    ##                                        1 
+    ##                                    other 
+    ##                                        3 
+    ##                        preaspirated, /h/ 
+    ##                                        1 
+    ##                                 sonorant 
+    ##                                        2 
+    ##                           sonorant, open 
+    ##                                        1 
+    ##                                     stop 
+    ##                                        3 
+    ##                       stop, glottal stop 
+    ##                                        1 
+    ##                                   voiced 
+    ##                                        2 
+    ##                                voiceless 
+    ##                                        1 
+    ##                      voiceless fricative 
+    ##                                        1 
+    ## voiceless fricative + voiceless sonorant 
+    ##                                        1 
+    ##                           voiceless stop 
+    ##                                        1
+
+``` r
+table(data$Tone, exclude=FALSE)
+```
+
+    ## 
+    ##                                                    extra high 
+    ##                             62                              5 
+    ##                      extra low                        falling 
+    ##                              1                             25 
+    ##      falling OR rising-falling                              H 
+    ##                              1                              1 
+    ##                           high                  high (rising) 
+    ##                             42                              1 
+    ##                    high creaky                   high falling 
+    ##                              1                              5 
+    ##                     high level                       high mid 
+    ##                              4                              1 
+    ##                    high rising            high/rising-falling 
+    ##                              4                              1 
+    ##                             HL                          level 
+    ##                              1                              5 
+    ##                             LH                      long high 
+    ##                              1                              1 
+    ##                            low  low creaky or glottal-stopped 
+    ##                             36                              1 
+    ##                    low falling                      low level 
+    ##                              5                              2 
+    ##                        low mid low register version of tone B 
+    ##                              1                              1 
+    ##                     low rising                            mid 
+    ##                              3                             11 
+    ##  mid creaky or glottal-stopped                    mid falling 
+    ##                              1                              1 
+    ##                     mid rising        mid-falling glottalized 
+    ##                              1                              1 
+    ##         mid-rising glottalized          not clear from source 
+    ##                              1                              2 
+    ##                         rising                 rising-falling 
+    ##                             13                              2 
+    ##                       toneless            unclear from source 
+    ##                              1                              5
+
+``` r
+table(data$Contour, exclude=FALSE)
+```
+
+    ## 
+    ##                       falling          level         rising rising-falling 
+    ##            175             37             14             22              2
