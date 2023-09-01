@@ -22,7 +22,7 @@ Load the [CLDF data](https://github.com/cldf-datasets/tonodb/).
 
 ```{r, message=FALSE}
 values <- 
-  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/values.csv'), na = c("N/A"))
+  read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/values.csv'))
 languages <- 
   read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/languages.csv'))
 contributions <- 
@@ -540,4 +540,90 @@ table(tmp) %>% kable()
 
 print(xtable(table(tmp), type = "latex", caption="Onset voicing in Asia"))
 table(tmp) %>% kable()
+```
+
+Tonogenetic events by macroarea.
+
+Worldwide.
+
+```{r}
+tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in the DTE"))
+t(t) %>% kable()
+```
+
+Africa.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "Africa") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in Africa in the DTE"))
+t(t) %>% kable()
+```
+
+Asia.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in Asia in the DTE"))
+t(t) %>% kable()
+```
+
+Europe.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in Europe in the DTE"))
+t(t) %>% kable()
+```
+
+North America.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "North America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"))
+t(t) %>% kable()
+```
+
+South America.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in South America in the DTE"))
+t(t) %>% kable()
+```
+
+Papunesia.
+
+```{r}
+tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+t <- left_join(cases, varieties)
+
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in the DTE"))
+t(t) %>% kable()
 ```
