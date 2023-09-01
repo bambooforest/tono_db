@@ -5,8 +5,61 @@ Steven Moran and Lilja Maria Sæbø
 01 September, 2023
 
 - [Setup](#setup)
-- [Descriptive stats](#descriptive-stats)
-- [Analyses](#analyses)
+- [Basics of the database contents](#basics-of-the-database-contents)
+- [Tables for the paper](#tables-for-the-paper)
+  - [Merge the tables](#merge-the-tables)
+  - [Distribution of the languages, families and cases of tonogenesis
+    across different
+    areas](#distribution-of-the-languages-families-and-cases-of-tonogenesis-across-different-areas)
+  - [Number of languages in different
+    families](#number-of-languages-in-different-families)
+  - [Cases of tonogenesis sorted by triggering
+    context](#cases-of-tonogenesis-sorted-by-triggering-context)
+  - [Tonogenesis conditioned by voiced and voiceless (unaspirated)
+    obstruents](#tonogenesis-conditioned-by-voiced-and-voiceless-unaspirated-obstruents)
+  - [Tonogenesis triggered by coda
+    consonants](#tonogenesis-triggered-by-coda-consonants)
+  - [Tonogenesis based on vowel
+    length](#tonogenesis-based-on-vowel-length)
+  - [Tonogenesis based on vowel
+    length](#tonogenesis-based-on-vowel-length-1)
+  - [Tonogenesis based on ATR](#tonogenesis-based-on-atr)
+  - [Effect of voicing on tone](#effect-of-voicing-on-tone)
+  - [Tonogenesis triggered by codas](#tonogenesis-triggered-by-codas)
+  - [Onset Voicing by effect on
+    pitch](#onset-voicing-by-effect-on-pitch)
+  - [Effect of voicing on pitch](#effect-of-voicing-on-pitch)
+  - [Effect of voice on pitch](#effect-of-voice-on-pitch)
+  - [Effect of coda glottal on pitch](#effect-of-coda-glottal-on-pitch)
+  - [Effect of vowel height on pitch](#effect-of-vowel-height-on-pitch)
+  - [Effect of nucleus length on
+    pitch](#effect-of-nucleus-length-on-pitch)
+  - [Effect of nuclear +/iATR on
+    pitch](#effect-of-nuclear-iatr-on-pitch)
+  - [Number of cases/varieties of different types for each
+    region](#number-of-casesvarieties-of-different-types-for-each-region)
+    - [Africa](#africa)
+    - [Asia](#asia)
+    - [Europe](#europe)
+    - [North America](#north-america)
+    - [Papunesia](#papunesia)
+    - [South America](#south-america)
+  - [Area and tonogenesis specific
+    tables](#area-and-tonogenesis-specific-tables)
+    - [Onset aspiration in Asia](#onset-aspiration-in-asia)
+    - [Coda glottal in Asia](#coda-glottal-in-asia)
+    - [Coda manner in Asia](#coda-manner-in-asia)
+    - [Coda phonation type in Asia](#coda-phonation-type-in-asia)
+    - [Nucleus height in Asia](#nucleus-height-in-asia)
+    - [Onset voicing in Asia](#onset-voicing-in-asia)
+  - [Tonogenetic events by macroarea](#tonogenetic-events-by-macroarea)
+    - [Worldwide](#worldwide)
+    - [Africa](#africa-1)
+    - [Asia](#asia-1)
+    - [Europe](#europe-1)
+    - [North America](#north-america-1)
+    - [South America](#south-america-1)
+    - [Papunesia](#papunesia-1)
 
 # Setup
 
@@ -19,7 +72,7 @@ library(kableExtra)
 library(xtable)
 ```
 
-Load the [CLDF data](https://github.com/cldf-datasets/tonodb/).
+Load the tonodb [CLDF data](https://github.com/cldf-datasets/tonodb/).
 
 ``` r
 values <- 
@@ -32,7 +85,7 @@ parameters <-
   read_csv(url('https://raw.githubusercontent.com/cldf-datasets/tonodb/main/cldf/parameters.csv'))
 ```
 
-# Descriptive stats
+# Basics of the database contents
 
 We have this many languages in our sample.
 
@@ -614,9 +667,11 @@ table(contributions$Area, exclude=FALSE)
     ## South America 
     ##             6
 
-# Analyses
+# Tables for the paper
 
 Recreate some of the tables.
+
+## Merge the tables
 
 First merge the tonodb tables.
 
@@ -630,8 +685,7 @@ tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 # tonodb %>% filter(is.na(family_id))
 ```
 
-Distribution of the languages, families and cases of tonogenesis across
-different areas.
+## Distribution of the languages, families and cases of tonogenesis across different areas
 
 ``` r
 x <- tonodb %>% select(Area, Language_ID) %>% distinct() %>% group_by(Area) %>% summarise(Languages = n())
@@ -884,12 +938,11 @@ South America
 </table>
 
 ``` r
-# TODO: comment this out for the SI
 print(xtable(tmp, type = "latex", caption="Distribution of the languages, families and cases of tonogenesis across different areas"), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -907,7 +960,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
     ## \caption{Distribution of the languages, families and cases of tonogenesis across different areas} 
     ## \end{table}
 
-Number of languages in different families.
+## Number of languages in different families
 
 ``` r
 tmp <- tonodb %>% select(family_id, LanguageVariety) %>% distinct() %>% arrange(family_id, LanguageVariety) %>% group_by(family_id) %>% summarize(`Number of varieties` = n(), Languages = str_c(LanguageVariety, collapse=", "))
@@ -1249,12 +1302,11 @@ Chai, Takelma
 </table>
 
 ``` r
-# TODO: comment this out for the SI
 print(xtable(tmp, type = "latex", caption="Number of languages in different language families"), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrl}
@@ -1293,7 +1345,7 @@ print(xtable(tmp, type = "latex", caption="Number of languages in different lang
     ## \caption{Number of languages in different language families} 
     ## \end{table}
 
-Cases of tonogenesis sorted by triggering context.
+## Cases of tonogenesis sorted by triggering context
 
 ``` r
 x <- tonodb %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
@@ -1614,12 +1666,11 @@ wordtype, nucleus
 </table>
 
 ``` r
-# TODO: comment this out for the SI
 print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -1643,8 +1694,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
     ## \caption{Cases of tonogenesis by category} 
     ## \end{table}
 
-Tonogenesis conditioned by voiced and voiceless (unaspirated)
-obstruents.
+## Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents
 
 ``` r
 tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch)
@@ -1726,7 +1776,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voi
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -1740,7 +1790,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voi
     ## \caption{Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents} 
     ## \end{table}
 
-Tonogenesis triggered by coda consonants.
+## Tonogenesis triggered by coda consonants
 
 ``` r
 tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch) %>%
@@ -1839,7 +1889,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis triggered by coda 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -1857,7 +1907,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis triggered by coda 
     ## \caption{Tonogenesis triggered by coda consonants} 
     ## \end{table}
 
-Tonogenesis based on vowel length.
+## Tonogenesis based on vowel length
 
 ``` r
 table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
@@ -2335,7 +2385,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel len
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -2349,7 +2399,9 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel len
     ## \caption{Tonogenesis based on vowel length} 
     ## \end{table}
 
-Tonogenesis based on vowel length – high/low is relative.
+## Tonogenesis based on vowel length
+
+high/low is relative.
 
 ``` r
 table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
@@ -2827,7 +2879,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel hei
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -2841,7 +2893,9 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel hei
     ## \caption{Tonogenesis based on vowel height – high/low is relative} 
     ## \end{table}
 
-Tonogenesis based on ATR – high/low is relative.
+## Tonogenesis based on ATR
+
+High/low is relative.
 
 ``` r
 table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
@@ -3319,7 +3373,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on ATR – h
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -3333,7 +3387,9 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on ATR – h
     ## \caption{Tonogenesis based on ATR – high/low is relative} 
     ## \end{table}
 
-The effect of voicing on tone in the DoTE (number of languages).
+## Effect of voicing on tone
+
+In the DoTE (number of languages).
 
 ``` r
 tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
@@ -3350,7 +3406,7 @@ print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The e
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -3364,8 +3420,9 @@ print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The e
     ## \caption{The effect of voicing on tone} 
     ## \end{table}
 
-Tonogenesis triggered by codas in the DoTE (number of cases of
-tonogenesis).
+## Tonogenesis triggered by codas
+
+In the DoTE (number of cases of tonogenesis).
 
 ``` r
 table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
@@ -6498,7 +6555,7 @@ voiceless fricative + voiceless sonorant
 </tbody>
 </table>
 
-Onset Voicing by effect on pitch.
+## Onset Voicing by effect on pitch
 
 ``` r
 tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch) %>%
@@ -6618,7 +6675,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -6634,7 +6691,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
     ## \caption{The effect of voicing on tone} 
     ## \end{table}
 
-The effect of voicing on pitch.
+## Effect of voicing on pitch
 
 ``` r
 tmp <- tonodb %>% select(CodaManner, EffectOnPitch) %>%
@@ -6834,7 +6891,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -6854,7 +6911,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
     ## \caption{The effect of voicing on tone} 
     ## \end{table}
 
-The effect of voice on pitch.
+## Effect of voice on pitch
 
 ``` r
 tmp <- tonodb %>% select(CodaPhonation, EffectOnPitch) %>%
@@ -6958,7 +7015,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -6975,7 +7032,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
     ## \caption{The effect of voice on pitch} 
     ## \end{table}
 
-The effect of coda glottal on pitch.
+## Effect of coda glottal on pitch
 
 ``` r
 tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch) %>%
@@ -7131,7 +7188,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -7296,7 +7353,7 @@ non-glottalized
 </tbody>
 </table>
 
-The effect of vowel height on pitch.
+## Effect of vowel height on pitch
 
 ``` r
 tmp <- tonodb %>% select(Height, EffectOnPitch) %>%
@@ -7456,7 +7513,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of vowel height on 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrrrrrrr}
@@ -7621,7 +7678,7 @@ mid
 </tbody>
 </table>
 
-The effect of nucleus length on pitch.
+## Effect of nucleus length on pitch
 
 ``` r
 tmp <- tonodb %>% select(NucleusLength, EffectOnPitch) %>%
@@ -7674,7 +7731,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of nucleus length o
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -7731,7 +7788,7 @@ short
 </tbody>
 </table>
 
-The effect of nuclear +/iATR on pitch.
+## Effect of nuclear +/iATR on pitch
 
 ``` r
 tmp <- tonodb %>% select(NucleusATR, EffectOnPitch) %>%
@@ -7784,7 +7841,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of nuclear +/iATR o
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:39 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -7841,11 +7898,9 @@ lowering
 </tbody>
 </table>
 
-For the second case study, the one about area, we will need:
+## Number of cases/varieties of different types for each region
 
-Number of cases/varieties of different types for each region.
-
-Africa.
+### Africa
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Africa") %>% select(CodaGlottal, EffectOnPitch)
@@ -7892,7 +7947,7 @@ table(tmp) %>% kable()
 # print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Africa"))
 ```
 
-Asia.
+### Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaGlottal, EffectOnPitch)
@@ -8136,7 +8191,7 @@ glottalized
 # print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Asia"))
 ```
 
-Europe.
+### Europe
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Europe") %>% select(CodaGlottal, EffectOnPitch)
@@ -8279,7 +8334,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -8293,7 +8348,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
     ## \caption{Number of cases/varieties of different tonogenesis types for Europe} 
     ## \end{table}
 
-North America.
+### North America
 
 ``` r
 tmp <- tonodb %>% filter(Area == "North America") %>% select(CodaGlottal, EffectOnPitch)
@@ -8565,7 +8620,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -8582,7 +8637,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
     ## \caption{Number of cases/varieties of different tonogenesis types for North America} 
     ## \end{table}
 
-Papunesia.
+### Papunesia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Papunesia") %>% select(CodaGlottal, EffectOnPitch)
@@ -8628,6 +8683,8 @@ table(tmp) %>% kable()
 # No results
 # print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Papunesia"))
 ```
+
+### South America
 
 ``` r
 tmp <- tonodb %>% filter(Area == "South America") %>% select(CodaGlottal, EffectOnPitch)
@@ -8715,7 +8772,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -8728,7 +8785,9 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
     ## \caption{Number of cases/varieties of different tonogenesis types for South America} 
     ## \end{table}
 
-Onset aspiration in Asia.
+## Area and tonogenesis specific tables
+
+### Onset aspiration in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(OnsetAspiration, EffectOnPitch) %>% 
@@ -8849,7 +8908,7 @@ print(xtable(table(tmp), type = "latex", caption="Onset aspiration in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -8865,7 +8924,7 @@ print(xtable(table(tmp), type = "latex", caption="Onset aspiration in Asia"))
     ## \caption{Onset aspiration in Asia} 
     ## \end{table}
 
-Coda glottal in Asia.
+### Coda glottal in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaGlottal, EffectOnPitch) %>% 
@@ -8954,7 +9013,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda glottal in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -8969,7 +9028,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda glottal in Asia"))
     ## \caption{Coda glottal in Asia} 
     ## \end{table}
 
-Coda manner in Asia.
+### Coda manner in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaManner, EffectOnPitch) %>% 
@@ -9130,7 +9189,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda manner in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -9298,7 +9357,7 @@ stop
 </tbody>
 </table>
 
-Coda phonation type in Asia.
+### Coda phonation type in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaPhonation, EffectOnPitch) %>% 
@@ -9363,7 +9422,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda phonation type in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -9432,7 +9491,7 @@ voiceless
 </tbody>
 </table>
 
-Nucleus height in Asia.
+### Nucleus height in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(NucleusHeight, EffectOnPitch) %>% 
@@ -9486,7 +9545,7 @@ print(xtable(table(tmp), type = "latex", caption="Nucleus height in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -9543,7 +9602,7 @@ Low
 </tbody>
 </table>
 
-Onset voicing in Asia.
+### Onset voicing in Asia
 
 ``` r
 tmp <- tonodb %>% filter(Area == "Asia") %>% select(OnsetVoicing, EffectOnPitch) %>% 
@@ -9679,7 +9738,7 @@ print(xtable(table(tmp), type = "latex", caption="Onset voicing in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrrr}
@@ -9820,9 +9879,9 @@ Voiceless
 </tbody>
 </table>
 
-Tonogenetic events by macroarea.
+## Tonogenetic events by macroarea
 
-Worldwide.
+### Worldwide
 
 ``` r
 tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -9838,7 +9897,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in the DTE"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllllll}
@@ -9931,7 +9990,7 @@ Number of varieties
 </tbody>
 </table>
 
-Africa.
+### Africa
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "Africa") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -9947,7 +10006,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Africa in the 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllll}
@@ -10022,7 +10081,7 @@ Number of varieties
 </tbody>
 </table>
 
-Asia.
+### Asia
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -10038,7 +10097,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Asia in the DT
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:09 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rlll}
@@ -10104,7 +10163,7 @@ Number of varieties
 </tbody>
 </table>
 
-Europe.
+### Europe
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -10120,7 +10179,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Europe in the 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:10 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rlll}
@@ -10186,7 +10245,7 @@ Number of varieties
 </tbody>
 </table>
 
-North America.
+### North America
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "North America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -10202,7 +10261,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:10 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllllll}
@@ -10295,7 +10354,7 @@ Number of varieties
 </tbody>
 </table>
 
-South America.
+### South America
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -10311,7 +10370,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in South America 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:10 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rlll}
@@ -10377,7 +10436,7 @@ Number of varieties
 </tbody>
 </table>
 
-Papunesia.
+### Papunesia
 
 ``` r
 tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
@@ -10393,7 +10452,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in t
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 12:48:10 2023
+    ## % Fri Sep  1 13:00:40 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rlll}
