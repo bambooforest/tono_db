@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-01 September, 2023
+02 September, 2023
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -60,6 +60,8 @@ Steven Moran and Lilja Maria Sæbø
     - [North America](#north-america-1)
     - [South America](#south-america-1)
     - [Papunesia](#papunesia-1)
+  - [Examples from the database for the
+    paper](#examples-from-the-database-for-the-paper)
 
 # Setup
 
@@ -942,7 +944,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1306,7 +1308,7 @@ print(xtable(tmp, type = "latex", caption="Number of languages in different lang
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrl}
@@ -1670,7 +1672,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -1776,7 +1778,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voi
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -1889,7 +1891,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis triggered by coda 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -2385,7 +2387,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel len
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -2879,7 +2881,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel hei
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -3373,7 +3375,7 @@ print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on ATR – h
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -3406,7 +3408,7 @@ print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The e
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -6675,7 +6677,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -6891,7 +6893,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -7015,7 +7017,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -7188,7 +7190,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -7513,7 +7515,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of vowel height on 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrrrrrrr}
@@ -7731,7 +7733,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of nucleus length o
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -7841,7 +7843,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of nuclear +/iATR o
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:39 2023
+    ## % Sat Sep  2 11:04:05 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -8334,7 +8336,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -8620,7 +8622,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -8772,7 +8774,7 @@ print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of d
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -8908,7 +8910,7 @@ print(xtable(table(tmp), type = "latex", caption="Onset aspiration in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -9013,7 +9015,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda glottal in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrr}
@@ -9189,7 +9191,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda manner in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -9422,7 +9424,7 @@ print(xtable(table(tmp), type = "latex", caption="Coda phonation type in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -9545,7 +9547,7 @@ print(xtable(table(tmp), type = "latex", caption="Nucleus height in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrr}
@@ -9738,7 +9740,7 @@ print(xtable(table(tmp), type = "latex", caption="Onset voicing in Asia"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrrr}
@@ -9897,7 +9899,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in the DTE"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllllll}
@@ -10006,7 +10008,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Africa in the 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllll}
@@ -10084,7 +10086,7 @@ Number of varieties
 ### Asia
 
 ``` r
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Asia") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -10097,16 +10099,16 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Asia in the DT
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
-    ## \begin{tabular}{rlll}
+    ## \begin{tabular}{rllllll}
     ##   \hline
-    ##  & 1 & 2 & 3 \\ 
+    ##  & 1 & 2 & 3 & 4 & 5 & 6 \\ 
     ##   \hline
-    ## Type & coda & nucleus & wordtype \\ 
-    ##   Number of cases & 6 & 3 & 1 \\ 
-    ##   Number of varieties & 5 & 1 & 1 \\ 
+    ## Type & coda & nucleus & onset & other & stress & wordtype \\ 
+    ##   Number of cases &  33 &   4 & 116 &   2 &   1 &   3 \\ 
+    ##   Number of varieties & 15 &  2 & 28 &  1 &  1 &  3 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{Tonogenetic events in Asia in the DTE} 
@@ -10129,6 +10131,15 @@ coda
 nucleus
 </td>
 <td style="text-align:left;">
+onset
+</td>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:left;">
 wordtype
 </td>
 </tr>
@@ -10137,13 +10148,22 @@ wordtype
 Number of cases
 </td>
 <td style="text-align:left;">
-6
+33
 </td>
 <td style="text-align:left;">
-3
+4
+</td>
+<td style="text-align:left;">
+116
+</td>
+<td style="text-align:left;">
+2
 </td>
 <td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+3
 </td>
 </tr>
 <tr>
@@ -10151,13 +10171,22 @@ Number of cases
 Number of varieties
 </td>
 <td style="text-align:left;">
-5
+15
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+28
 </td>
 <td style="text-align:left;">
 1
 </td>
 <td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+3
 </td>
 </tr>
 </tbody>
@@ -10166,7 +10195,7 @@ Number of varieties
 ### Europe
 
 ``` r
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Europe") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -10179,16 +10208,16 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Europe in the 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
-    ## \begin{tabular}{rlll}
+    ## \begin{tabular}{rlllll}
     ##   \hline
-    ##  & 1 & 2 & 3 \\ 
+    ##  & 1 & 2 & 3 & 4 & 5 \\ 
     ##   \hline
-    ## Type & coda & nucleus & wordtype \\ 
-    ##   Number of cases & 6 & 3 & 1 \\ 
-    ##   Number of varieties & 5 & 1 & 1 \\ 
+    ## Type & coda & nucleus & other & stress & wordtype \\ 
+    ##   Number of cases & 8 & 1 & 1 & 5 & 8 \\ 
+    ##   Number of varieties & 5 & 1 & 1 & 4 & 6 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{Tonogenetic events in Europe in the DTE} 
@@ -10211,6 +10240,12 @@ coda
 nucleus
 </td>
 <td style="text-align:left;">
+other
+</td>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:left;">
 wordtype
 </td>
 </tr>
@@ -10219,13 +10254,19 @@ wordtype
 Number of cases
 </td>
 <td style="text-align:left;">
-6
-</td>
-<td style="text-align:left;">
-3
+8
 </td>
 <td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+8
 </td>
 </tr>
 <tr>
@@ -10240,6 +10281,12 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+6
 </td>
 </tr>
 </tbody>
@@ -10257,16 +10304,15 @@ t <- left_join(cases, varieties)
     ## Joining with `by = join_by(Type)`
 
 ``` r
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"))
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"), include.colnames=FALSE)
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rllllll}
     ##   \hline
-    ##  & 1 & 2 & 3 & 4 & 5 & 6 \\ 
     ##   \hline
     ## Type & coda & nucleus & onset & other & stress & wordtype \\ 
     ##   Number of cases & 18 &  4 &  1 &  1 &  4 &  3 \\ 
@@ -10370,7 +10416,7 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in South America 
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rlll}
@@ -10439,7 +10485,7 @@ Number of varieties
 ### Papunesia
 
 ``` r
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Papunesia") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -10452,16 +10498,16 @@ print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in t
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Fri Sep  1 13:00:40 2023
+    ## % Sat Sep  2 11:04:06 2023
     ## \begin{table}[ht]
     ## \centering
-    ## \begin{tabular}{rlll}
+    ## \begin{tabular}{rlllll}
     ##   \hline
-    ##  & 1 & 2 & 3 \\ 
+    ##  & 1 & 2 & 3 & 4 & 5 \\ 
     ##   \hline
-    ## Type & coda & nucleus & wordtype \\ 
-    ##   Number of cases & 6 & 3 & 1 \\ 
-    ##   Number of varieties & 5 & 1 & 1 \\ 
+    ## Type & coda & nucleus & onset & stress & wordtype \\ 
+    ##   Number of cases & 1 & 3 & 9 & 1 & 4 \\ 
+    ##   Number of varieties & 1 & 2 & 6 & 1 & 3 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{Tonogenetic events in Papunesia in the DTE} 
@@ -10484,6 +10530,12 @@ coda
 nucleus
 </td>
 <td style="text-align:left;">
+onset
+</td>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:left;">
 wordtype
 </td>
 </tr>
@@ -10492,13 +10544,19 @@ wordtype
 Number of cases
 </td>
 <td style="text-align:left;">
-6
+1
 </td>
 <td style="text-align:left;">
 3
 </td>
 <td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+4
 </td>
 </tr>
 <tr>
@@ -10506,14 +10564,248 @@ Number of cases
 Number of varieties
 </td>
 <td style="text-align:left;">
-5
+1
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+6
 </td>
 <td style="text-align:left;">
 1
 </td>
 <td style="text-align:left;">
-1
+3
 </td>
 </tr>
 </tbody>
 </table>
+
+## Examples from the database for the paper
+
+``` r
+tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type )%>% head(n=10)
+tmp %>% kable()
+```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ID
+</th>
+<th style="text-align:left;">
+LanguageVariety
+</th>
+<th style="text-align:left;">
+TriggeringContext
+</th>
+<th style="text-align:left;">
+EffectOnPitch
+</th>
+<th style="text-align:left;">
+Type
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Proto-Nordic
+</td>
+<td style="text-align:left;">
+addition of a syllable
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+wordtype
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Proto-Nordic
+</td>
+<td style="text-align:left;">
+destressing after loss of syllable
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+wordtype
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Yabem
+</td>
+<td style="text-align:left;">
+Initial voiceless stop
+</td>
+<td style="text-align:left;">
+elevating
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Yabem
+</td>
+<td style="text-align:left;">
+Initial voiced stop
+</td>
+<td style="text-align:left;">
+lowering
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Kammu
+</td>
+<td style="text-align:left;">
+Initial voiced stop or sonorant
+</td>
+<td style="text-align:left;">
+lowering
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Kammu
+</td>
+<td style="text-align:left;">
+Initial voiceless stop or voiceless sonorant
+</td>
+<td style="text-align:left;">
+elevating
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Phan Rang Cham
+</td>
+<td style="text-align:left;">
+initial other than voiced stop or affricate
+</td>
+<td style="text-align:left;">
+elevating
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+Phan Rang Cham
+</td>
+<td style="text-align:left;">
+voiced intial stop or affricate
+</td>
+<td style="text-align:left;">
+lowering
+</td>
+<td style="text-align:left;">
+onset
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+Vietnamese
+</td>
+<td style="text-align:left;">
+open syllable or final nasal
+</td>
+<td style="text-align:left;">
+level
+</td>
+<td style="text-align:left;">
+coda
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+Vietnamese
+</td>
+<td style="text-align:left;">
+Final oral stop, final glottal stop
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:left;">
+coda
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+print(xtable(tmp, type = "latex", caption="Example entries from the DTE"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
+    ## % Sat Sep  2 11:04:06 2023
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{rllll}
+    ##   \hline
+    ## ID & LanguageVariety & TriggeringContext & EffectOnPitch & Type \\ 
+    ##   \hline
+    ## 1.00 & Proto-Nordic & addition of a syllable &  & wordtype \\ 
+    ##   2.00 & Proto-Nordic & destressing after loss of syllable &  & wordtype \\ 
+    ##   3.00 & Yabem & Initial voiceless stop & elevating & onset \\ 
+    ##   4.00 & Yabem & Initial voiced stop & lowering & onset \\ 
+    ##   5.00 & Kammu & Initial voiced stop or sonorant & lowering & onset \\ 
+    ##   6.00 & Kammu & Initial voiceless stop or voiceless sonorant & elevating & onset \\ 
+    ##   7.00 & Phan Rang Cham & initial other than voiced stop or affricate & elevating & onset \\ 
+    ##   8.00 & Phan Rang Cham & voiced intial stop or affricate & lowering & onset \\ 
+    ##   9.00 & Vietnamese & open syllable or final nasal & level & coda \\ 
+    ##   10.00 & Vietnamese & Final oral stop, final glottal stop & rising & coda \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Example entries from the DTE} 
+    ## \end{table}

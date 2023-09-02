@@ -586,7 +586,7 @@ t(t) %>% kable()
 ### Asia
 
 ```{r}
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Asia") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -598,7 +598,7 @@ t(t) %>% kable()
 ### Europe
 
 ```{r}
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Europe") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -615,7 +615,7 @@ cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"))
+print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"), include.colnames=FALSE)
 t(t) %>% kable()
 ```
 
@@ -634,7 +634,7 @@ t(t) %>% kable()
 ### Papunesia
 
 ```{r}
-tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+tmp <- tonodb  %>% filter(Area == "Papunesia") %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
@@ -642,3 +642,12 @@ t <- left_join(cases, varieties)
 print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in the DTE"))
 t(t) %>% kable()
 ```
+## Examples from the database for the paper
+
+```{r}
+tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type )%>% head(n=10)
+tmp %>% kable()
+
+print(xtable(tmp, type = "latex", caption="Example entries from the DTE"), include.rownames=FALSE)
+```
+
