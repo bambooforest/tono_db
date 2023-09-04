@@ -562,12 +562,26 @@ table(tmp) %>% kable()
 ### Worldwide
 
 ```{r}
-tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
-cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
-varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
+tmp <- tonodb %>% select(LanguageVariety, Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n())
 t <- left_join(cases, varieties)
+t <- t %>% arrange(desc(`Cases of tonogenesis`))
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in the DTE"))
+t %>% kable()
+print(xtable(t, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+
+
+tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n())
+varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n())
+t <- left_join(cases, varieties)
+t <- t %>% arrange(desc(`Cases of tonogenesis`))
+
+t %>% kable()
+print(xtable(t, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+
+print(xtable(t(t), type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 t(t) %>% kable()
 ```
 
