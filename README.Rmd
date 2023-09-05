@@ -98,7 +98,7 @@ ggplot(data=languages, aes(x=Longitude, y=Latitude, color=family_id)) +
 How many data points per macroarea? (Note again several NAs.)
 
 ```{r}
-table(languages$Area, exclude=FALSE)
+table(languages$Macroarea, exclude=FALSE)
 ```
 
 Some Glottolog macroareas are missing, e.g., languages that don't have Glottocodes or are family level codes.
@@ -126,11 +126,7 @@ table(contributions$Area, exclude=FALSE)
 
 # Tables for the paper
 
-Recreate some of the tables.
-
-## Merge the tables
-
-First merge the tonodb tables.
+Recreate some of the tables. First merge the tonodb tables.
 
 ```{r}
 tonodb <- left_join(values, languages, by=c("Language_ID"="ID"))
@@ -145,13 +141,14 @@ tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 
 ## Distribution of the languages, families and cases of tonogenesis across different areas
 
-```{r}
+```{r, message=FALSE}
 x <- tonodb %>% select(Area, Language_ID) %>% distinct() %>% group_by(Area) %>% summarise(Languages = n())
 y <- tonodb %>% select(Area, family_id) %>% distinct() %>% group_by(Area) %>% summarize(Families = n())
 z <- tonodb %>% select(Area, TriggeringContext) %>% group_by(Area) %>% summarize(`Cases of tonogenesis` = n())
 
 tmp <- left_join(x, y)
 tmp <- left_join(tmp, z)
+tmp <- tmp %>% arrange(desc(`Cases of tonogenesis`))
 tmp %>% kable()
 
 # Still getting some NAs, let's drop them
@@ -176,22 +173,25 @@ tmp <- tmp %>% rename(Family = name)
 
 tmp %>% kable()
 
-print(xtable(tmp, type = "latex", caption="Number of languages in different language families"), include.rownames=FALSE)
+# print(xtable(tmp, type = "latex", caption="Number of languages in different language families"), include.rownames=FALSE)
 ```
 
 ## Cases of tonogenesis sorted by triggering context
 
 ```{r}
-x <- tonodb %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
-y <- tonodb %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n()) %>% arrange()
+z <- tonodb %>% select(Type, LanguageVariety) %>% separate_rows(Type)
+x <- z %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n()) %>% arrange()
+y <- z %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n()) %>% arrange()
+
 tmp <- left_join(x, y)
+tmp <- tmp %>% arrange(desc(`Cases of tonogenesis`))
 tmp %>% kable()
 
 # Remove NAs
 tmp <- tmp %>% filter(!is.na(Type))
 tmp %>% kable()
 
-print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+# print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
 
 ## Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents
@@ -221,7 +221,7 @@ tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>%
   filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
 table(tmp)
 
-print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
+# print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
 ```
 
 ## Tonogenesis triggered by coda consonants
@@ -234,7 +234,7 @@ tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch) %>%
   filter(EffectOnPitch %in% c("level", "rising", "falling"))
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Tonogenesis triggered by coda consonants"))
+# print(xtable(table(tmp), type = "latex", caption="Tonogenesis triggered by coda consonants"))
 ```
 
 ## Tonogenesis based on vowel length
@@ -247,7 +247,7 @@ tmp <- tonodb %>% select(Nucleus, EffectOnPitch) %>%
   filter(EffectOnPitch != "") %>%
   filter(Nucleus %in% c("long vowel", "short vowel"))
 
-print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel length"))
+# print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel length"))
 ```
 
 ## Tonogenesis based on vowel length
@@ -262,7 +262,7 @@ tmp <- tonodb %>% select(Nucleus, EffectOnPitch) %>%
   filter(EffectOnPitch != "") %>%
   filter(Nucleus %in% c("high vowel", "low vowel"))
 
-print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel height – high/low is relative"))
+# print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on vowel height – high/low is relative"))
 ```
 
 ## Tonogenesis based on ATR
@@ -277,7 +277,7 @@ tmp <- tonodb %>% select(Nucleus, EffectOnPitch) %>%
   filter(EffectOnPitch != "") %>%
   filter(Nucleus %in% c("+ATR", "-ATR"))
 
-print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on ATR – high/low is relative"))
+# print(xtable(table(tmp), type = "latex", caption="Tonogenesis based on ATR – high/low is relative"))
 ```
 
 ## Effect of voicing on tone
@@ -288,7 +288,7 @@ In the DoTE (number of languages).
 tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
 table(tmp$Onset, tmp$EffectOnPitch)
 
-print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The effect of voicing on tone"))
+# print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Tonogenesis triggered by codas
@@ -313,18 +313,18 @@ tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Effect of voicing on pitch
 
 ```{r}
-tmp <- tonodb %>% select(CodaManner, EffectOnPitch) %>%
+tmp <- tonodb %>% select(CodaManner, EffectOnPitch) %>% separate_rows(CodaManner) %>%
   filter(CodaManner != "") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Effect of voice on pitch
@@ -346,7 +346,7 @@ tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on pitch"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on pitch"))
 table(tmp) %>% kable()
 ```
 
@@ -358,7 +358,7 @@ tmp <- tonodb %>% select(Height, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of vowel height on pitch"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of vowel height on pitch"))
 table(tmp) %>% kable()
 ```
 
@@ -370,7 +370,7 @@ tmp <- tonodb %>% select(NucleusLength, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of nucleus length on pitch"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of nucleus length on pitch"))
 table(tmp) %>% kable()
 ```
 
@@ -382,7 +382,7 @@ tmp <- tonodb %>% select(NucleusATR, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="The effect of nuclear +/iATR on pitch"))
+# print(xtable(table(tmp), type = "latex", caption="The effect of nuclear +/- ATR on pitch"))
 table(tmp) %>% kable()
 ```
 
@@ -415,6 +415,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>%
   filter(CodaGlottal != "") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
+
 # print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Asia"))
 ```
 
@@ -430,7 +431,7 @@ tmp <- tonodb %>% filter(Area == "Europe") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Europe"))
+# print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for Europe"))
 ```
 
 ### North America
@@ -445,7 +446,7 @@ tmp <- tonodb %>% filter(Area == "North America") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for North America"))
+# print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for North America"))
 ```
 
 ### Papunesia
@@ -476,7 +477,7 @@ tmp <- tonodb %>% filter(Area == "South America") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for South America"))
+# print(xtable(table(tmp), type = "latex", caption="Number of cases/varieties of different tonogenesis types for South America"))
 ```
 
 ## Area and tonogenesis specific tables
@@ -490,7 +491,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(OnsetAspiration, EffectOnPit
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Onset aspiration in Asia"))
+# print(xtable(table(tmp), type = "latex", caption="Onset aspiration in Asia"))
 ```
 
 ### Coda glottal in Asia
@@ -502,7 +503,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaGlottal, EffectOnPitch) 
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Coda glottal in Asia"))
+# print(xtable(table(tmp), type = "latex", caption="Coda glottal in Asia"))
 ```
 
 ### Coda manner in Asia
@@ -514,8 +515,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaManner, EffectOnPitch) %
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Coda manner in Asia"))
-table(tmp) %>% kable()
+# print(xtable(table(tmp), type = "latex", caption="Coda manner in Asia"))
 ```
 
 ### Coda phonation type in Asia
@@ -527,8 +527,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(CodaPhonation, EffectOnPitch
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Coda phonation type in Asia"))
-table(tmp) %>% kable()
+# print(xtable(table(tmp), type = "latex", caption="Coda phonation type in Asia"))
 ```
 
 ### Nucleus height in Asia
@@ -540,8 +539,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(NucleusHeight, EffectOnPitch
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Nucleus height in Asia"))
-table(tmp) %>% kable()
+# print(xtable(table(tmp), type = "latex", caption="Nucleus height in Asia"))
 ```
 
 ### Onset voicing in Asia
@@ -553,8 +551,7 @@ tmp <- tonodb %>% filter(Area == "Asia") %>% select(OnsetVoicing, EffectOnPitch)
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-print(xtable(table(tmp), type = "latex", caption="Onset voicing in Asia"))
-table(tmp) %>% kable()
+# print(xtable(table(tmp), type = "latex", caption="Onset voicing in Asia"))
 ```
 
 ## Tonogenetic events by macroarea
@@ -562,16 +559,6 @@ table(tmp) %>% kable()
 ### Worldwide
 
 ```{r}
-tmp <- tonodb %>% select(LanguageVariety, Type)
-cases <- tmp %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n())
-varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n())
-t <- left_join(cases, varieties)
-t <- t %>% arrange(desc(`Cases of tonogenesis`))
-
-t %>% kable()
-print(xtable(t, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
-
-
 tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Cases of tonogenesis` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of languages` = n())
@@ -579,10 +566,10 @@ t <- left_join(cases, varieties)
 t <- t %>% arrange(desc(`Cases of tonogenesis`))
 
 t %>% kable()
-print(xtable(t, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+# print(xtable(t, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 
-print(xtable(t(t), type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 t(t) %>% kable()
+# print(xtable(t(t), type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
 
 ### Africa
@@ -592,8 +579,9 @@ tmp <- tonodb  %>% filter(Area == "Africa") %>% select(LanguageVariety, Type) %>
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in Africa in the DTE"))
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in Africa in the DTE"))
 t(t) %>% kable()
 ```
 
@@ -604,8 +592,9 @@ tmp <- tonodb  %>% filter(Area == "Asia") %>% select(LanguageVariety, Type) %>% 
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in Asia in the DTE"))
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in Asia in the DTE"))
 t(t) %>% kable()
 ```
 
@@ -616,8 +605,9 @@ tmp <- tonodb  %>% filter(Area == "Europe") %>% select(LanguageVariety, Type) %>
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in Europe in the DTE"))
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in Europe in the DTE"))
 t(t) %>% kable()
 ```
 
@@ -628,8 +618,9 @@ tmp <- tonodb  %>% filter(Area == "North America") %>% select(LanguageVariety, T
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"), include.colnames=FALSE)
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in North America in the DTE"), include.colnames=FALSE)
 t(t) %>% kable()
 ```
 
@@ -640,8 +631,9 @@ tmp <- tonodb  %>% filter(Area == "South America") %>% select(LanguageVariety, T
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in South America in the DTE"))
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in South America in the DTE"))
 t(t) %>% kable()
 ```
 
@@ -652,16 +644,73 @@ tmp <- tonodb  %>% filter(Area == "Papunesia") %>% select(LanguageVariety, Type)
 cases <- tmp %>% group_by(Type) %>% summarize(`Number of cases` = n())
 varieties <- tmp %>% distinct() %>% group_by(Type) %>% summarize(`Number of varieties` = n())
 t <- left_join(cases, varieties)
+t %>% kable()
 
-print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in the DTE"))
+# print(xtable(t(t), type = "latex", caption="Tonogenetic events in Papunesia in the DTE"))
 t(t) %>% kable()
 ```
+
 ## Examples from the database for the paper
 
 ```{r}
-tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type )%>% head(n=10)
+tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type ) %>% head(n=10)
 tmp %>% kable()
 
-print(xtable(tmp, type = "latex", caption="Example entries from the DTE"), include.rownames=FALSE)
+# print(xtable(tmp, type = "latex", caption="Example entries from the DTE"), include.rownames=FALSE)
+```
+
+# A table showing the number of cases/langauges for each type in each region
+
+```{r}
+tmp <- tonodb %>% select(Area, LanguageVariety, Type) %>% separate_rows(Type)
+# tmp <- tonodb %>% select(LanguageVariety, Type) %>% separate_rows(Type)
+cases <- tmp %>% group_by(Area, Type) %>% summarize(`Cases of tonogenesis` = n())
+varieties <- tmp %>% distinct() %>% group_by(Area, Type) %>% summarize(`Number of languages` = n())
+t <- left_join(cases, varieties)
+t <- t %>% arrange(desc(`Cases of tonogenesis`))
+```
+
+```{r}
+tbl <- t %>% select(-`Number of languages`) %>% pivot_wider(names_from = Type, values_from = `Cases of tonogenesis`)
+tbl
+# print(xtable(tbl, type = "latex", caption="Tonogenesis events by area"), include.rownames=FALSE)
+```
+
+```{r}
+tbl <- t %>% select(-`Cases of tonogenesis`) %>% pivot_wider(names_from = Type, values_from = `Number of languages`)
+tbl
+# print(xtable(tbl, type = "latex", caption="Languages with tonogenesis events by area"), include.rownames=FALSE)
+```
+
+```{r}
+t$both_cases <- paste0(t$`Cases of tonogenesis`, " (", t$`Number of languages`, ")")
+tbl <- t %>% select(-`Cases of tonogenesis`, -`Number of languages`) %>% pivot_wider(names_from = Type, values_from = both_cases)
+tbl
+# print(xtable(tbl, type = "latex", caption="Tonogenesis events (languages) by area"), include.rownames=FALSE)
+```
+
+
+# Multiple paths to the same result
+
+```{r}
+x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+```
+
+```{r}
+ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
+  geom_tile() +
+  theme_bw() +
+  scale_y_discrete(limits = c("other", "wordtype", "stress", "nucleus", "coda", "onset"))
+```
+
+```{r}
+ggplot(x, aes(x=Type, y=Height, fill = Freq)) + 
+  geom_tile() +
+  theme_bw() +
+  scale_x_discrete(limits = c("onset", "coda", "nucleus", "stress", "wordtype", "other")) +
+  scale_y_discrete(limits = c("mid", "low", "high"))
 ```
 
