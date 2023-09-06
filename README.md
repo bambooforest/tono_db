@@ -694,7 +694,7 @@ tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 # tonodb %>% filter(is.na(family_id))
 
 # Rename wordtype to syllable-count -- TODO replace when database is updated
-tonodb <- tonodb %>% mutate(Type = str_replace(Type, "wordtype", "syllable_count"))
+tonodb <- tonodb %>% mutate(Type = str_replace(Type, "wordtype", "syllable"))
 ```
 
 ## Distribution of the languages, families and cases of tonogenesis across different areas
@@ -945,7 +945,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 00:55:34 2023
+    ## % Wed Sep  6 10:58:53 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1364,17 +1364,6 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 syllable
 </td>
 <td style="text-align:right;">
@@ -1465,17 +1454,6 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 syllable
 </td>
 <td style="text-align:right;">
@@ -1522,88 +1500,58 @@ other
 </table>
 
 ``` r
-# print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
+
+    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
+    ## % Wed Sep  6 10:58:53 2023
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrr}
+    ##   \hline
+    ## Type & Cases of tonogenesis & Number of languages \\ 
+    ##   \hline
+    ## onset & 133 &  40 \\ 
+    ##   coda &  66 &  42 \\ 
+    ##   syllable &  25 &  19 \\ 
+    ##   nucleus &  22 &  13 \\ 
+    ##   stress &  11 &   8 \\ 
+    ##   other &   5 &   4 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Cases of tonogenesis by category} 
+    ## \end{table}
 
 ## Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents
 
 ``` r
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch)
-table(tmp)
-```
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch)
+# table(tmp)
 
-    ##                    EffectOnPitch
-    ## OnsetVoicing        elevating falling level lowering lowering, elevating mid
-    ##   sonorant                  1       1     0        0                   0   0
-    ##   Voiced                    9       2     0       35                   0   0
-    ##   Voiced, voiceless         4       0     0        3                   1   2
-    ##   Voiceless                32       1     0        9                   0   7
-    ##                    EffectOnPitch
-    ## OnsetVoicing        no change rising rising-falling rising, elevating
-    ##   sonorant                  0      0              0                 0
-    ##   Voiced                    0      2              0                 0
-    ##   Voiced, voiceless         0      0              0                 0
-    ##   Voiceless                 0      0              0                 0
-    ##                    EffectOnPitch
-    ## OnsetVoicing        rising, lowering
-    ##   sonorant                         0
-    ##   Voiced                           0
-    ##   Voiced, voiceless                0
-    ##   Voiceless                        0
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% filter(OnsetVoicing != "") %>% filter(EffectOnPitch != "")
+# table(tmp)
 
-``` r
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% filter(OnsetVoicing != "") %>% filter(EffectOnPitch != "")
-table(tmp)
-```
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
+#  filter(OnsetVoicing != "") %>% 
+#  filter(EffectOnPitch != "") %>%
+#  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
+# table(tmp)
 
-    ##                    EffectOnPitch
-    ## OnsetVoicing        elevating falling lowering lowering, elevating mid rising
-    ##   sonorant                  1       1        0                   0   0      0
-    ##   Voiced                    9       2       35                   0   0      2
-    ##   Voiced, voiceless         4       0        3                   1   2      0
-    ##   Voiceless                32       1        9                   0   7      0
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
+#  filter(OnsetVoicing != "") %>% 
+#  filter(EffectOnPitch != "") %>%
+#  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
+# table(tmp)
 
-``` r
 tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
   filter(OnsetVoicing != "") %>% 
   filter(EffectOnPitch != "") %>%
   filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
-```
 
-    ##             EffectOnPitch
-    ## OnsetVoicing elevating falling lowering mid rising
-    ##    Voiced            9       2       35   0      2
-    ##    Voiceless        32       1        9   7      0
+t <- data.frame(unclass(table(tmp$OnsetVoicing, tmp$EffectOnPitch)))
+t <- t %>% select(lowering, mid, elevating, rising, falling)
 
-``` r
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
-  filter(OnsetVoicing != "") %>% 
-  filter(EffectOnPitch != "") %>%
-  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
-```
-
-    ##             EffectOnPitch
-    ## OnsetVoicing elevating falling lowering mid rising
-    ##    Voiced            9       2       35   0      2
-    ##    Voiceless        32       1        9   7      0
-
-``` r
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
-  filter(OnsetVoicing != "") %>% 
-  filter(EffectOnPitch != "") %>%
-  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
-```
-
-    ##             EffectOnPitch
-    ## OnsetVoicing elevating falling lowering mid rising
-    ##    Voiced            9       2       35   0      2
-    ##    Voiceless        32       1        9   7      0
-
-``` r
-# print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
+# print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
 ```
 
 ## Tonogenesis triggered by coda consonants
@@ -3154,7 +3102,9 @@ table(tmp$Onset, tmp$EffectOnPitch)
     ##   voiceless        15       0        1      0
 
 ``` r
-# print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The effect of voicing on tone"))
+t <- data.frame(unclass(table(tmp$Onset, tmp$EffectOnPitch)))
+t <- t %>% select(lowering, elevating, rising, falling)
+# print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Tonogenesis triggered by codas
@@ -3162,3135 +3112,14 @@ table(tmp$Onset, tmp$EffectOnPitch)
 In the DoTE (number of cases of tonogenesis).
 
 ``` r
-table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+# table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+
+# tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),any_vars(!is.na(.)))
+# table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
+
+# tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),all_vars(!is.na(.)))
+# table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
 ```
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-elevating
-</th>
-<th style="text-align:right;">
-falling
-</th>
-<th style="text-align:right;">
-level
-</th>
-<th style="text-align:right;">
-lowering
-</th>
-<th style="text-align:right;">
-lowering, elevating
-</th>
-<th style="text-align:right;">
-mid
-</th>
-<th style="text-align:right;">
-no change
-</th>
-<th style="text-align:right;">
-rising
-</th>
-<th style="text-align:right;">
-rising-falling
-</th>
-<th style="text-align:right;">
-rising, elevating
-</th>
-<th style="text-align:right;">
-rising, lowering
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-/h/
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/ + consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/, glottal stop
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-absence of glottalization
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-breathy voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-creaky
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal constriction
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal stop
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic, non-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalization
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalized
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-laryngeal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-no glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-not glottalized
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-obstruent
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open, nasal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open, semivowel, sonorant, other
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-other
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-preaspirated, /h/
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant, open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop, glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative + voiceless sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
-
-``` r
-tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),any_vars(!is.na(.)))
-table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
-```
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-elevating
-</th>
-<th style="text-align:right;">
-falling
-</th>
-<th style="text-align:right;">
-level
-</th>
-<th style="text-align:right;">
-lowering
-</th>
-<th style="text-align:right;">
-lowering, elevating
-</th>
-<th style="text-align:right;">
-mid
-</th>
-<th style="text-align:right;">
-no change
-</th>
-<th style="text-align:right;">
-rising
-</th>
-<th style="text-align:right;">
-rising-falling
-</th>
-<th style="text-align:right;">
-rising, elevating
-</th>
-<th style="text-align:right;">
-rising, lowering
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-/h/
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/ + consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/, glottal stop
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-absence of glottalization
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-breathy voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-creaky
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal constriction
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal stop
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic, non-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalization
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalized
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-laryngeal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-no glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-not glottalized
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-obstruent
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open, nasal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open, semivowel, sonorant, other
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-other
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-preaspirated, /h/
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant, open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop, glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative + voiceless sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
-
-``` r
-tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),all_vars(!is.na(.)))
-table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
-```
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-elevating
-</th>
-<th style="text-align:right;">
-falling
-</th>
-<th style="text-align:right;">
-level
-</th>
-<th style="text-align:right;">
-lowering
-</th>
-<th style="text-align:right;">
-no change
-</th>
-<th style="text-align:right;">
-rising
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-/h/
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/ + consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/, glottal stop
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-absence of glottalization
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-breathy voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-creaky
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal consonant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal constriction
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal stop
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalic, non-glottalic
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalization
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalized
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-laryngeal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-no glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-obstruent
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-open, nasal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-other
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-preaspirated, /h/
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sonorant, open
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stop, glottal stop
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiced
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-voiceless fricative + voiceless sonorant
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
 
 ## Onset Voicing by effect on pitch
 
@@ -6408,7 +3237,10 @@ Unaspirated
 </table>
 
 ``` r
-# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, mid, elevating, falling, rising)
+
+# print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Effect of voicing on pitch
@@ -6567,8 +3399,179 @@ stop
 </table>
 
 ``` r
-# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, level, elevating, rising, falling) %>% arrange(desc(lowering))
+t %>% kable()
 ```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+lowering
+</th>
+<th style="text-align:right;">
+level
+</th>
+<th style="text-align:right;">
+elevating
+</th>
+<th style="text-align:right;">
+rising
+</th>
+<th style="text-align:right;">
+falling
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+stop
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+obstruent
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cluster
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sonorant
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fricative
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+open
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
+```
+
+    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
+    ## % Wed Sep  6 10:58:53 2023
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{rrrrrr}
+    ##   \hline
+    ##  & lowering & level & elevating & rising & falling \\ 
+    ##   \hline
+    ## stop &   5 &   0 &   3 &   3 &   2 \\ 
+    ##   obstruent &   2 &   0 &   3 &   1 &   4 \\ 
+    ##   cluster &   1 &   0 &   0 &   0 &   0 \\ 
+    ##   sonorant &   1 &   3 &   1 &   0 &   2 \\ 
+    ##   fricative &   0 &   0 &   1 &   0 &   3 \\ 
+    ##   open &   0 &   3 &   0 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{The effect of voicing on tone} 
+    ## \end{table}
 
 ## Effect of voice on pitch
 
@@ -6674,7 +3677,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 00:55:34 2023
+    ## % Wed Sep  6 10:58:53 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -6843,151 +3846,11 @@ non-glottalized
 </table>
 
 ``` r
-# print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on pitch"))
-table(tmp) %>% kable()
-```
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, elevating, falling, rising)
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-elevating
-</th>
-<th style="text-align:right;">
-falling
-</th>
-<th style="text-align:right;">
-lowering
-</th>
-<th style="text-align:right;">
-rising
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-/h/
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/h/, glottal stop
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottal stop
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalized
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glottalized, non-glottalized
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-laryngeal
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-non-glottalized
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
+# print(xtable(t, type = "latex", caption="The effect of coda glottal on pitch"))
+```
 
 ## Effect of vowel height on pitch
 
@@ -8999,17 +5862,6 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 syllable
 </td>
 <td style="text-align:right;">
@@ -9074,9 +5926,6 @@ onset
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 syllable
 </td>
 <td style="text-align:left;">
@@ -9103,9 +5952,6 @@ Cases of tonogenesis
 25
 </td>
 <td style="text-align:left;">
-25
-</td>
-<td style="text-align:left;">
 22
 </td>
 <td style="text-align:left;">
@@ -9124,9 +5970,6 @@ Number of languages
 </td>
 <td style="text-align:left;">
 42
-</td>
-<td style="text-align:left;">
-19
 </td>
 <td style="text-align:left;">
 19
@@ -9178,17 +6021,6 @@ Number of varieties
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
 <tr>
 <td style="text-align:left;">
 nucleus
@@ -9248,9 +6080,6 @@ t(t) %>% kable()
 Type
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9268,9 +6097,6 @@ syllable
 Number of cases
 </td>
 <td style="text-align:left;">
-6
-</td>
-<td style="text-align:left;">
 7
 </td>
 <td style="text-align:left;">
@@ -9286,9 +6112,6 @@ Number of cases
 <tr>
 <td style="text-align:left;">
 Number of varieties
-</td>
-<td style="text-align:left;">
-4
 </td>
 <td style="text-align:left;">
 4
@@ -9345,17 +6168,6 @@ coda
 </td>
 <td style="text-align:right;">
 15
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
 </td>
 </tr>
 <tr>
@@ -9431,9 +6243,6 @@ Type
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9457,9 +6266,6 @@ Number of cases
 33
 </td>
 <td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
 4
 </td>
 <td style="text-align:left;">
@@ -9481,9 +6287,6 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 15
-</td>
-<td style="text-align:left;">
-3
 </td>
 <td style="text-align:left;">
 2
@@ -9543,17 +6346,6 @@ coda
 </td>
 <td style="text-align:right;">
 5
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-6
 </td>
 </tr>
 <tr>
@@ -9618,9 +6410,6 @@ Type
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9636,9 +6425,6 @@ syllable
 <tr>
 <td style="text-align:left;">
 Number of cases
-</td>
-<td style="text-align:left;">
-8
 </td>
 <td style="text-align:left;">
 8
@@ -9662,9 +6448,6 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 5
-</td>
-<td style="text-align:left;">
-6
 </td>
 <td style="text-align:left;">
 1
@@ -9721,17 +6504,6 @@ coda
 </td>
 <td style="text-align:right;">
 16
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
 </td>
 </tr>
 <tr>
@@ -9807,9 +6579,6 @@ Type
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9833,9 +6602,6 @@ Number of cases
 18
 </td>
 <td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
 4
 </td>
 <td style="text-align:left;">
@@ -9857,9 +6623,6 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 16
-</td>
-<td style="text-align:left;">
-2
 </td>
 <td style="text-align:left;">
 3
@@ -9923,17 +6686,6 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9972,9 +6724,6 @@ Type
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9989,9 +6738,6 @@ Number of cases
 6
 </td>
 <td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
 3
 </td>
 <td style="text-align:left;">
@@ -10004,9 +6750,6 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 5
-</td>
-<td style="text-align:left;">
-1
 </td>
 <td style="text-align:left;">
 1
@@ -10057,17 +6800,6 @@ coda
 </td>
 <td style="text-align:right;">
 1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
 </td>
 </tr>
 <tr>
@@ -10132,9 +6864,6 @@ Type
 coda
 </td>
 <td style="text-align:left;">
-count
-</td>
-<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -10155,9 +6884,6 @@ Number of cases
 1
 </td>
 <td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
 3
 </td>
 <td style="text-align:left;">
@@ -10176,9 +6902,6 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 1
-</td>
-<td style="text-align:left;">
-3
 </td>
 <td style="text-align:left;">
 2
@@ -10238,7 +6961,7 @@ addition of a syllable
 NA
 </td>
 <td style="text-align:left;">
-syllable_count
+syllable
 </td>
 </tr>
 <tr>
@@ -10255,7 +6978,7 @@ destressing after loss of syllable
 NA
 </td>
 <td style="text-align:left;">
-syllable_count
+syllable
 </td>
 </tr>
 <tr>
@@ -10434,16 +7157,16 @@ tbl <- t %>% select(-`Number of languages`) %>% pivot_wider(names_from = Type, v
 tbl
 ```
 
-    ## # A tibble: 6 × 8
+    ## # A tibble: 6 × 7
     ## # Groups:   Area [6]
-    ##   Area          onset  coda count syllable nucleus stress other
-    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia            116    33     3        3       4      1     2
-    ## 2 North America     1    18     3        3       4      4     1
-    ## 3 Papunesia         9     1     4        4       3      1    NA
-    ## 4 Europe           NA     8     8        8       1      5     1
-    ## 5 Africa            7    NA     6        6       7     NA     1
-    ## 6 South America    NA     6     1        1       3     NA    NA
+    ##   Area          onset  coda syllable nucleus stress other
+    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
+    ## 1 Asia            116    33        3       4      1     2
+    ## 2 North America     1    18        3       4      4     1
+    ## 3 Papunesia         9     1        4       3      1    NA
+    ## 4 Europe           NA     8        8       1      5     1
+    ## 5 Africa            7    NA        6       7     NA     1
+    ## 6 South America    NA     6        1       3     NA    NA
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events by area"), include.rownames=FALSE)
@@ -10454,16 +7177,16 @@ tbl <- t %>% select(-`Cases of tonogenesis`) %>% pivot_wider(names_from = Type, 
 tbl
 ```
 
-    ## # A tibble: 6 × 8
+    ## # A tibble: 6 × 7
     ## # Groups:   Area [6]
-    ##   Area          onset  coda count syllable nucleus stress other
-    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia             28    15     3        3       2      1     1
-    ## 2 North America     1    16     2        2       3      2     1
-    ## 3 Papunesia         6     1     3        3       2      1    NA
-    ## 4 Europe           NA     5     6        6       1      4     1
-    ## 5 Africa            5    NA     4        4       4     NA     1
-    ## 6 South America    NA     5     1        1       1     NA    NA
+    ##   Area          onset  coda syllable nucleus stress other
+    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
+    ## 1 Asia             28    15        3       2      1     1
+    ## 2 North America     1    16        2       3      2     1
+    ## 3 Papunesia         6     1        3       2      1    NA
+    ## 4 Europe           NA     5        6       1      4     1
+    ## 5 Africa            5    NA        4       4     NA     1
+    ## 6 South America    NA     5        1       1     NA    NA
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Languages with tonogenesis events by area"), include.rownames=FALSE)
@@ -10475,16 +7198,16 @@ tbl <- t %>% select(-`Cases of tonogenesis`, -`Number of languages`) %>% pivot_w
 tbl
 ```
 
-    ## # A tibble: 6 × 8
+    ## # A tibble: 6 × 7
     ## # Groups:   Area [6]
-    ##   Area          onset    coda    count syllable nucleus stress other
-    ##   <chr>         <chr>    <chr>   <chr> <chr>    <chr>   <chr>  <chr>
-    ## 1 Asia          116 (28) 33 (15) 3 (3) 3 (3)    4 (2)   1 (1)  2 (1)
-    ## 2 North America 1 (1)    18 (16) 3 (2) 3 (2)    4 (3)   4 (2)  1 (1)
-    ## 3 Papunesia     9 (6)    1 (1)   4 (3) 4 (3)    3 (2)   1 (1)  <NA> 
-    ## 4 Europe        <NA>     8 (5)   8 (6) 8 (6)    1 (1)   5 (4)  1 (1)
-    ## 5 Africa        7 (5)    <NA>    6 (4) 6 (4)    7 (4)   <NA>   1 (1)
-    ## 6 South America <NA>     6 (5)   1 (1) 1 (1)    3 (1)   <NA>   <NA>
+    ##   Area          onset    coda    syllable nucleus stress other
+    ##   <chr>         <chr>    <chr>   <chr>    <chr>   <chr>  <chr>
+    ## 1 Asia          116 (28) 33 (15) 3 (3)    4 (2)   1 (1)  2 (1)
+    ## 2 North America 1 (1)    18 (16) 3 (2)    4 (3)   4 (2)  1 (1)
+    ## 3 Papunesia     9 (6)    1 (1)   4 (3)    3 (2)   1 (1)  <NA> 
+    ## 4 Europe        <NA>     8 (5)   8 (6)    1 (1)   5 (4)  1 (1)
+    ## 5 Africa        7 (5)    <NA>    6 (4)    7 (4)   <NA>   1 (1)
+    ## 6 South America <NA>     6 (5)   1 (1)    3 (1)   <NA>   <NA>
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events (languages) by area"), include.rownames=FALSE)
@@ -10552,7 +7275,7 @@ ggplot(x, aes(x=Height, y=Type, fill = Freq)) +
   scale_y_discrete(limits = c("other", "wordtype", "stress", "nucleus", "coda", "onset"))
 ```
 
-    ## Warning: Removed 4 rows containing missing values (`geom_tile()`).
+    ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
 
@@ -10564,6 +7287,6 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
   scale_y_discrete(limits = c("mid", "low", "high"))
 ```
 
-    ## Warning: Removed 4 rows containing missing values (`geom_tile()`).
+    ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->

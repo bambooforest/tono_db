@@ -205,31 +205,33 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ## Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents
 
 ```{r}
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch)
-table(tmp)
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch)
+# table(tmp)
 
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% filter(OnsetVoicing != "") %>% filter(EffectOnPitch != "")
-table(tmp)
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% filter(OnsetVoicing != "") %>% filter(EffectOnPitch != "")
+# table(tmp)
+
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
+#  filter(OnsetVoicing != "") %>% 
+#  filter(EffectOnPitch != "") %>%
+#  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
+# table(tmp)
+
+# tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
+#  filter(OnsetVoicing != "") %>% 
+#  filter(EffectOnPitch != "") %>%
+#  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
+# table(tmp)
 
 tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
   filter(OnsetVoicing != "") %>% 
   filter(EffectOnPitch != "") %>%
   filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
 
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
-  filter(OnsetVoicing != "") %>% 
-  filter(EffectOnPitch != "") %>%
-  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
+t <- data.frame(unclass(table(tmp$OnsetVoicing, tmp$EffectOnPitch)))
+t <- t %>% select(lowering, mid, elevating, rising, falling)
 
-tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>% 
-  filter(OnsetVoicing != "") %>% 
-  filter(EffectOnPitch != "") %>%
-  filter(OnsetVoicing %in% c("Voiced", "Voiceless"))
-table(tmp)
-
-# print(xtable(table(tmp), type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
+# print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
 ```
 
 ## Tonogenesis triggered by coda consonants
@@ -297,7 +299,7 @@ tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
 table(tmp$Onset, tmp$EffectOnPitch)
 
 t <- data.frame(unclass(table(tmp$Onset, tmp$EffectOnPitch)))
-t <- t %>% select(lowering, elevating, falling, rising)
+t <- t %>% select(lowering, elevating, rising, falling)
 # print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
@@ -306,13 +308,13 @@ t <- t %>% select(lowering, elevating, falling, rising)
 In the DoTE (number of cases of tonogenesis).
 
 ```{r}
-table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
+# table(tonodb$Coda, tonodb$EffectOnPitch) %>% kable()
 
-tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),any_vars(!is.na(.)))
-table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
+# tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),any_vars(!is.na(.)))
+# table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
 
-tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),all_vars(!is.na(.)))
-table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
+# tmp <- tonodb %>% select(Coda, EffectOnPitch) %>% filter_at(vars(Coda, EffectOnPitch),all_vars(!is.na(.)))
+# table(tmp$Coda, tmp$EffectOnPitch) %>% kable()
 ```
 
 ## Onset Voicing by effect on pitch
@@ -324,7 +326,7 @@ tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch) %>%
 table(tmp) %>% kable()
 
 t <- data.frame(unclass(table(tmp)))
-t <- t %>% select(lowering, elevating, mid, falling, rising)
+t <- t %>% select(lowering, mid, elevating, falling, rising)
 
 # print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
@@ -337,7 +339,8 @@ tmp <- tonodb %>% select(CodaManner, EffectOnPitch) %>% separate_rows(CodaManner
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 t <- data.frame(unclass(table(tmp)))
-t <- t %>% select(lowering, elevating, level, falling, rising)
+t <- t %>% select(lowering, level, elevating, rising, falling) %>% arrange(desc(lowering))
+t %>% kable()
 
 print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
@@ -361,8 +364,10 @@ tmp <- tonodb %>% select(CodaGlottal, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-# print(xtable(table(tmp), type = "latex", caption="The effect of coda glottal on pitch"))
-table(tmp) %>% kable()
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, elevating, falling, rising)
+
+# print(xtable(t, type = "latex", caption="The effect of coda glottal on pitch"))
 ```
 
 ## Effect of vowel height on pitch
