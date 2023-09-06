@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-05 September, 2023
+06 September, 2023
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -59,12 +59,17 @@ Steven Moran and Lilja Maria Sæbø
     - [North America](#north-america-1)
     - [South America](#south-america-1)
     - [Papunesia](#papunesia-1)
-  - [Examples from the database for the
-    paper](#examples-from-the-database-for-the-paper)
+- [Examples from the database for the
+  paper](#examples-from-the-database-for-the-paper)
 - [A table showing the number of cases/langauges for each type in each
   region](#a-table-showing-the-number-of-caseslangauges-for-each-type-in-each-region)
 - [Multiple paths to the same
   result](#multiple-paths-to-the-same-result)
+
+Todos:
+
+- syllable-count (instead of wordtype)
+- lowering, elevating, falling, rising
 
 # Setup
 
@@ -75,6 +80,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(xtable)
+library(ggalluvial)
 ```
 
 Load the tonodb [CLDF data](https://github.com/cldf-datasets/tonodb/).
@@ -686,6 +692,9 @@ tmp <- contributions %>% select(ID, Family, Area)
 tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 
 # tonodb %>% filter(is.na(family_id))
+
+# Rename wordtype to syllable-count -- TODO replace when database is updated
+tonodb <- tonodb %>% mutate(Type = str_replace(Type, "wordtype", "syllable_count"))
 ```
 
 ## Distribution of the languages, families and cases of tonogenesis across different areas
@@ -936,7 +945,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Tue Sep  5 11:30:26 2023
+    ## % Wed Sep  6 00:55:34 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1355,7 +1364,18 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+count
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
 </td>
 <td style="text-align:right;">
 25
@@ -1445,7 +1465,18 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+count
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
 </td>
 <td style="text-align:right;">
 25
@@ -6643,7 +6674,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Tue Sep  5 11:30:26 2023
+    ## % Wed Sep  6 00:55:34 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -8968,7 +8999,18 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+count
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
 </td>
 <td style="text-align:right;">
 25
@@ -9032,7 +9074,10 @@ onset
 coda
 </td>
 <td style="text-align:left;">
-wordtype
+count
+</td>
+<td style="text-align:left;">
+syllable
 </td>
 <td style="text-align:left;">
 nucleus
@@ -9058,6 +9103,9 @@ Cases of tonogenesis
 25
 </td>
 <td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
 22
 </td>
 <td style="text-align:left;">
@@ -9076,6 +9124,9 @@ Number of languages
 </td>
 <td style="text-align:left;">
 42
+</td>
+<td style="text-align:left;">
+19
 </td>
 <td style="text-align:left;">
 19
@@ -9129,6 +9180,17 @@ Number of varieties
 <tbody>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9162,7 +9224,7 @@ other
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 6
@@ -9186,6 +9248,9 @@ t(t) %>% kable()
 Type
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9195,12 +9260,15 @@ onset
 other
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Number of cases
+</td>
+<td style="text-align:left;">
+6
 </td>
 <td style="text-align:left;">
 7
@@ -9218,6 +9286,9 @@ Number of cases
 <tr>
 <td style="text-align:left;">
 Number of varieties
+</td>
+<td style="text-align:left;">
+4
 </td>
 <td style="text-align:left;">
 4
@@ -9278,6 +9349,17 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9322,7 +9404,7 @@ stress
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 3
@@ -9349,6 +9431,9 @@ Type
 coda
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9361,7 +9446,7 @@ other
 stress
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
@@ -9370,6 +9455,9 @@ Number of cases
 </td>
 <td style="text-align:left;">
 33
+</td>
+<td style="text-align:left;">
+3
 </td>
 <td style="text-align:left;">
 4
@@ -9393,6 +9481,9 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 15
+</td>
+<td style="text-align:left;">
+3
 </td>
 <td style="text-align:left;">
 2
@@ -9456,6 +9547,17 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9489,7 +9591,7 @@ stress
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 8
@@ -9516,6 +9618,9 @@ Type
 coda
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9525,12 +9630,15 @@ other
 stress
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Number of cases
+</td>
+<td style="text-align:left;">
+8
 </td>
 <td style="text-align:left;">
 8
@@ -9554,6 +9662,9 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 5
+</td>
+<td style="text-align:left;">
+6
 </td>
 <td style="text-align:left;">
 1
@@ -9614,6 +9725,17 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9658,7 +9780,7 @@ stress
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 3
@@ -9685,6 +9807,9 @@ Type
 coda
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9697,7 +9822,7 @@ other
 stress
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
@@ -9706,6 +9831,9 @@ Number of cases
 </td>
 <td style="text-align:left;">
 18
+</td>
+<td style="text-align:left;">
+3
 </td>
 <td style="text-align:left;">
 4
@@ -9729,6 +9857,9 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 16
+</td>
+<td style="text-align:left;">
+2
 </td>
 <td style="text-align:left;">
 3
@@ -9792,6 +9923,17 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9803,7 +9945,7 @@ nucleus
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 1
@@ -9830,10 +9972,13 @@ Type
 coda
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
@@ -9842,6 +9987,9 @@ Number of cases
 </td>
 <td style="text-align:left;">
 6
+</td>
+<td style="text-align:left;">
+1
 </td>
 <td style="text-align:left;">
 3
@@ -9856,6 +10004,9 @@ Number of varieties
 </td>
 <td style="text-align:left;">
 5
+</td>
+<td style="text-align:left;">
+1
 </td>
 <td style="text-align:left;">
 1
@@ -9910,6 +10061,17 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:right;">
@@ -9943,7 +10105,7 @@ stress
 </tr>
 <tr>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 <td style="text-align:right;">
 4
@@ -9970,6 +10132,9 @@ Type
 coda
 </td>
 <td style="text-align:left;">
+count
+</td>
+<td style="text-align:left;">
 nucleus
 </td>
 <td style="text-align:left;">
@@ -9979,7 +10144,7 @@ onset
 stress
 </td>
 <td style="text-align:left;">
-wordtype
+syllable
 </td>
 </tr>
 <tr>
@@ -9988,6 +10153,9 @@ Number of cases
 </td>
 <td style="text-align:left;">
 1
+</td>
+<td style="text-align:left;">
+4
 </td>
 <td style="text-align:left;">
 3
@@ -10010,6 +10178,9 @@ Number of varieties
 1
 </td>
 <td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
 2
 </td>
 <td style="text-align:left;">
@@ -10025,7 +10196,7 @@ Number of varieties
 </tbody>
 </table>
 
-## Examples from the database for the paper
+# Examples from the database for the paper
 
 ``` r
 tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type ) %>% head(n=10)
@@ -10067,7 +10238,7 @@ addition of a syllable
 NA
 </td>
 <td style="text-align:left;">
-wordtype
+syllable_count
 </td>
 </tr>
 <tr>
@@ -10084,7 +10255,7 @@ destressing after loss of syllable
 NA
 </td>
 <td style="text-align:left;">
-wordtype
+syllable_count
 </td>
 </tr>
 <tr>
@@ -10263,16 +10434,16 @@ tbl <- t %>% select(-`Number of languages`) %>% pivot_wider(names_from = Type, v
 tbl
 ```
 
-    ## # A tibble: 6 × 7
+    ## # A tibble: 6 × 8
     ## # Groups:   Area [6]
-    ##   Area          onset  coda wordtype nucleus stress other
-    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia            116    33        3       4      1     2
-    ## 2 North America     1    18        3       4      4     1
-    ## 3 Papunesia         9     1        4       3      1    NA
-    ## 4 Europe           NA     8        8       1      5     1
-    ## 5 Africa            7    NA        6       7     NA     1
-    ## 6 South America    NA     6        1       3     NA    NA
+    ##   Area          onset  coda count syllable nucleus stress other
+    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int>
+    ## 1 Asia            116    33     3        3       4      1     2
+    ## 2 North America     1    18     3        3       4      4     1
+    ## 3 Papunesia         9     1     4        4       3      1    NA
+    ## 4 Europe           NA     8     8        8       1      5     1
+    ## 5 Africa            7    NA     6        6       7     NA     1
+    ## 6 South America    NA     6     1        1       3     NA    NA
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events by area"), include.rownames=FALSE)
@@ -10283,16 +10454,16 @@ tbl <- t %>% select(-`Cases of tonogenesis`) %>% pivot_wider(names_from = Type, 
 tbl
 ```
 
-    ## # A tibble: 6 × 7
+    ## # A tibble: 6 × 8
     ## # Groups:   Area [6]
-    ##   Area          onset  coda wordtype nucleus stress other
-    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia             28    15        3       2      1     1
-    ## 2 North America     1    16        2       3      2     1
-    ## 3 Papunesia         6     1        3       2      1    NA
-    ## 4 Europe           NA     5        6       1      4     1
-    ## 5 Africa            5    NA        4       4     NA     1
-    ## 6 South America    NA     5        1       1     NA    NA
+    ##   Area          onset  coda count syllable nucleus stress other
+    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int>
+    ## 1 Asia             28    15     3        3       2      1     1
+    ## 2 North America     1    16     2        2       3      2     1
+    ## 3 Papunesia         6     1     3        3       2      1    NA
+    ## 4 Europe           NA     5     6        6       1      4     1
+    ## 5 Africa            5    NA     4        4       4     NA     1
+    ## 6 South America    NA     5     1        1       1     NA    NA
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Languages with tonogenesis events by area"), include.rownames=FALSE)
@@ -10304,20 +10475,32 @@ tbl <- t %>% select(-`Cases of tonogenesis`, -`Number of languages`) %>% pivot_w
 tbl
 ```
 
-    ## # A tibble: 6 × 7
+    ## # A tibble: 6 × 8
     ## # Groups:   Area [6]
-    ##   Area          onset    coda    wordtype nucleus stress other
-    ##   <chr>         <chr>    <chr>   <chr>    <chr>   <chr>  <chr>
-    ## 1 Asia          116 (28) 33 (15) 3 (3)    4 (2)   1 (1)  2 (1)
-    ## 2 North America 1 (1)    18 (16) 3 (2)    4 (3)   4 (2)  1 (1)
-    ## 3 Papunesia     9 (6)    1 (1)   4 (3)    3 (2)   1 (1)  <NA> 
-    ## 4 Europe        <NA>     8 (5)   8 (6)    1 (1)   5 (4)  1 (1)
-    ## 5 Africa        7 (5)    <NA>    6 (4)    7 (4)   <NA>   1 (1)
-    ## 6 South America <NA>     6 (5)   1 (1)    3 (1)   <NA>   <NA>
+    ##   Area          onset    coda    count syllable nucleus stress other
+    ##   <chr>         <chr>    <chr>   <chr> <chr>    <chr>   <chr>  <chr>
+    ## 1 Asia          116 (28) 33 (15) 3 (3) 3 (3)    4 (2)   1 (1)  2 (1)
+    ## 2 North America 1 (1)    18 (16) 3 (2) 3 (2)    4 (3)   4 (2)  1 (1)
+    ## 3 Papunesia     9 (6)    1 (1)   4 (3) 4 (3)    3 (2)   1 (1)  <NA> 
+    ## 4 Europe        <NA>     8 (5)   8 (6) 8 (6)    1 (1)   5 (4)  1 (1)
+    ## 5 Africa        7 (5)    <NA>    6 (4) 6 (4)    7 (4)   <NA>   1 (1)
+    ## 6 South America <NA>     6 (5)   1 (1) 1 (1)    3 (1)   <NA>   <NA>
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events (languages) by area"), include.rownames=FALSE)
 ```
+
+``` r
+m <- tonodb %>% select(Latitude, Longitude, LanguageVariety, Type) %>% distinct() %>% separate_rows(Type)
+ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point() +
+  theme_bw()
+```
+
+    ## Warning: Removed 3 rows containing missing values (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
 
 # Multiple paths to the same result
 
@@ -10335,13 +10518,43 @@ x <- x %>% arrange(desc(Count))
 ```
 
 ``` r
+ggplot(data = x,
+       aes(axis1 = Height, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+
+``` r
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = Height, y = Count)) +
+  geom_alluvium(aes(fill = Height)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+
+``` r
 ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
   geom_tile() +
   theme_bw() +
   scale_y_discrete(limits = c("other", "wordtype", "stress", "nucleus", "coda", "onset"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
+    ## Warning: Removed 4 rows containing missing values (`geom_tile()`).
+
+![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
 
 ``` r
 ggplot(x, aes(x=Type, y=Height, fill = Freq)) + 
@@ -10351,4 +10564,6 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
   scale_y_discrete(limits = c("mid", "low", "high"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+    ## Warning: Removed 4 rows containing missing values (`geom_tile()`).
+
+![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->

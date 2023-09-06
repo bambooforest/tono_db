@@ -7,6 +7,11 @@ output:
     toc: true
 ---
 
+Todos:
+
+- syllable-count (instead of wordtype)
+- lowering, elevating, falling, rising
+
 # Setup
 
 Load the libraries.
@@ -16,6 +21,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(xtable)
+library(ggalluvial)
 ```
 
 Load the tonodb [CLDF data](https://github.com/cldf-datasets/tonodb/).
@@ -136,8 +142,10 @@ tmp <- contributions %>% select(ID, Family, Area)
 tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 
 # tonodb %>% filter(is.na(family_id))
-```
 
+# Rename wordtype to syllable-count -- TODO replace when database is updated
+tonodb <- tonodb %>% mutate(Type = str_replace(Type, "wordtype", "syllable"))
+```
 
 ## Distribution of the languages, families and cases of tonogenesis across different areas
 
@@ -191,7 +199,7 @@ tmp %>% kable()
 tmp <- tmp %>% filter(!is.na(Type))
 tmp %>% kable()
 
-# print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
+print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
 
 ## Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents
@@ -288,7 +296,9 @@ In the DoTE (number of languages).
 tmp <- tonodb %>% filter(Onset %in% c('voiceless', 'voiced'))
 table(tmp$Onset, tmp$EffectOnPitch)
 
-# print(xtable(table(tmp$Onset, tmp$EffectOnPitch), type = "latex", caption="The effect of voicing on tone"))
+t <- data.frame(unclass(table(tmp$Onset, tmp$EffectOnPitch)))
+t <- t %>% select(lowering, elevating, falling, rising)
+# print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Tonogenesis triggered by codas
@@ -313,7 +323,10 @@ tmp <- tonodb %>% select(OnsetAspiration, EffectOnPitch) %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
 
-# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, elevating, mid, falling, rising)
+
+# print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Effect of voicing on pitch
@@ -323,8 +336,10 @@ tmp <- tonodb %>% select(CodaManner, EffectOnPitch) %>% separate_rows(CodaManner
   filter(CodaManner != "") %>%
   filter(EffectOnPitch != "")
 table(tmp) %>% kable()
+t <- data.frame(unclass(table(tmp)))
+t <- t %>% select(lowering, elevating, level, falling, rising)
 
-# print(xtable(table(tmp), type = "latex", caption="The effect of voicing on tone"))
+print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
 ## Effect of voice on pitch
@@ -650,7 +665,7 @@ t %>% kable()
 t(t) %>% kable()
 ```
 
-## Examples from the database for the paper
+# Examples from the database for the paper
 
 ```{r}
 tmp <- tonodb %>% select(ID, LanguageVariety, TriggeringContext, EffectOnPitch, Type ) %>% head(n=10)
@@ -689,6 +704,13 @@ tbl
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events (languages) by area"), include.rownames=FALSE)
 ```
 
+```{r}
+m <- tonodb %>% select(Latitude, Longitude, LanguageVariety, Type) %>% distinct() %>% separate_rows(Type)
+ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) + 
+  borders("world", colour="gray50", fill="gray50") + 
+  geom_point() +
+  theme_bw()
+```
 
 # Multiple paths to the same result
 
@@ -698,6 +720,31 @@ x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
 x <- x %>% mutate(Freq = Count / sum(x$Count))
 x <- x %>% arrange(desc(Count))
 ```
+
+```{r}
+ggplot(data = x,
+       aes(axis1 = Height, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+```{r}
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = Height, y = Count)) +
+  geom_alluvium(aes(fill = Height)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
 
 ```{r}
 ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
