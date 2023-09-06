@@ -10,7 +10,6 @@ output:
 Todos:
 
 - syllable-count (instead of wordtype)
-- lowering, elevating, falling, rising
 
 # Setup
 
@@ -98,7 +97,9 @@ Here we can add some color by language family.
 ggplot(data=languages, aes(x=Longitude, y=Latitude, color=family_id)) + 
   borders("world", colour="gray50", fill="gray50") + 
   geom_point() +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position="none")
+  # ggtitle("Language varieties colored for language family")
 ```
 
 How many data points per macroarea? (Note again several NAs.)
@@ -193,10 +194,14 @@ y <- z %>% select(Type, LanguageVariety) %>% distinct() %>% group_by(Type) %>% s
 
 tmp <- left_join(x, y)
 tmp <- tmp %>% arrange(desc(`Cases of tonogenesis`))
-tmp %>% kable()
 
 # Remove NAs
-tmp <- tmp %>% filter(!is.na(Type))
+# tmp <- tmp %>% filter(!is.na(Type))
+# tmp %>% kable()
+
+# rename to syllable-count
+tmp <- tmp %>% mutate(Type = str_replace(Type, "syllable", "syllable-count"))
+
 tmp %>% kable()
 
 print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
@@ -750,8 +755,40 @@ ggplot(data = x,
   theme_void()
 ```
 
+```{r}
+x <- tonodb %>% select(Type, Contour) %>% filter(!is.na(Contour)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Contour) %>% summarize(Count = n())
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+x %>% kable()
+
+ggplot(data = x,
+       aes(axis1 = Contour, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = Contour, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
 
 ```{r}
+x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+
 ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
   geom_tile() +
   theme_bw() +
@@ -765,4 +802,35 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
   scale_x_discrete(limits = c("onset", "coda", "nucleus", "stress", "wordtype", "other")) +
   scale_y_discrete(limits = c("mid", "low", "high"))
 ```
+
+
+# Patterns in level vs contour height
+
+it is more common for onset tonogenesis to have a elevating or lowering effect, and more common for coda tonogenesis to have a rising or falling effect
+
+```{r}
+type_height <- tonodb %>% select(Type, Height) %>% separate_rows(Type)
+type_countour <- tonodb %>% select(Type, Contour) %>% separate_rows(Type)
+table(type_height)
+table(type_countour)
+th <- data.frame(unclass(table(type_height$Type, type_height$Height)))
+tc <- data.frame(unclass(table(type_countour$Type, type_countour$Contour)))
+
+th <- tibble::rownames_to_column(th, "Type")
+tc <- tibble::rownames_to_column(tc, "Type")
+
+tmp <- left_join(th, tc)
+tmp <- tmp %>% arrange(desc(high))
+tmp %>% kable()
+# print(xtable(tmp, type = "latex", caption=""), include.rownames=FALSE)
+
+tmp <- tmp %>% rowwise() %>% mutate(height = sum(c(high, low, mid)))
+tmp <- tmp %>% rowwise() %>% mutate(contour = sum(c(falling, level, rising, rising.falling)))
+tmp
+
+t <- tmp %>% select(Type, height, contour)
+t %>% kable()
+print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
+```
+
 

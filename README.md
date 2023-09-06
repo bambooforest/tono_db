@@ -65,11 +65,12 @@ Steven Moran and Lilja Maria Sæbø
   region](#a-table-showing-the-number-of-caseslangauges-for-each-type-in-each-region)
 - [Multiple paths to the same
   result](#multiple-paths-to-the-same-result)
+- [Patterns in level vs contour
+  height](#patterns-in-level-vs-contour-height)
 
 Todos:
 
 - syllable-count (instead of wordtype)
-- lowering, elevating, falling, rising
 
 # Setup
 
@@ -602,10 +603,15 @@ Here we can add some color by language family.
 ggplot(data=languages, aes(x=Longitude, y=Latitude, color=family_id)) + 
   borders("world", colour="gray50", fill="gray50") + 
   geom_point() +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position="none")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+  # ggtitle("Language varieties colored for language family")
+```
 
 How many data points per macroarea? (Note again several NAs.)
 
@@ -945,7 +951,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 10:58:53 2023
+    ## % Wed Sep  6 13:28:10 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1322,96 +1328,14 @@ tmp <- left_join(x, y)
 
 ``` r
 tmp <- tmp %>% arrange(desc(`Cases of tonogenesis`))
-tmp %>% kable()
-```
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-Type
-</th>
-<th style="text-align:right;">
-Cases of tonogenesis
-</th>
-<th style="text-align:right;">
-Number of languages
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-onset
-</td>
-<td style="text-align:right;">
-133
-</td>
-<td style="text-align:right;">
-40
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-coda
-</td>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:right;">
-42
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-syllable
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nucleus
-</td>
-<td style="text-align:right;">
-22
-</td>
-<td style="text-align:right;">
-13
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-stress
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-other
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-</tbody>
-</table>
-
-``` r
 # Remove NAs
-tmp <- tmp %>% filter(!is.na(Type))
+# tmp <- tmp %>% filter(!is.na(Type))
+# tmp %>% kable()
+
+# rename to syllable-count
+tmp <- tmp %>% mutate(Type = str_replace(Type, "syllable", "syllable-count"))
+
 tmp %>% kable()
 ```
 
@@ -1454,7 +1378,7 @@ coda
 </tr>
 <tr>
 <td style="text-align:left;">
-syllable
+syllable-count
 </td>
 <td style="text-align:right;">
 25
@@ -1504,7 +1428,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 10:58:53 2023
+    ## % Wed Sep  6 13:28:10 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -1513,7 +1437,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
     ##   \hline
     ## onset & 133 &  40 \\ 
     ##   coda &  66 &  42 \\ 
-    ##   syllable &  25 &  19 \\ 
+    ##   syllable-count &  25 &  19 \\ 
     ##   nucleus &  22 &  13 \\ 
     ##   stress &  11 &   8 \\ 
     ##   other &   5 &   4 \\ 
@@ -3555,7 +3479,7 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 10:58:53 2023
+    ## % Wed Sep  6 13:28:10 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -3677,7 +3601,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 10:58:53 2023
+    ## % Wed Sep  6 13:28:10 2023
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -7269,6 +7193,276 @@ ggplot(data = x,
 ![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
 
 ``` r
+x <- tonodb %>% select(Type, Contour) %>% filter(!is.na(Contour)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Contour) %>% summarize(Count = n())
+```
+
+    ## `summarise()` has grouped output by 'Type'. You can override using the
+    ## `.groups` argument.
+
+``` r
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+x %>% kable()
+```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Contour
+</th>
+<th style="text-align:right;">
+Count
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+coda
+</td>
+<td style="text-align:left;">
+falling
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.3170732
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+onset
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.1341463
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+onset
+</td>
+<td style="text-align:left;">
+falling
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.1097561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+onset
+</td>
+<td style="text-align:left;">
+level
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.1097561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+coda
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0.0853659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+coda
+</td>
+<td style="text-align:left;">
+level
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0609756
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
+</td>
+<td style="text-align:left;">
+falling
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0609756
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.0365854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.0243902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleus
+</td>
+<td style="text-align:left;">
+falling
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0121951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleus
+</td>
+<td style="text-align:left;">
+rising
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0121951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleus
+</td>
+<td style="text-align:left;">
+rising-falling
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0121951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:left;">
+falling
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0121951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
+</td>
+<td style="text-align:left;">
+rising-falling
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0121951
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+ggplot(data = x,
+       aes(axis1 = Contour, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+
+``` r
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = Contour, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-59-2.png)<!-- -->
+
+``` r
+x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
+```
+
+    ## `summarise()` has grouped output by 'Type'. You can override using the
+    ## `.groups` argument.
+
+``` r
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+
 ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
   geom_tile() +
   theme_bw() +
@@ -7277,7 +7471,7 @@ ggplot(x, aes(x=Height, y=Type, fill = Freq)) +
 
     ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
 
 ``` r
 ggplot(x, aes(x=Type, y=Height, fill = Freq)) + 
@@ -7289,4 +7483,375 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
 
     ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+
+# Patterns in level vs contour height
+
+it is more common for onset tonogenesis to have a elevating or lowering
+effect, and more common for coda tonogenesis to have a rising or falling
+effect
+
+``` r
+type_height <- tonodb %>% select(Type, Height) %>% separate_rows(Type)
+type_countour <- tonodb %>% select(Type, Contour) %>% separate_rows(Type)
+table(type_height)
+```
+
+    ##           Height
+    ## Type       high low mid
+    ##   coda       14  10   0
+    ##   nucleus    12   5   1
+    ##   onset      26  31  17
+    ##   other       3   1   0
+    ##   stress      3   2   1
+    ##   syllable    5   3   0
+
+``` r
+table(type_countour)
+```
+
+    ##           Contour
+    ## Type       falling level rising rising-falling
+    ##   coda          26     5      7              0
+    ##   nucleus        1     0      1              1
+    ##   onset          9     9     11              0
+    ##   other          1     0      0              0
+    ##   stress         0     0      3              0
+    ##   syllable       5     0      2              1
+
+``` r
+th <- data.frame(unclass(table(type_height$Type, type_height$Height)))
+tc <- data.frame(unclass(table(type_countour$Type, type_countour$Contour)))
+
+th <- tibble::rownames_to_column(th, "Type")
+tc <- tibble::rownames_to_column(tc, "Type")
+
+tmp <- left_join(th, tc)
+```
+
+    ## Joining with `by = join_by(Type)`
+
+``` r
+tmp <- tmp %>% arrange(desc(high))
+tmp %>% kable()
+```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+high
+</th>
+<th style="text-align:right;">
+low
+</th>
+<th style="text-align:right;">
+mid
+</th>
+<th style="text-align:right;">
+falling
+</th>
+<th style="text-align:right;">
+level
+</th>
+<th style="text-align:right;">
+rising
+</th>
+<th style="text-align:right;">
+rising.falling
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+onset
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+coda
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleus
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+# print(xtable(tmp, type = "latex", caption=""), include.rownames=FALSE)
+
+tmp <- tmp %>% rowwise() %>% mutate(height = sum(c(high, low, mid)))
+tmp <- tmp %>% rowwise() %>% mutate(contour = sum(c(falling, level, rising, rising.falling)))
+tmp
+```
+
+    ## # A tibble: 6 × 10
+    ## # Rowwise: 
+    ##   Type      high   low   mid falling level rising rising.falling height contour
+    ##   <chr>    <int> <int> <int>   <int> <int>  <int>          <int>  <int>   <int>
+    ## 1 onset       26    31    17       9     9     11              0     74      29
+    ## 2 coda        14    10     0      26     5      7              0     24      38
+    ## 3 nucleus     12     5     1       1     0      1              1     18       3
+    ## 4 syllable     5     3     0       5     0      2              1      8       8
+    ## 5 other        3     1     0       1     0      0              0      4       1
+    ## 6 stress       3     2     1       0     0      3              0      6       3
+
+``` r
+t <- tmp %>% select(Type, height, contour)
+t %>% kable()
+```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+height
+</th>
+<th style="text-align:right;">
+contour
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+onset
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:right;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+coda
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleus
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+syllable
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stress
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
+    ## % Wed Sep  6 13:28:14 2023
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrr}
+    ##   \hline
+    ## Type & height & contour \\ 
+    ##   \hline
+    ## onset &  74 &  29 \\ 
+    ##   coda &  24 &  38 \\ 
+    ##   nucleus &  18 &   3 \\ 
+    ##   syllable &   8 &   8 \\ 
+    ##   other &   4 &   1 \\ 
+    ##   stress &   6 &   3 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{} 
+    ## \end{table}
