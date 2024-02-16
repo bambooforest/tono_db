@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-06 September, 2023
+13 February, 2024
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -950,8 +950,8 @@ South America
 print(xtable(tmp, type = "latex", caption="Distribution of the languages, families and cases of tonogenesis across different areas"), include.rownames=FALSE)
 ```
 
-    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 13:28:10 2023
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Tue Feb 13 22:51:46 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -1427,8 +1427,8 @@ other
 print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), include.rownames=FALSE)
 ```
 
-    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 13:28:10 2023
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Tue Feb 13 22:51:46 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -3478,8 +3478,8 @@ open
 print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
-    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 13:28:10 2023
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Tue Feb 13 22:51:46 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -3600,8 +3600,8 @@ voiceless
 print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch"))
 ```
 
-    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 13:28:10 2023
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Tue Feb 13 22:51:46 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -7837,8 +7837,8 @@ stress
 print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
-    ## % latex table generated in R 4.0.5 by xtable 1.8-4 package
-    ## % Wed Sep  6 13:28:14 2023
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Tue Feb 13 22:51:49 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
