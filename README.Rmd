@@ -724,6 +724,8 @@ ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) +
 
 # Multiple paths to the same result
 
+
+
 ```{r}
 x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
 x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
@@ -774,6 +776,35 @@ ggplot(data = x,
 
 ggplot(data = x,
        aes(axis1 = Type, axis2 = Contour, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+```{r}
+x <- tonodb %>% select(Type, EffectOnPitch) %>% filter(!is.na(EffectOnPitch)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, EffectOnPitch) %>% summarize(Count = n())
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+x <- x %>% filter(Count > 1) %>% filter(Type != "other")
+x %>% kable()
+
+ggplot(data = x,
+       aes(axis1 = EffectOnPitch, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
   geom_alluvium(aes(fill = Type)) +
   geom_stratum() +
   geom_text(stat = "stratum",

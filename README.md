@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-13 February, 2024
+16 September, 2024
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -126,7 +126,8 @@ ggplot(data=languages, aes(x=Longitude, y=Latitude)) +
   theme_bw()
 ```
 
-    ## Warning: Removed 24 rows containing missing values (`geom_point()`).
+    ## Warning: Removed 24 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
@@ -137,435 +138,740 @@ languages %>% filter(is.na(Latitude)) %>% select(ID, Name, Macroarea, Latitude, 
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 ID
 </th>
+
 <th style="text-align:left;">
+
 Name
 </th>
+
 <th style="text-align:left;">
+
 Macroarea
 </th>
+
 <th style="text-align:right;">
+
 Latitude
 </th>
+
 <th style="text-align:right;">
+
 Longitude
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 atha1247
 </td>
+
 <td style="text-align:left;">
+
 Athabaskan
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 auks1239
 </td>
+
 <td style="text-align:left;">
+
 Aukshtaitish
 </td>
+
 <td style="text-align:left;">
+
 Eurasia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 cant1236
 </td>
+
 <td style="text-align:left;">
+
 Cantonese
 </td>
+
 <td style="text-align:left;">
+
 Eurasia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 cent2346
 </td>
+
 <td style="text-align:left;">
+
 Central Tibetan
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coas1300
 </td>
+
 <td style="text-align:left;">
+
 Coast Tsimshian
 </td>
+
 <td style="text-align:left;">
+
 North America
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 east2280
 </td>
+
 <td style="text-align:left;">
+
 Eastern Baltic
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 extr1245
 </td>
+
 <td style="text-align:left;">
+
 Extreme Southern New Caledonian
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 kere1287
 </td>
+
 <td style="text-align:left;">
+
 Keresan
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 mang1393
 </td>
+
 <td style="text-align:left;">
+
 Mangbetu-Asua
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 metn1237
 </td>
+
 <td style="text-align:left;">
+
 Metnyo
 </td>
+
 <td style="text-align:left;">
+
 Papunesia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 midd1319
 </td>
+
 <td style="text-align:left;">
+
 Middle Franconian
 </td>
+
 <td style="text-align:left;">
+
 Eurasia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 moha1257
 </td>
+
 <td style="text-align:left;">
+
 Mohawk-Oneida
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 newc1243
 </td>
+
 <td style="text-align:left;">
+
 New Caledonian
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nort3160
 </td>
+
 <td style="text-align:left;">
+
 North Germanic
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 podo1243
 </td>
+
 <td style="text-align:left;">
+
 Podoko
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 pwoo1239
 </td>
+
 <td style="text-align:left;">
+
 Pwo
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 raja1258
 </td>
+
 <td style="text-align:left;">
+
 Raja Ampat Maya
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 sind1278
 </td>
+
 <td style="text-align:left;">
+
 Sindhi-Lahnda
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 slav1255
 </td>
+
 <td style="text-align:left;">
+
 Slavic
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 taik1256
 </td>
+
 <td style="text-align:left;">
+
 Tai-Kadai
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 tere1281
 </td>
+
 <td style="text-align:left;">
+
 Terena
 </td>
+
 <td style="text-align:left;">
+
 South America
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 utsa1239
 </td>
+
 <td style="text-align:left;">
+
 Lhasa Tibetan
 </td>
+
 <td style="text-align:left;">
+
 Eurasia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 yeni1252
 </td>
+
 <td style="text-align:left;">
+
 Yeniseian
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 zhuo1234
 </td>
+
 <td style="text-align:left;">
+
 Zhuoni
 </td>
+
 <td style="text-align:left;">
+
 Eurasia
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 NA
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 We’ve gone through by hand and added approximate geocoordinates for
@@ -717,108 +1023,183 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Area
 </th>
+
 <th style="text-align:right;">
+
 Languages
 </th>
+
 <th style="text-align:right;">
+
 Families
 </th>
+
 <th style="text-align:right;">
+
 Cases of tonogenesis
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Asia
 </td>
+
 <td style="text-align:right;">
+
 37
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 154
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 North America
 </td>
+
 <td style="text-align:right;">
+
 19
 </td>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:right;">
+
 29
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Europe
 </td>
+
 <td style="text-align:right;">
+
 12
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 22
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Africa
 </td>
+
 <td style="text-align:right;">
+
 13
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 21
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Papunesia
 </td>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 16
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 South America
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -842,108 +1223,183 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Area
 </th>
+
 <th style="text-align:right;">
+
 Languages
 </th>
+
 <th style="text-align:right;">
+
 Families
 </th>
+
 <th style="text-align:right;">
+
 Cases of tonogenesis
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Asia
 </td>
+
 <td style="text-align:right;">
+
 37
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 154
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 North America
 </td>
+
 <td style="text-align:right;">
+
 19
 </td>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:right;">
+
 29
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Europe
 </td>
+
 <td style="text-align:right;">
+
 12
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 22
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Africa
 </td>
+
 <td style="text-align:right;">
+
 13
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 21
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Papunesia
 </td>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 16
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 South America
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -951,7 +1407,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Tue Feb 13 22:51:46 2024
+    ## % Mon Sep 16 10:04:12 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -985,329 +1441,558 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Family
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 <th style="text-align:left;">
+
 Languages
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Afro-Asiatic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 Iraqw, Podoko
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Algic
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 Arapaho, Cheyenne, Kickapoo
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Arawakan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Terena
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Athabaskan-Eyak-Tlingit
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 Proto-Athabaskan (tonal dialects) group one, Proto-Athabaskan (tonal
 dialects) group two, Sanya-Henya Tlingit
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Atlantic-Congo
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 Bantu D30, Bila, Kohumono, Moba, Nupe
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Austroasiatic
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 Hu, Kammu, U, Vietnamese
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Austronesian
 </td>
+
 <td style="text-align:right;">
+
 12
 </td>
+
 <td style="text-align:left;">
+
 Cem, Central North New Caledonian languages, Far South New Caledonian
 langauges, Magey Matbat, Metnyo Ambel, Moor, Phan Rang Cham,
 Proto-Maˈya, Samoan, Utsat, Yabem, Yerisiam
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Caddoan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Caddo
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Central Sudanic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 Languages of the Mangbetu-Asua subgroup with three tones, Western
 Lugbara
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Chimakuan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Quileute
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Ta-Ne-Omotic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 Gimira, Shinasha
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Hmong-Mien
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 White Hmong
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Indo-European
 </td>
+
 <td style="text-align:right;">
+
 14
 </td>
+
 <td style="text-align:left;">
+
 Auktaitian dialects of Lithuanian, Central Franconian, Central
 Scandinavian, East Baltic (Latvian and Lithuanian), East Slesvig, Late
 Proto-Slavic, Latvian, Limburgish, Lithuanian, Proto-Nordic, Punjabi,
 Scottish gaelic (Bernera), West Baltic (Prussian, Zealand Danish
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Iroquoian
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 Cherokee, Mohawk, Proto-Mohawk-Oneida
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Koman
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 Proto-Gwama, Proto-Opo
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Koreanic
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Korean
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Mayan
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 Mocho’, San Bartolo Tzotzil, Uspanteko, Yucatec
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Mongolic-Khitan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Mongour
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Naduhup
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Eastern Naduhup
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Sino-Tibetan
 </td>
+
 <td style="text-align:right;">
+
 20
 </td>
+
 <td style="text-align:left;">
+
 Baima Tibetan, Brokpa, Burmese, Cantonese, Chitabu (bwe), Dzongkha,
 Geba, Khaling, Kurtöp, Lahu, Lhasa Tibetan, Middle Chinese, Phlong, Pwo
 Karen, Rikeze Tibetan, Sgaw Karen, Tokpe Gola (Tibetan), T’ientsin,
 Zhibo Tibetan, Zhuoni Tibetan
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Tai-Kadai
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 Nakhon Si Thammarat Thai, Proto-Tai, Shan, Yung Chiang Kam
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Tsimshian
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Coast Tsimshian
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Tucanoan
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 Barasana, Kubeo, Máíhɨ̃ki, Tatuyo
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Uralic
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Estonian
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Uto-Aztecan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Hopi
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Wakashan
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Heiltsuk
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:left;">
+
 Blimaw, Dong, Keres, Kra-Dai languages, Pre-proto-Yeniseian, Szu ta
 Chai, Takelma
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -1340,87 +2025,148 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Cases of tonogenesis
 </th>
+
 <th style="text-align:right;">
+
 Number of languages
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 133
 </td>
+
 <td style="text-align:right;">
+
 40
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 66
 </td>
+
 <td style="text-align:right;">
+
 42
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable-count
 </td>
+
 <td style="text-align:right;">
+
 25
 </td>
+
 <td style="text-align:right;">
+
 19
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 22
 </td>
+
 <td style="text-align:right;">
+
 13
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 11
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -1428,7 +2174,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Tue Feb 13 22:51:46 2024
+    ## % Mon Sep 16 10:04:12 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -1490,86 +2236,147 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/, glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 laryngeal
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -1583,465 +2390,782 @@ table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising-falling
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR and non-high vowel
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR and high vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 high vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 long vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 low vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long, glottalic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -2062,465 +3186,782 @@ table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising-falling
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR and non-high vowel
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR and high vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 high vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 long vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 low vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long, glottalic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -2541,465 +3982,782 @@ table(tonodb$Nucleus, tonodb$EffectOnPitch) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising-falling
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR and non-high vowel
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR and high vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 high vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 long vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 low vowel
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short vowel
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short, long, glottalic
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3055,109 +4813,184 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Aspirated
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Aspirated, unaspirated
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Breathy
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Unaspirated
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3177,149 +5010,252 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 cluster
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 fricative
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 obstruent
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 open
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 sonorant
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stop
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3329,149 +5265,252 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 stop
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 obstruent
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 cluster
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 sonorant
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 fricative
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 open
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3479,7 +5518,7 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Tue Feb 13 22:51:46 2024
+    ## % Mon Sep 16 10:04:12 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -3507,93 +5546,158 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 breathy
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 creaky
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 preaspirated
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 voiced
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 voiceless
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3601,7 +5705,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Tue Feb 13 22:51:46 2024
+    ## % Mon Sep 16 10:04:12 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -3628,145 +5732,246 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/, glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized, non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 laryngeal
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3786,149 +5991,250 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 high
 </td>
+
 <td style="text-align:right;">
+
 51
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 low
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 47
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 mid
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -3937,149 +6243,250 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 high
 </td>
+
 <td style="text-align:right;">
+
 51
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 low
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 47
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 mid
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ## Effect of nucleus length on pitch
@@ -4092,42 +6499,71 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 long
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4136,42 +6572,71 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 long
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 short
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ## Effect of nuclear +/iATR on pitch
@@ -4184,42 +6649,71 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4228,42 +6722,71 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 -ATR
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 +ATR
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ## Number of cases/varieties of different types for each region
@@ -4276,23 +6799,38 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4304,10 +6842,15 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4323,154 +6866,259 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4482,77 +7130,130 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4567,78 +7268,131 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 no change
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising-falling
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4650,51 +7404,86 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4709,147 +7498,248 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising, elevating
 </th>
+
 <th style="text-align:right;">
+
 rising, lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/, glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized, non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 laryngeal
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4861,111 +7751,188 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/, glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized, non-glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 laryngeal
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -4980,23 +7947,38 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5008,10 +7990,15 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5027,43 +8014,72 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5075,31 +8091,52 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5119,109 +8156,184 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Aspirated
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Aspirated, unaspirated
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Breathy
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Unaspirated
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5239,77 +8351,130 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 /h/
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottal stop
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 glottalized
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5327,149 +8492,252 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 fricative
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 obstruent
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 open
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 sonorant
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 sonorant, open
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stop
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5487,53 +8755,90 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 breathy
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 voiced
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 voiceless
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5551,42 +8856,71 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 High
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Low
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5604,124 +8938,209 @@ table(tmp) %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 elevating
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 lowering
 </th>
+
 <th style="text-align:right;">
+
 lowering, elevating
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 sonorant
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Voiced
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 30
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Voiced, voiceless
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Voiceless
 </td>
+
 <td style="text-align:right;">
+
 28
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5748,87 +9167,148 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Cases of tonogenesis
 </th>
+
 <th style="text-align:right;">
+
 Number of languages
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 133
 </td>
+
 <td style="text-align:right;">
+
 40
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 66
 </td>
+
 <td style="text-align:right;">
+
 42
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 25
 </td>
+
 <td style="text-align:right;">
+
 19
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 22
 </td>
+
 <td style="text-align:right;">
+
 13
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 11
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5838,77 +9318,128 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Cases of tonogenesis
 </td>
+
 <td style="text-align:left;">
+
 133
 </td>
+
 <td style="text-align:left;">
+
 66
 </td>
+
 <td style="text-align:left;">
+
 25
 </td>
+
 <td style="text-align:left;">
+
 22
 </td>
+
 <td style="text-align:left;">
+
 11
 </td>
+
 <td style="text-align:left;">
+
 5
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of languages
 </td>
+
 <td style="text-align:left;">
+
 40
 </td>
+
 <td style="text-align:left;">
+
 42
 </td>
+
 <td style="text-align:left;">
+
 19
 </td>
+
 <td style="text-align:left;">
+
 13
 </td>
+
 <td style="text-align:left;">
+
 8
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5931,65 +9462,110 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -5998,59 +9574,98 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 7
 </td>
+
 <td style="text-align:left;">
+
 7
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 6
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ### Asia
@@ -6069,87 +9684,148 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 33
 </td>
+
 <td style="text-align:right;">
+
 15
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 116
 </td>
+
 <td style="text-align:right;">
+
 28
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -6158,77 +9834,128 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 33
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 116
 </td>
+
 <td style="text-align:left;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 15
 </td>
+
 <td style="text-align:left;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 28
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ### Europe
@@ -6247,76 +9974,129 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -6325,68 +10105,113 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 8
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 8
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 6
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ### North America
@@ -6405,87 +10230,148 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 18
 </td>
+
 <td style="text-align:right;">
+
 16
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -6494,77 +10380,128 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 18
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 16
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 2
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ### South America
@@ -6583,54 +10520,91 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -6639,50 +10613,83 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 6
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ### Papunesia
@@ -6701,76 +10708,129 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 Number of cases
 </th>
+
 <th style="text-align:right;">
+
 Number of varieties
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -6779,68 +10839,113 @@ t(t) %>% kable()
 ```
 
 <table>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 Type
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of cases
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 9
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 4
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 Number of varieties
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 6
 </td>
+
 <td style="text-align:left;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 # Examples from the database for the paper
@@ -6851,197 +10956,334 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:right;">
+
 ID
 </th>
+
 <th style="text-align:left;">
+
 LanguageVariety
 </th>
+
 <th style="text-align:left;">
+
 TriggeringContext
 </th>
+
 <th style="text-align:left;">
+
 EffectOnPitch
 </th>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:left;">
+
 Proto-Nordic
 </td>
+
 <td style="text-align:left;">
+
 addition of a syllable
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:left;">
+
 Proto-Nordic
 </td>
+
 <td style="text-align:left;">
+
 destressing after loss of syllable
 </td>
+
 <td style="text-align:left;">
+
 NA
 </td>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:left;">
+
 Yabem
 </td>
+
 <td style="text-align:left;">
+
 Initial voiceless stop
 </td>
+
 <td style="text-align:left;">
+
 elevating
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:left;">
+
 Yabem
 </td>
+
 <td style="text-align:left;">
+
 Initial voiced stop
 </td>
+
 <td style="text-align:left;">
+
 lowering
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:left;">
+
 Kammu
 </td>
+
 <td style="text-align:left;">
+
 Initial voiced stop or sonorant
 </td>
+
 <td style="text-align:left;">
+
 lowering
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:left;">
+
 Kammu
 </td>
+
 <td style="text-align:left;">
+
 Initial voiceless stop or voiceless sonorant
 </td>
+
 <td style="text-align:left;">
+
 elevating
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:left;">
+
 Phan Rang Cham
 </td>
+
 <td style="text-align:left;">
+
 initial other than voiced stop or affricate
 </td>
+
 <td style="text-align:left;">
+
 elevating
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:left;">
+
 Phan Rang Cham
 </td>
+
 <td style="text-align:left;">
+
 voiced intial stop or affricate
 </td>
+
 <td style="text-align:left;">
+
 lowering
 </td>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:left;">
+
 Vietnamese
 </td>
+
 <td style="text-align:left;">
+
 open syllable or final nasal
 </td>
+
 <td style="text-align:left;">
+
 level
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:left;">
+
 Vietnamese
 </td>
+
 <td style="text-align:left;">
+
 Final oral stop, final glottal stop
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -7145,7 +11387,8 @@ ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) +
   theme_bw()
 ```
 
-    ## Warning: Removed 3 rows containing missing values (`geom_point()`).
+    ## Warning: Removed 3 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
 
@@ -7207,220 +11450,375 @@ x %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:left;">
+
 Contour
 </th>
+
 <th style="text-align:right;">
+
 Count
 </th>
+
 <th style="text-align:right;">
+
 Freq
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 falling
 </td>
+
 <td style="text-align:right;">
+
 26
 </td>
+
 <td style="text-align:right;">
+
 0.3170732
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:right;">
+
 11
 </td>
+
 <td style="text-align:right;">
+
 0.1341463
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 falling
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 0.1097561
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:left;">
+
 level
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 0.1097561
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:right;">
+
 0.0853659
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:left;">
+
 level
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 0.0609756
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:left;">
+
 falling
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 0.0609756
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0.0365854
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 0.0243902
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 falling
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0.0121951
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 rising
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0.0121951
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:left;">
+
 rising-falling
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0.0121951
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:left;">
+
 falling
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0.0121951
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:left;">
+
 rising-falling
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0.0121951
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -7452,6 +11850,517 @@ ggplot(data = x,
 ![](README_files/figure-gfm/unnamed-chunk-59-2.png)<!-- -->
 
 ``` r
+x <- tonodb %>% select(Type, EffectOnPitch) %>% filter(!is.na(EffectOnPitch)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, EffectOnPitch) %>% summarize(Count = n())
+```
+
+    ## `summarise()` has grouped output by 'Type'. You can override using the
+    ## `.groups` argument.
+
+``` r
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+x <- x %>% filter(Count > 1) %>% filter(Type != "other")
+x %>% kable()
+```
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Type
+</th>
+
+<th style="text-align:left;">
+
+EffectOnPitch
+</th>
+
+<th style="text-align:right;">
+
+Count
+</th>
+
+<th style="text-align:right;">
+
+Freq
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+54
+</td>
+
+<td style="text-align:right;">
+
+0.2297872
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+54
+</td>
+
+<td style="text-align:right;">
+
+0.2297872
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:right;">
+
+24
+</td>
+
+<td style="text-align:right;">
+
+0.1021277
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+10
+</td>
+
+<td style="text-align:right;">
+
+0.0425532
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+10
+</td>
+
+<td style="text-align:right;">
+
+0.0425532
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+10
+</td>
+
+<td style="text-align:right;">
+
+0.0425532
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+mid
+</td>
+
+<td style="text-align:right;">
+
+10
+</td>
+
+<td style="text-align:right;">
+
+0.0425532
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+0.0340426
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+0.0340426
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+level
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0212766
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0212766
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0212766
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0170213
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0170213
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0127660
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+stress
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0085106
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+stress
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0085106
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+stress
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0085106
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+ggplot(data = x,
+       aes(axis1 = EffectOnPitch, axis2 = Type, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+
+``` r
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
+  geom_alluvium(aes(fill = Type)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-60-2.png)<!-- -->
+
+``` r
 x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
 x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
 ```
@@ -7469,9 +12378,10 @@ ggplot(x, aes(x=Height, y=Type, fill = Freq)) +
   scale_y_discrete(limits = c("other", "wordtype", "stress", "nucleus", "coda", "onset"))
 ```
 
-    ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
 
 ``` r
 ggplot(x, aes(x=Type, y=Height, fill = Freq)) + 
@@ -7481,9 +12391,10 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
   scale_y_discrete(limits = c("mid", "low", "high"))
 ```
 
-    ## Warning: Removed 2 rows containing missing values (`geom_tile()`).
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
 
 # Patterns in level vs contour height
 
@@ -7537,192 +12448,323 @@ tmp %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 high
 </th>
+
 <th style="text-align:right;">
+
 low
 </th>
+
 <th style="text-align:right;">
+
 mid
 </th>
+
 <th style="text-align:right;">
+
 falling
 </th>
+
 <th style="text-align:right;">
+
 level
 </th>
+
 <th style="text-align:right;">
+
 rising
 </th>
+
 <th style="text-align:right;">
+
 rising.falling
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 26
 </td>
+
 <td style="text-align:right;">
+
 31
 </td>
+
 <td style="text-align:right;">
+
 17
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 9
 </td>
+
 <td style="text-align:right;">
+
 11
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 14
 </td>
+
 <td style="text-align:right;">
+
 10
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 26
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 7
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 12
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 5
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 2
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -7750,87 +12792,148 @@ t %>% kable()
 ```
 
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 Type
 </th>
+
 <th style="text-align:right;">
+
 height
 </th>
+
 <th style="text-align:right;">
+
 contour
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 onset
 </td>
+
 <td style="text-align:right;">
+
 74
 </td>
+
 <td style="text-align:right;">
+
 29
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 coda
 </td>
+
 <td style="text-align:right;">
+
 24
 </td>
+
 <td style="text-align:right;">
+
 38
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 nucleus
 </td>
+
 <td style="text-align:right;">
+
 18
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 syllable
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 <td style="text-align:right;">
+
 8
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 other
 </td>
+
 <td style="text-align:right;">
+
 4
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 stress
 </td>
+
 <td style="text-align:right;">
+
 6
 </td>
+
 <td style="text-align:right;">
+
 3
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 ``` r
@@ -7838,7 +12941,7 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Tue Feb 13 22:51:49 2024
+    ## % Mon Sep 16 10:04:15 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}

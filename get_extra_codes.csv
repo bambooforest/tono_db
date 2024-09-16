@@ -1,0 +1,25 @@
+ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code,family_id,parent_id,bookkeeping,level,description,markup_description,child_family_count,child_language_count,child_dialect_count,country_ids
+atha1247,Athabaskan,NA,NA,NA,atha1247,NA,atha1245,atha1246,FALSE,family,NA,NA,25,44,57,NA
+auks1239,Aukshtaitish,Eurasia,NA,NA,auks1239,NA,indo1319,lith1251,FALSE,dialect,NA,NA,0,0,3,NA
+cant1236,Cantonese,Eurasia,NA,NA,cant1236,NA,sino1245,yueh1236,FALSE,dialect,NA,NA,0,0,5,NA
+cent2346,Central Tibetan,NA,NA,NA,cent2346,NA,sino1245,late1253,FALSE,family,NA,NA,7,16,33,NA
+coas1300,Coast Tsimshian,North America,NA,NA,coas1300,NA,tsim1258,nucl1649,FALSE,dialect,NA,NA,0,0,0,NA
+east2280,Eastern Baltic,NA,NA,NA,east2280,NA,indo1319,balt1263,FALSE,family,NA,NA,0,2,12,NA
+extr1245,Extreme Southern New Caledonian,NA,NA,NA,extr1245,NA,aust1307,sout3313,FALSE,family,NA,NA,0,2,6,NA
+kere1287,Keresan,NA,NA,NA,kere1287,NA,NA,NA,FALSE,family,NA,NA,0,2,6,NA
+mang1393,Mangbetu-Asua,NA,NA,NA,mang1393,NA,cent2225,cent2225,FALSE,family,NA,NA,1,3,5,NA
+metn1237,Metnyo,Papunesia,NA,NA,metn1237,NA,aust1307,waig1244,FALSE,dialect,NA,NA,0,0,0,NA
+midd1319,Middle Franconian,Eurasia,NA,NA,midd1319,NA,indo1319,high1287,FALSE,family,NA,NA,1,3,25,NA
+moha1257,Mohawk-Oneida,NA,NA,NA,moha1257,NA,iroq1247,nort2947,FALSE,family,NA,NA,0,2,0,NA
+newc1243,New Caledonian,NA,NA,NA,newc1243,NA,aust1307,sout3173,FALSE,family,NA,NA,20,33,20,NA
+nort3160,North Germanic,NA,NA,NA,nort3160,NA,indo1319,nort3152,FALSE,family,NA,NA,8,15,71,NA
+podo1243,Podoko,NA,NA,NA,podo1243,NA,afro1255,mand1472,FALSE,family,NA,NA,0,2,0,NA
+pwoo1239,Pwo,NA,NA,NA,pwoo1239,NA,sino1245,peri1254,FALSE,family,NA,NA,2,4,10,NA
+raja1258,Raja Ampat Maya,NA,NA,NA,raja1258,NA,aust1307,maya1288,FALSE,family,NA,NA,0,4,3,NA
+sind1278,Sindhi-Lahnda,NA,NA,NA,sind1278,NA,indo1319,indo1324,FALSE,family,NA,NA,8,18,50,NA
+slav1255,Slavic,NA,NA,NA,slav1255,NA,indo1319,balt1263,FALSE,family,NA,NA,11,20,102,NA
+taik1256,Tai-Kadai,NA,NA,NA,taik1256,NA,NA,NA,FALSE,family,NA,NA,55,95,88,NA
+tere1281,Terena,South America,NA,NA,tere1281,NA,araw1281,tere1279,FALSE,dialect,NA,NA,0,0,0,NA
+utsa1239,Lhasa Tibetan,Eurasia,NA,NA,utsa1239,NA,sino1245,dbus1238,FALSE,dialect,NA,NA,0,0,0,NA
+yeni1252,Yeniseian,NA,NA,NA,yeni1252,NA,NA,NA,FALSE,family,NA,NA,3,5,3,NA
+zhuo1234,Zhuoni,Eurasia,NA,NA,zhuo1234,NA,sino1245,chon1285,FALSE,dialect,NA,NA,0,0,3,NA
