@@ -127,6 +127,7 @@ table(languages$Macroarea, exclude = FALSE)
 And a quick look at our areas.
 
 ```{r}
+contributions %>% filter(is.na(Area)) # 
 table(contributions$Area, exclude=FALSE)
 ```
 
@@ -864,4 +865,115 @@ t %>% kable()
 print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
+# New tables for revise resubmit
 
+```{r}
+# Fix the mistakes
+tonodb$Ordering <- str_replace(tonodb$Ordering, "broad", "Broad")
+tonodb$Ordering <- str_replace(tonodb$Ordering, "strict", "Strict")
+tonodb %>% filter(Ordering=="broad")
+tonodb %>% filter(is.na(Ordering))
+```
+
+Strict vs broad.
+
+```{r}
+# table(tonodb$Ordering, exclude = FALSE)
+table(tonodb$Ordering)
+
+t <- data.frame(table(tonodb$Ordering))
+t <- t %>% rename(Ordering = Var1, Count = Freq)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis"), include.rownames=FALSE)
+```
+
+Plus something like this, where the numbers outside the parenthesis represent cases, and numbers in parenthesis are languages. 
+
+```{r}
+tonodb %>% select(Type, Ordering)
+table(tonodb$Type, tonodb$Ordering)
+
+t <- data.frame(unclass(table(tonodb$Type, tonodb$Ordering))) %>% rownames_to_column()
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class"), include.rownames=FALSE)
+```
+
+Numbers in parenthesis are languages. 
+
+```{r}
+tmp <- tonodb %>% select(Type, Ordering, Language_ID) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Ordering))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by language"), include.rownames=FALSE)
+```
+
+Class by type by area.
+
+```{r}
+tmp <- tonodb %>% select(Type, Ordering, Macroarea)
+t <- data.frame(unclass(table(tmp$Type, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by macroarea"), include.rownames=FALSE)
+```
+
+Strict vs broad cases of tonogenesis by class by macroarea (macroarea collapses Asia and Europe). All rows.
+
+```{r}
+tmp <- tonodb %>% select(Type, Area)
+t <- data.frame(unclass(table(tmp$Type, tmp$Area))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis per macroarea"), include.rownames=FALSE)
+```
+
+Strict vs broad cases of tonogenesis by class by macroarea (macroarea collapses Asia and Europe). Per language.
+
+```{r}
+tmp <- tonodb %>% select(Type, LanguageVariety, Area) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Area))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by language by macroarea"), include.rownames=FALSE)
+```
+
+Strict vs broad cases of tonogenesis by class by language by macroarea.
+
+```{r}
+tmp <- tonodb %>% select(Type, Ordering, Macroarea) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by language by macroarea"), include.rownames=FALSE)
+```
+
+Type by rows by area.
+
+```{r}
+tmp <- tonodb %>% select(Ordering, Macroarea)
+t <- data.frame(unclass(table(tmp$Ordering, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Type by rows by area"), include.rownames=FALSE)
+```
+
+Type by distinct languages.
+
+```{r}
+tmp <- tonodb %>% select(Language_ID, Ordering, Macroarea) %>% distinct()
+t <- data.frame(unclass(table(tmp$Ordering, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+
+print(xtable(t, type = "latex", caption="Type by distinct languages"), include.rownames=FALSE)
+```

@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-16 September, 2024
+03 October, 2024
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -67,6 +67,7 @@ Steven Moran and Lilja Maria Sæbø
   result](#multiple-paths-to-the-same-result)
 - [Patterns in level vs contour
   height](#patterns-in-level-vs-contour-height)
+- [New tables for revise resubmit](#new-tables-for-revise-resubmit)
 
 Todos:
 
@@ -105,7 +106,7 @@ We have this many languages in our sample.
 nrow(languages)
 ```
 
-    ## [1] 96
+    ## [1] 97
 
 And this many observations.
 
@@ -113,7 +114,7 @@ And this many observations.
 nrow(values)
 ```
 
-    ## [1] 250
+    ## [1] 259
 
 Let’s map our data points. We note some rows are removed because the
 lat/long figures are NA due to them being listed as dialects or language
@@ -927,7 +928,7 @@ table(languages$Macroarea, exclude=FALSE)
 
     ## 
     ##        Africa       Eurasia North America     Papunesia South America 
-    ##            11            40            16             7             6 
+    ##            11            40            17             7             6 
     ##          <NA> 
     ##            16
 
@@ -978,9 +979,19 @@ table(languages$Macroarea, exclude = FALSE)
 
     ## 
     ##        Africa       Eurasia North America     Papunesia South America 
-    ##            13            48            19            10             6
+    ##            13            48            20            10             6
 
 And a quick look at our areas.
+
+``` r
+contributions %>% filter(is.na(Area)) # 
+```
+
+    ## # A tibble: 1 × 9
+    ##      ID Contributor  Citation      Glottocode LanguageVariety Family Area  Notes
+    ##   <dbl> <chr>        <chr>         <chr>      <chr>           <chr>  <chr> <chr>
+    ## 1   105 Lilja Saeboe Lilja Saeboe… <NA>       Montagnais      Algic  <NA>  <NA> 
+    ## # ℹ 1 more variable: BibTex <chr>
 
 ``` r
 table(contributions$Area, exclude=FALSE)
@@ -988,9 +999,9 @@ table(contributions$Area, exclude=FALSE)
 
     ## 
     ##        Africa          Asia        Europe North America     Papunesia 
-    ##            13            39            14            20            10 
-    ## South America 
-    ##             6
+    ##            13            39            14            21            10 
+    ## South America          <NA> 
+    ##             6             1
 
 # Tables for the paper
 
@@ -1073,7 +1084,7 @@ Asia
 
 <td style="text-align:right;">
 
-154
+157
 </td>
 
 </tr>
@@ -1087,7 +1098,7 @@ North America
 
 <td style="text-align:right;">
 
-19
+20
 </td>
 
 <td style="text-align:right;">
@@ -1097,7 +1108,7 @@ North America
 
 <td style="text-align:right;">
 
-29
+33
 </td>
 
 </tr>
@@ -1198,6 +1209,30 @@ South America
 
 </tr>
 
+<tr>
+
+<td style="text-align:left;">
+
+NA
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+</tr>
+
 </tbody>
 
 </table>
@@ -1209,13 +1244,13 @@ table(tonodb$family_id, exclude = FALSE)
 
     ## 
     ## afro1255 algi1248 araw1281 atha1245 atla1278 aust1305 aust1307 cadd1255 
-    ##        3        5        1        5        6       15       25        1 
+    ##        3        7        1        5        6       15       27        1 
     ## cent2225 chim1311 gong1255 hmon1336 indo1319 iroq1247 koma1264 kore1284 
-    ##        4        1        2       10       23        7        6        2 
+    ##        4        1        2       10       23        8        6        2 
     ## maya1287 mong1349 nada1235 sino1245 taik1256 tsim1258 tuca1253 ural1272 
-    ##        4        1        3       58       28        1        4        1 
+    ##        4        2        3       58       28        1        4        1 
     ## utoa1244 waka1280     <NA> 
-    ##        1        2       31
+    ##        2        2       33
 
 ``` r
 tmp <- tmp %>% filter(!is.na(Area))
@@ -1273,7 +1308,7 @@ Asia
 
 <td style="text-align:right;">
 
-154
+157
 </td>
 
 </tr>
@@ -1287,7 +1322,7 @@ North America
 
 <td style="text-align:right;">
 
-19
+20
 </td>
 
 <td style="text-align:right;">
@@ -1297,7 +1332,7 @@ North America
 
 <td style="text-align:right;">
 
-29
+33
 </td>
 
 </tr>
@@ -1407,15 +1442,15 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Mon Sep 16 10:04:12 2024
+    ## % Thu Oct  3 12:53:58 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
     ##   \hline
     ## Area & Languages & Families & Cases of tonogenesis \\ 
     ##   \hline
-    ## Asia &  37 &   9 & 154 \\ 
-    ##   North America &  19 &  10 &  29 \\ 
+    ## Asia &  37 &   9 & 157 \\ 
+    ##   North America &  20 &  10 &  33 \\ 
     ##   Europe &  12 &   2 &  22 \\ 
     ##   Africa &  13 &   5 &  21 \\ 
     ##   Papunesia &  10 &   1 &  16 \\ 
@@ -1495,12 +1530,12 @@ Algic
 
 <td style="text-align:right;">
 
-3
+4
 </td>
 
 <td style="text-align:left;">
 
-Arapaho, Cheyenne, Kickapoo
+Arapaho, Cheyenne, Kickapoo, Maliseet-Passamaquoddy
 </td>
 
 </tr>
@@ -1572,12 +1607,12 @@ Austroasiatic
 
 <td style="text-align:right;">
 
-4
+5
 </td>
 
 <td style="text-align:left;">
 
-Hu, Kammu, U, Vietnamese
+Hu, U, Vietnamese, Wester Kammu, Western Kammu
 </td>
 
 </tr>
@@ -1598,7 +1633,7 @@ Austronesian
 
 Cem, Central North New Caledonian languages, Far South New Caledonian
 langauges, Magey Matbat, Metnyo Ambel, Moor, Phan Rang Cham,
-Proto-Maˈya, Samoan, Utsat, Yabem, Yerisiam
+Pre-proto-North Huon Gulf, Proto-Maˈya, Samoan, Utsat, Yerisiam
 </td>
 
 </tr>
@@ -1980,13 +2015,12 @@ NA
 
 <td style="text-align:right;">
 
-7
+9
 </td>
 
 <td style="text-align:left;">
 
-Blimaw, Dong, Keres, Kra-Dai languages, Pre-proto-Yeniseian, Szu ta
-Chai, Takelma
+NA
 </td>
 
 </tr>
@@ -2065,7 +2099,7 @@ onset
 
 <td style="text-align:right;">
 
-40
+41
 </td>
 
 </tr>
@@ -2079,12 +2113,12 @@ coda
 
 <td style="text-align:right;">
 
-66
+70
 </td>
 
 <td style="text-align:right;">
 
-42
+43
 </td>
 
 </tr>
@@ -2093,17 +2127,17 @@ coda
 
 <td style="text-align:left;">
 
-syllable-count
+count
 </td>
 
 <td style="text-align:right;">
 
-25
+27
 </td>
 
 <td style="text-align:right;">
 
-19
+20
 </td>
 
 </tr>
@@ -2117,12 +2151,31 @@ nucleus
 
 <td style="text-align:right;">
 
-22
+27
 </td>
 
 <td style="text-align:right;">
 
-13
+16
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable-count
+</td>
+
+<td style="text-align:right;">
+
+27
+</td>
+
+<td style="text-align:right;">
+
+20
 </td>
 
 </tr>
@@ -2136,7 +2189,7 @@ stress
 
 <td style="text-align:right;">
 
-11
+12
 </td>
 
 <td style="text-align:right;">
@@ -2155,12 +2208,31 @@ other
 
 <td style="text-align:right;">
 
-5
+6
 </td>
 
 <td style="text-align:right;">
 
-4
+5
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+NA
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
 </td>
 
 </tr>
@@ -2174,19 +2246,21 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Mon Sep 16 10:04:12 2024
+    ## % Thu Oct  3 12:53:58 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
     ##   \hline
     ## Type & Cases of tonogenesis & Number of languages \\ 
     ##   \hline
-    ## onset & 133 &  40 \\ 
-    ##   coda &  66 &  42 \\ 
-    ##   syllable-count &  25 &  19 \\ 
-    ##   nucleus &  22 &  13 \\ 
-    ##   stress &  11 &   8 \\ 
-    ##   other &   5 &   4 \\ 
+    ## onset & 133 &  41 \\ 
+    ##   coda &  70 &  43 \\ 
+    ##   count &  27 &  20 \\ 
+    ##   nucleus &  27 &  16 \\ 
+    ##   syllable-count &  27 &  20 \\ 
+    ##   stress &  12 &   8 \\ 
+    ##   other &   6 &   5 \\ 
+    ##    &   1 &   1 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{Cases of tonogenesis by category} 
@@ -2270,7 +2344,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -2289,7 +2363,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -2308,7 +2382,7 @@ glottal stop
 
 <td style="text-align:right;">
 
-2
+4
 </td>
 
 <td style="text-align:right;">
@@ -2484,7 +2558,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -2597,7 +2671,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -2794,7 +2868,7 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -2824,12 +2898,12 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -3280,7 +3354,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -3393,7 +3467,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -3590,7 +3664,7 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -3620,12 +3694,12 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -4076,7 +4150,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -4189,7 +4263,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -4386,7 +4460,7 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -4416,12 +4490,12 @@ long vowel
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -4780,8 +4854,8 @@ table(tmp$Onset, tmp$EffectOnPitch)
 
     ##            
     ##             elevating falling lowering rising
-    ##   voiced            2       1       19      1
-    ##   voiceless        15       0        1      0
+    ##   voiced            3       1       19      1
+    ##   voiceless        15       0        2      0
 
 ``` r
 t <- data.frame(unclass(table(tmp$Onset, tmp$EffectOnPitch)))
@@ -4872,12 +4946,12 @@ Aspirated
 
 <td style="text-align:right;">
 
-6
+7
 </td>
 
 <td style="text-align:right;">
 
-3
+4
 </td>
 
 <td style="text-align:right;">
@@ -4964,7 +5038,7 @@ Unaspirated
 
 <td style="text-align:right;">
 
-4
+7
 </td>
 
 <td style="text-align:right;">
@@ -5064,7 +5138,7 @@ cluster
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -5108,7 +5182,7 @@ fricative
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -5142,7 +5216,7 @@ obstruent
 
 <td style="text-align:right;">
 
-2
+1
 </td>
 
 <td style="text-align:right;">
@@ -5200,7 +5274,7 @@ sonorant
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 <td style="text-align:right;">
@@ -5229,12 +5303,12 @@ stop
 
 <td style="text-align:right;">
 
-3
+2
 </td>
 
 <td style="text-align:right;">
 
-2
+4
 </td>
 
 <td style="text-align:right;">
@@ -5244,7 +5318,7 @@ stop
 
 <td style="text-align:right;">
 
-5
+4
 </td>
 
 <td style="text-align:right;">
@@ -5314,7 +5388,7 @@ stop
 
 <td style="text-align:right;">
 
-5
+4
 </td>
 
 <td style="text-align:right;">
@@ -5324,46 +5398,12 @@ stop
 
 <td style="text-align:right;">
 
-3
-</td>
-
-<td style="text-align:right;">
-
-3
-</td>
-
-<td style="text-align:right;">
-
-2
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-obstruent
-</td>
-
-<td style="text-align:right;">
-
 2
 </td>
 
 <td style="text-align:right;">
 
-0
-</td>
-
-<td style="text-align:right;">
-
 3
-</td>
-
-<td style="text-align:right;">
-
-1
 </td>
 
 <td style="text-align:right;">
@@ -5402,7 +5442,75 @@ cluster
 
 <td style="text-align:right;">
 
+1
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+fricative
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
 0
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+obstruent
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+4
 </td>
 
 </tr>
@@ -5422,40 +5530,6 @@ sonorant
 <td style="text-align:right;">
 
 3
-</td>
-
-<td style="text-align:right;">
-
-1
-</td>
-
-<td style="text-align:right;">
-
-0
-</td>
-
-<td style="text-align:right;">
-
-2
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-fricative
-</td>
-
-<td style="text-align:right;">
-
-0
-</td>
-
-<td style="text-align:right;">
-
-0
 </td>
 
 <td style="text-align:right;">
@@ -5518,18 +5592,18 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Mon Sep 16 10:04:12 2024
+    ## % Thu Oct  3 12:53:58 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
     ##   \hline
     ##  & lowering & level & elevating & rising & falling \\ 
     ##   \hline
-    ## stop &   5 &   0 &   3 &   3 &   2 \\ 
-    ##   obstruent &   2 &   0 &   3 &   1 &   4 \\ 
-    ##   cluster &   1 &   0 &   0 &   0 &   0 \\ 
-    ##   sonorant &   1 &   3 &   1 &   0 &   2 \\ 
-    ##   fricative &   0 &   0 &   1 &   0 &   3 \\ 
+    ## stop &   4 &   0 &   2 &   3 &   4 \\ 
+    ##   cluster &   1 &   0 &   0 &   0 &   1 \\ 
+    ##   fricative &   1 &   0 &   1 &   0 &   3 \\ 
+    ##   obstruent &   1 &   0 &   3 &   1 &   4 \\ 
+    ##   sonorant &   1 &   3 &   1 &   0 &   3 \\ 
     ##   open &   0 &   3 &   0 &   0 &   0 \\ 
     ##    \hline
     ## \end{tabular}
@@ -5705,7 +5779,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Mon Sep 16 10:04:12 2024
+    ## % Thu Oct  3 12:53:58 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -5781,7 +5855,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -5810,7 +5884,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -5834,17 +5908,17 @@ glottal stop
 
 <td style="text-align:right;">
 
-3
-</td>
-
-<td style="text-align:right;">
-
 2
 </td>
 
 <td style="text-align:right;">
 
 4
+</td>
+
+<td style="text-align:right;">
+
+3
 </td>
 
 <td style="text-align:right;">
@@ -6070,7 +6144,7 @@ high
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -6129,7 +6203,7 @@ low
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -6322,7 +6396,7 @@ high
 
 <td style="text-align:right;">
 
-0
+1
 </td>
 
 <td style="text-align:right;">
@@ -6381,7 +6455,7 @@ low
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -6515,7 +6589,22 @@ elevating
 
 <th style="text-align:right;">
 
+falling
+</th>
+
+<th style="text-align:right;">
+
 lowering
+</th>
+
+<th style="text-align:right;">
+
+rising
+</th>
+
+<th style="text-align:right;">
+
+rising-falling
 </th>
 
 </tr>
@@ -6529,6 +6618,21 @@ lowering
 <td style="text-align:left;">
 
 long
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
 </td>
 
 <td style="text-align:right;">
@@ -6557,7 +6661,22 @@ short
 
 <td style="text-align:right;">
 
+0
+</td>
+
+<td style="text-align:right;">
+
 1
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+0
 </td>
 
 </tr>
@@ -6588,7 +6707,22 @@ elevating
 
 <th style="text-align:right;">
 
+falling
+</th>
+
+<th style="text-align:right;">
+
 lowering
+</th>
+
+<th style="text-align:right;">
+
+rising
+</th>
+
+<th style="text-align:right;">
+
+rising-falling
 </th>
 
 </tr>
@@ -6602,6 +6736,21 @@ lowering
 <td style="text-align:left;">
 
 long
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
 </td>
 
 <td style="text-align:right;">
@@ -6630,7 +6779,22 @@ short
 
 <td style="text-align:right;">
 
+0
+</td>
+
+<td style="text-align:right;">
+
 1
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+0
 </td>
 
 </tr>
@@ -6688,7 +6852,7 @@ lowering
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 </tr>
@@ -6702,7 +6866,7 @@ lowering
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 <td style="text-align:right;">
@@ -6761,7 +6925,7 @@ lowering
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 </tr>
@@ -6775,7 +6939,7 @@ lowering
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 <td style="text-align:right;">
@@ -6935,7 +7099,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -6979,12 +7143,12 @@ glottal stop
 
 <td style="text-align:right;">
 
-2
+1
 </td>
 
 <td style="text-align:right;">
 
-2
+4
 </td>
 
 <td style="text-align:right;">
@@ -6994,7 +7158,7 @@ glottal stop
 
 <td style="text-align:right;">
 
-1
+0
 </td>
 
 <td style="text-align:right;">
@@ -7151,11 +7315,6 @@ falling
 
 <th style="text-align:right;">
 
-lowering
-</th>
-
-<th style="text-align:right;">
-
 rising
 </th>
 
@@ -7179,12 +7338,7 @@ rising
 
 <td style="text-align:right;">
 
-1
-</td>
-
-<td style="text-align:right;">
-
-0
+2
 </td>
 
 <td style="text-align:right;">
@@ -7203,17 +7357,12 @@ glottal stop
 
 <td style="text-align:right;">
 
-2
-</td>
-
-<td style="text-align:right;">
-
-2
-</td>
-
-<td style="text-align:right;">
-
 1
+</td>
+
+<td style="text-align:right;">
+
+4
 </td>
 
 <td style="text-align:right;">
@@ -7233,11 +7382,6 @@ glottalized
 <td style="text-align:right;">
 
 1
-</td>
-
-<td style="text-align:right;">
-
-0
 </td>
 
 <td style="text-align:right;">
@@ -7596,7 +7740,7 @@ rising, lowering
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -7829,7 +7973,7 @@ rising
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -8215,12 +8359,12 @@ Aspirated
 
 <td style="text-align:right;">
 
-5
+6
 </td>
 
 <td style="text-align:right;">
 
-3
+4
 </td>
 
 <td style="text-align:right;">
@@ -8307,7 +8451,7 @@ Unaspirated
 
 <td style="text-align:right;">
 
-4
+7
 </td>
 
 <td style="text-align:right;">
@@ -8372,11 +8516,6 @@ falling
 
 <th style="text-align:right;">
 
-lowering
-</th>
-
-<th style="text-align:right;">
-
 rising
 </th>
 
@@ -8400,12 +8539,7 @@ rising
 
 <td style="text-align:right;">
 
-1
-</td>
-
-<td style="text-align:right;">
-
-0
+2
 </td>
 
 <td style="text-align:right;">
@@ -8424,17 +8558,12 @@ glottal stop
 
 <td style="text-align:right;">
 
-2
-</td>
-
-<td style="text-align:right;">
-
-2
-</td>
-
-<td style="text-align:right;">
-
 1
+</td>
+
+<td style="text-align:right;">
+
+4
 </td>
 
 <td style="text-align:right;">
@@ -8454,11 +8583,6 @@ glottalized
 <td style="text-align:right;">
 
 1
-</td>
-
-<td style="text-align:right;">
-
-0
 </td>
 
 <td style="text-align:right;">
@@ -8711,12 +8835,12 @@ stop
 
 <td style="text-align:right;">
 
-2
+1
 </td>
 
 <td style="text-align:right;">
 
-2
+4
 </td>
 
 <td style="text-align:right;">
@@ -8726,7 +8850,7 @@ stop
 
 <td style="text-align:right;">
 
-2
+1
 </td>
 
 <td style="text-align:right;">
@@ -9031,7 +9155,7 @@ Voiced
 
 <td style="text-align:right;">
 
-9
+10
 </td>
 
 <td style="text-align:right;">
@@ -9041,7 +9165,7 @@ Voiced
 
 <td style="text-align:right;">
 
-30
+32
 </td>
 
 <td style="text-align:right;">
@@ -9109,7 +9233,7 @@ Voiceless
 
 <td style="text-align:right;">
 
-28
+31
 </td>
 
 <td style="text-align:right;">
@@ -9119,7 +9243,7 @@ Voiceless
 
 <td style="text-align:right;">
 
-9
+11
 </td>
 
 <td style="text-align:right;">
@@ -9129,7 +9253,7 @@ Voiceless
 
 <td style="text-align:right;">
 
-7
+8
 </td>
 
 <td style="text-align:right;">
@@ -9207,7 +9331,7 @@ onset
 
 <td style="text-align:right;">
 
-40
+41
 </td>
 
 </tr>
@@ -9221,12 +9345,12 @@ coda
 
 <td style="text-align:right;">
 
-66
+70
 </td>
 
 <td style="text-align:right;">
 
-42
+43
 </td>
 
 </tr>
@@ -9235,17 +9359,17 @@ coda
 
 <td style="text-align:left;">
 
-syllable
+count
 </td>
 
 <td style="text-align:right;">
 
-25
+27
 </td>
 
 <td style="text-align:right;">
 
-19
+20
 </td>
 
 </tr>
@@ -9259,12 +9383,31 @@ nucleus
 
 <td style="text-align:right;">
 
-22
+27
 </td>
 
 <td style="text-align:right;">
 
-13
+16
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:right;">
+
+27
+</td>
+
+<td style="text-align:right;">
+
+20
 </td>
 
 </tr>
@@ -9278,7 +9421,7 @@ stress
 
 <td style="text-align:right;">
 
-11
+12
 </td>
 
 <td style="text-align:right;">
@@ -9297,12 +9440,31 @@ other
 
 <td style="text-align:right;">
 
-5
+6
 </td>
 
 <td style="text-align:right;">
 
-4
+5
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+NA
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
 </td>
 
 </tr>
@@ -9340,12 +9502,17 @@ coda
 
 <td style="text-align:left;">
 
-syllable
+count
 </td>
 
 <td style="text-align:left;">
 
 nucleus
+</td>
+
+<td style="text-align:left;">
+
+syllable
 </td>
 
 <td style="text-align:left;">
@@ -9356,6 +9523,11 @@ stress
 <td style="text-align:left;">
 
 other
+</td>
+
+<td style="text-align:left;">
+
+NA
 </td>
 
 </tr>
@@ -9374,27 +9546,37 @@ Cases of tonogenesis
 
 <td style="text-align:left;">
 
-66
+70
 </td>
 
 <td style="text-align:left;">
 
-25
+27
 </td>
 
 <td style="text-align:left;">
 
-22
+27
 </td>
 
 <td style="text-align:left;">
 
-11
+27
 </td>
 
 <td style="text-align:left;">
 
-5
+12
+</td>
+
+<td style="text-align:left;">
+
+6
+</td>
+
+<td style="text-align:left;">
+
+1
 </td>
 
 </tr>
@@ -9408,22 +9590,27 @@ Number of languages
 
 <td style="text-align:left;">
 
-40
+41
 </td>
 
 <td style="text-align:left;">
 
-42
+43
 </td>
 
 <td style="text-align:left;">
 
-19
+20
 </td>
 
 <td style="text-align:left;">
 
-13
+16
+</td>
+
+<td style="text-align:left;">
+
+20
 </td>
 
 <td style="text-align:left;">
@@ -9433,7 +9620,12 @@ Number of languages
 
 <td style="text-align:left;">
 
-4
+5
+</td>
+
+<td style="text-align:left;">
+
+1
 </td>
 
 </tr>
@@ -9487,6 +9679,25 @@ Number of varieties
 </thead>
 
 <tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+6
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+</tr>
 
 <tr>
 
@@ -9586,6 +9797,11 @@ Type
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -9615,6 +9831,11 @@ Number of cases
 
 <td style="text-align:left;">
 
+6
+</td>
+
+<td style="text-align:left;">
+
 7
 </td>
 
@@ -9640,6 +9861,11 @@ Number of cases
 <td style="text-align:left;">
 
 Number of varieties
+</td>
+
+<td style="text-align:left;">
+
+4
 </td>
 
 <td style="text-align:left;">
@@ -9719,12 +9945,31 @@ coda
 
 <td style="text-align:right;">
 
-33
+35
 </td>
 
 <td style="text-align:right;">
 
 15
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+3
 </td>
 
 </tr>
@@ -9762,7 +10007,7 @@ onset
 
 <td style="text-align:right;">
 
-28
+29
 </td>
 
 </tr>
@@ -9795,7 +10040,7 @@ stress
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
@@ -9851,6 +10096,11 @@ coda
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -9885,7 +10135,12 @@ Number of cases
 
 <td style="text-align:left;">
 
-33
+35
+</td>
+
+<td style="text-align:left;">
+
+3
 </td>
 
 <td style="text-align:left;">
@@ -9905,7 +10160,7 @@ Number of cases
 
 <td style="text-align:left;">
 
-1
+2
 </td>
 
 <td style="text-align:left;">
@@ -9929,12 +10184,17 @@ Number of varieties
 
 <td style="text-align:left;">
 
+3
+</td>
+
+<td style="text-align:left;">
+
 2
 </td>
 
 <td style="text-align:left;">
 
-28
+29
 </td>
 
 <td style="text-align:left;">
@@ -10015,6 +10275,25 @@ coda
 <td style="text-align:right;">
 
 5
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+6
 </td>
 
 </tr>
@@ -10122,6 +10401,11 @@ coda
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -10147,6 +10431,11 @@ syllable
 <td style="text-align:left;">
 
 Number of cases
+</td>
+
+<td style="text-align:left;">
+
+8
 </td>
 
 <td style="text-align:left;">
@@ -10186,6 +10475,11 @@ Number of varieties
 <td style="text-align:left;">
 
 5
+</td>
+
+<td style="text-align:left;">
+
+6
 </td>
 
 <td style="text-align:left;">
@@ -10265,7 +10559,7 @@ coda
 
 <td style="text-align:right;">
 
-18
+19
 </td>
 
 <td style="text-align:right;">
@@ -10279,17 +10573,36 @@ coda
 
 <td style="text-align:left;">
 
-nucleus
+count
 </td>
 
 <td style="text-align:right;">
 
-4
+5
 </td>
 
 <td style="text-align:right;">
 
 3
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+5
 </td>
 
 </tr>
@@ -10322,12 +10635,12 @@ other
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 <td style="text-align:right;">
 
-1
+2
 </td>
 
 </tr>
@@ -10360,12 +10673,12 @@ syllable
 
 <td style="text-align:right;">
 
-3
+5
 </td>
 
 <td style="text-align:right;">
 
-2
+3
 </td>
 
 </tr>
@@ -10393,6 +10706,11 @@ Type
 <td style="text-align:left;">
 
 coda
+</td>
+
+<td style="text-align:left;">
+
+count
 </td>
 
 <td style="text-align:left;">
@@ -10431,12 +10749,17 @@ Number of cases
 
 <td style="text-align:left;">
 
-18
+19
 </td>
 
 <td style="text-align:left;">
 
-4
+5
+</td>
+
+<td style="text-align:left;">
+
+8
 </td>
 
 <td style="text-align:left;">
@@ -10446,7 +10769,7 @@ Number of cases
 
 <td style="text-align:left;">
 
-1
+2
 </td>
 
 <td style="text-align:left;">
@@ -10456,7 +10779,7 @@ Number of cases
 
 <td style="text-align:left;">
 
-3
+5
 </td>
 
 </tr>
@@ -10480,7 +10803,7 @@ Number of varieties
 
 <td style="text-align:left;">
 
-1
+5
 </td>
 
 <td style="text-align:left;">
@@ -10496,6 +10819,11 @@ Number of varieties
 <td style="text-align:left;">
 
 2
+</td>
+
+<td style="text-align:left;">
+
+3
 </td>
 
 </tr>
@@ -10569,6 +10897,25 @@ coda
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -10630,6 +10977,11 @@ coda
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -10654,6 +11006,11 @@ Number of cases
 
 <td style="text-align:left;">
 
+1
+</td>
+
+<td style="text-align:left;">
+
 3
 </td>
 
@@ -10674,6 +11031,11 @@ Number of varieties
 <td style="text-align:left;">
 
 5
+</td>
+
+<td style="text-align:left;">
+
+1
 </td>
 
 <td style="text-align:left;">
@@ -10749,6 +11111,25 @@ coda
 <td style="text-align:right;">
 
 1
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+3
 </td>
 
 </tr>
@@ -10856,6 +11237,11 @@ coda
 
 <td style="text-align:left;">
 
+count
+</td>
+
+<td style="text-align:left;">
+
 nucleus
 </td>
 
@@ -10890,6 +11276,11 @@ Number of cases
 
 <td style="text-align:left;">
 
+4
+</td>
+
+<td style="text-align:left;">
+
 3
 </td>
 
@@ -10920,6 +11311,11 @@ Number of varieties
 <td style="text-align:left;">
 
 1
+</td>
+
+<td style="text-align:left;">
+
+3
 </td>
 
 <td style="text-align:left;">
@@ -11001,22 +11397,22 @@ Type
 
 <td style="text-align:left;">
 
-Proto-Nordic
+Vietnamese
 </td>
 
 <td style="text-align:left;">
 
-addition of a syllable
+Initial voiced stop + Falling tone
 </td>
 
 <td style="text-align:left;">
 
-NA
+lowering
 </td>
 
 <td style="text-align:left;">
 
-syllable
+onset
 </td>
 
 </tr>
@@ -11030,22 +11426,22 @@ syllable
 
 <td style="text-align:left;">
 
-Proto-Nordic
+Vietnamese
 </td>
 
 <td style="text-align:left;">
 
-destressing after loss of syllable
+Initial voiceless stop + Falling tone
 </td>
 
 <td style="text-align:left;">
 
-NA
+elevating
 </td>
 
 <td style="text-align:left;">
 
-syllable
+onset
 </td>
 
 </tr>
@@ -11059,22 +11455,22 @@ syllable
 
 <td style="text-align:left;">
 
-Yabem
+Vietnamese
 </td>
 
 <td style="text-align:left;">
 
-Initial voiceless stop
+Final voiceless fricative
 </td>
 
 <td style="text-align:left;">
 
-elevating
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda
 </td>
 
 </tr>
@@ -11088,22 +11484,22 @@ onset
 
 <td style="text-align:left;">
 
-Yabem
+Punjabi
 </td>
 
 <td style="text-align:left;">
 
-Initial voiced stop
+voiced aspirateed coda
 </td>
 
 <td style="text-align:left;">
 
-lowering
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda
 </td>
 
 </tr>
@@ -11117,22 +11513,22 @@ onset
 
 <td style="text-align:left;">
 
-Kammu
+Middle Chinese
 </td>
 
 <td style="text-align:left;">
 
-Initial voiced stop or sonorant
+final /h/
 </td>
 
 <td style="text-align:left;">
 
-lowering
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda
 </td>
 
 </tr>
@@ -11146,22 +11542,22 @@ onset
 
 <td style="text-align:left;">
 
-Kammu
+Cherokee
 </td>
 
 <td style="text-align:left;">
 
-Initial voiceless stop or voiceless sonorant
+inital glide or final glottal consonant
 </td>
 
 <td style="text-align:left;">
 
-elevating
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda, onset
 </td>
 
 </tr>
@@ -11175,22 +11571,22 @@ onset
 
 <td style="text-align:left;">
 
-Phan Rang Cham
+Lhasa Tibetan
 </td>
 
 <td style="text-align:left;">
 
-initial other than voiced stop or affricate
+final glottal stop
 </td>
 
 <td style="text-align:left;">
 
-elevating
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda
 </td>
 
 </tr>
@@ -11204,22 +11600,22 @@ onset
 
 <td style="text-align:left;">
 
-Phan Rang Cham
+Khaling
 </td>
 
 <td style="text-align:left;">
 
-voiced intial stop or affricate
+Obstruent coda OR disyllable –\> monosyllable
 </td>
 
 <td style="text-align:left;">
 
-lowering
+falling
 </td>
 
 <td style="text-align:left;">
 
-onset
+coda, syllable-count
 </td>
 
 </tr>
@@ -11233,17 +11629,18 @@ onset
 
 <td style="text-align:left;">
 
-Vietnamese
+Proto-Mohawk-Oneida
 </td>
 
 <td style="text-align:left;">
 
-open syllable or final nasal
+lengthened accented vowel followed by a glottal stop or by \* / h / plus
+a resonant consonant
 </td>
 
 <td style="text-align:left;">
 
-level
+falling
 </td>
 
 <td style="text-align:left;">
@@ -11262,22 +11659,22 @@ coda
 
 <td style="text-align:left;">
 
-Vietnamese
+Dzongkha
 </td>
 
 <td style="text-align:left;">
 
-Final oral stop, final glottal stop
+loss of a second syllable OR loss of a coda /-r/ or /-l/.
 </td>
 
 <td style="text-align:left;">
 
-rising
+falling
 </td>
 
 <td style="text-align:left;">
 
-coda
+coda, syllable-count
 </td>
 
 </tr>
@@ -11323,16 +11720,17 @@ tbl <- t %>% select(-`Number of languages`) %>% pivot_wider(names_from = Type, v
 tbl
 ```
 
-    ## # A tibble: 6 × 7
-    ## # Groups:   Area [6]
-    ##   Area          onset  coda syllable nucleus stress other
-    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia            116    33        3       4      1     2
-    ## 2 North America     1    18        3       4      4     1
-    ## 3 Papunesia         9     1        4       3      1    NA
-    ## 4 Europe           NA     8        8       1      5     1
-    ## 5 Africa            7    NA        6       7     NA     1
-    ## 6 South America    NA     6        1       3     NA    NA
+    ## # A tibble: 7 × 9
+    ## # Groups:   Area [7]
+    ##   Area          onset  coda count syllable nucleus stress other  `NA`
+    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int> <int>
+    ## 1 Asia            116    35     3        3       4      2     2    NA
+    ## 2 North America     1    19     5        5       8      4     2    NA
+    ## 3 Papunesia         9     1     4        4       3      1    NA    NA
+    ## 4 Europe           NA     8     8        8       1      5     1    NA
+    ## 5 Africa            7    NA     6        6       7     NA     1    NA
+    ## 6 South America    NA     6     1        1       3     NA    NA    NA
+    ## 7 <NA>             NA     1    NA       NA       1     NA    NA     1
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events by area"), include.rownames=FALSE)
@@ -11343,16 +11741,17 @@ tbl <- t %>% select(-`Cases of tonogenesis`) %>% pivot_wider(names_from = Type, 
 tbl
 ```
 
-    ## # A tibble: 6 × 7
-    ## # Groups:   Area [6]
-    ##   Area          onset  coda syllable nucleus stress other
-    ##   <chr>         <int> <int>    <int>   <int>  <int> <int>
-    ## 1 Asia             28    15        3       2      1     1
-    ## 2 North America     1    16        2       3      2     1
-    ## 3 Papunesia         6     1        3       2      1    NA
-    ## 4 Europe           NA     5        6       1      4     1
-    ## 5 Africa            5    NA        4       4     NA     1
-    ## 6 South America    NA     5        1       1     NA    NA
+    ## # A tibble: 7 × 9
+    ## # Groups:   Area [7]
+    ##   Area          onset  coda count syllable nucleus stress other  `NA`
+    ##   <chr>         <int> <int> <int>    <int>   <int>  <int> <int> <int>
+    ## 1 Asia             29    15     3        3       2      1     1    NA
+    ## 2 North America     1    16     3        3       5      2     2    NA
+    ## 3 Papunesia         6     1     3        3       2      1    NA    NA
+    ## 4 Europe           NA     5     6        6       1      4     1    NA
+    ## 5 Africa            5    NA     4        4       4     NA     1    NA
+    ## 6 South America    NA     5     1        1       1     NA    NA    NA
+    ## 7 <NA>             NA     1    NA       NA       1     NA    NA     1
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Languages with tonogenesis events by area"), include.rownames=FALSE)
@@ -11364,16 +11763,17 @@ tbl <- t %>% select(-`Cases of tonogenesis`, -`Number of languages`) %>% pivot_w
 tbl
 ```
 
-    ## # A tibble: 6 × 7
-    ## # Groups:   Area [6]
-    ##   Area          onset    coda    syllable nucleus stress other
-    ##   <chr>         <chr>    <chr>   <chr>    <chr>   <chr>  <chr>
-    ## 1 Asia          116 (28) 33 (15) 3 (3)    4 (2)   1 (1)  2 (1)
-    ## 2 North America 1 (1)    18 (16) 3 (2)    4 (3)   4 (2)  1 (1)
-    ## 3 Papunesia     9 (6)    1 (1)   4 (3)    3 (2)   1 (1)  <NA> 
-    ## 4 Europe        <NA>     8 (5)   8 (6)    1 (1)   5 (4)  1 (1)
-    ## 5 Africa        7 (5)    <NA>    6 (4)    7 (4)   <NA>   1 (1)
-    ## 6 South America <NA>     6 (5)   1 (1)    3 (1)   <NA>   <NA>
+    ## # A tibble: 7 × 9
+    ## # Groups:   Area [7]
+    ##   Area          onset    coda    count syllable nucleus stress other `NA` 
+    ##   <chr>         <chr>    <chr>   <chr> <chr>    <chr>   <chr>  <chr> <chr>
+    ## 1 Asia          116 (29) 35 (15) 3 (3) 3 (3)    4 (2)   2 (1)  2 (1) <NA> 
+    ## 2 North America 1 (1)    19 (16) 5 (3) 5 (3)    8 (5)   4 (2)  2 (2) <NA> 
+    ## 3 Papunesia     9 (6)    1 (1)   4 (3) 4 (3)    3 (2)   1 (1)  <NA>  <NA> 
+    ## 4 Europe        <NA>     8 (5)   8 (6) 8 (6)    1 (1)   5 (4)  1 (1) <NA> 
+    ## 5 Africa        7 (5)    <NA>    6 (4) 6 (4)    7 (4)   <NA>   1 (1) <NA> 
+    ## 6 South America <NA>     6 (5)   1 (1) 1 (1)    3 (1)   <NA>   <NA>  <NA> 
+    ## 7 <NA>          <NA>     1 (1)   <NA>  <NA>     1 (1)   <NA>   <NA>  1 (1)
 
 ``` r
 # print(xtable(tbl, type = "latex", caption="Tonogenesis events (languages) by area"), include.rownames=FALSE)
@@ -11387,7 +11787,7 @@ ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) +
   theme_bw()
 ```
 
-    ## Warning: Removed 3 rows containing missing values or values outside the scale range
+    ## Warning: Removed 6 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
@@ -11500,7 +11900,7 @@ falling
 
 <td style="text-align:right;">
 
-0.3170732
+0.2888889
 </td>
 
 </tr>
@@ -11524,7 +11924,7 @@ rising
 
 <td style="text-align:right;">
 
-0.1341463
+0.1222222
 </td>
 
 </tr>
@@ -11548,7 +11948,7 @@ falling
 
 <td style="text-align:right;">
 
-0.1097561
+0.1000000
 </td>
 
 </tr>
@@ -11572,7 +11972,7 @@ level
 
 <td style="text-align:right;">
 
-0.1097561
+0.1000000
 </td>
 
 </tr>
@@ -11596,7 +11996,7 @@ rising
 
 <td style="text-align:right;">
 
-0.0853659
+0.0777778
 </td>
 
 </tr>
@@ -11620,7 +12020,31 @@ level
 
 <td style="text-align:right;">
 
-0.0609756
+0.0555556
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0555556
 </td>
 
 </tr>
@@ -11644,7 +12068,7 @@ falling
 
 <td style="text-align:right;">
 
-0.0609756
+0.0555556
 </td>
 
 </tr>
@@ -11668,7 +12092,31 @@ rising
 
 <td style="text-align:right;">
 
-0.0365854
+0.0333333
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0222222
 </td>
 
 </tr>
@@ -11692,7 +12140,31 @@ rising
 
 <td style="text-align:right;">
 
-0.0243902
+0.0222222
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+rising-falling
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+<td style="text-align:right;">
+
+0.0111111
 </td>
 
 </tr>
@@ -11716,7 +12188,7 @@ falling
 
 <td style="text-align:right;">
 
-0.0121951
+0.0111111
 </td>
 
 </tr>
@@ -11740,7 +12212,7 @@ rising
 
 <td style="text-align:right;">
 
-0.0121951
+0.0111111
 </td>
 
 </tr>
@@ -11764,7 +12236,7 @@ rising-falling
 
 <td style="text-align:right;">
 
-0.0121951
+0.0111111
 </td>
 
 </tr>
@@ -11788,7 +12260,7 @@ falling
 
 <td style="text-align:right;">
 
-0.0121951
+0.0111111
 </td>
 
 </tr>
@@ -11812,7 +12284,7 @@ rising-falling
 
 <td style="text-align:right;">
 
-0.0121951
+0.0111111
 </td>
 
 </tr>
@@ -11915,7 +12387,7 @@ elevating
 
 <td style="text-align:right;">
 
-0.2297872
+0.2117647
 </td>
 
 </tr>
@@ -11939,7 +12411,7 @@ lowering
 
 <td style="text-align:right;">
 
-0.2297872
+0.2117647
 </td>
 
 </tr>
@@ -11958,60 +12430,12 @@ falling
 
 <td style="text-align:right;">
 
-24
+26
 </td>
 
 <td style="text-align:right;">
 
-0.1021277
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-coda
-</td>
-
-<td style="text-align:left;">
-
-elevating
-</td>
-
-<td style="text-align:right;">
-
-10
-</td>
-
-<td style="text-align:right;">
-
-0.0425532
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-coda
-</td>
-
-<td style="text-align:left;">
-
-lowering
-</td>
-
-<td style="text-align:right;">
-
-10
-</td>
-
-<td style="text-align:right;">
-
-0.0425532
+0.1019608
 </td>
 
 </tr>
@@ -12030,12 +12454,36 @@ elevating
 
 <td style="text-align:right;">
 
+12
+</td>
+
+<td style="text-align:right;">
+
+0.0470588
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
 10
 </td>
 
 <td style="text-align:right;">
 
-0.0425532
+0.0392157
 </td>
 
 </tr>
@@ -12059,7 +12507,55 @@ mid
 
 <td style="text-align:right;">
 
-0.0425532
+0.0392157
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+9
+</td>
+
+<td style="text-align:right;">
+
+0.0352941
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+9
+</td>
+
+<td style="text-align:right;">
+
+0.0352941
 </td>
 
 </tr>
@@ -12083,31 +12579,7 @@ rising
 
 <td style="text-align:right;">
 
-0.0340426
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-nucleus
-</td>
-
-<td style="text-align:left;">
-
-lowering
-</td>
-
-<td style="text-align:right;">
-
-8
-</td>
-
-<td style="text-align:right;">
-
-0.0340426
+0.0313725
 </td>
 
 </tr>
@@ -12131,7 +12603,31 @@ level
 
 <td style="text-align:right;">
 
-0.0212766
+0.0196078
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0196078
 </td>
 
 </tr>
@@ -12155,7 +12651,7 @@ rising
 
 <td style="text-align:right;">
 
-0.0212766
+0.0196078
 </td>
 
 </tr>
@@ -12179,7 +12675,31 @@ falling
 
 <td style="text-align:right;">
 
-0.0212766
+0.0196078
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
 </td>
 
 </tr>
@@ -12203,7 +12723,7 @@ falling
 
 <td style="text-align:right;">
 
-0.0170213
+0.0156863
 </td>
 
 </tr>
@@ -12227,7 +12747,31 @@ elevating
 
 <td style="text-align:right;">
 
-0.0170213
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
 </td>
 
 </tr>
@@ -12251,7 +12795,7 @@ lowering
 
 <td style="text-align:right;">
 
-0.0127660
+0.0117647
 </td>
 
 </tr>
@@ -12275,7 +12819,7 @@ elevating
 
 <td style="text-align:right;">
 
-0.0085106
+0.0078431
 </td>
 
 </tr>
@@ -12299,7 +12843,7 @@ lowering
 
 <td style="text-align:right;">
 
-0.0085106
+0.0078431
 </td>
 
 </tr>
@@ -12323,7 +12867,7 @@ rising
 
 <td style="text-align:right;">
 
-0.0085106
+0.0078431
 </td>
 
 </tr>
@@ -12378,7 +12922,7 @@ ggplot(x, aes(x=Height, y=Type, fill = Freq)) +
   scale_y_discrete(limits = c("other", "wordtype", "stress", "nucleus", "coda", "onset"))
 ```
 
-    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## Warning: Removed 4 rows containing missing values or values outside the scale range
     ## (`geom_tile()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
@@ -12391,7 +12935,7 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
   scale_y_discrete(limits = c("mid", "low", "high"))
 ```
 
-    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## Warning: Removed 4 rows containing missing values or values outside the scale range
     ## (`geom_tile()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
@@ -12411,8 +12955,9 @@ table(type_height)
     ##           Height
     ## Type       high low mid
     ##   coda       14  10   0
-    ##   nucleus    12   5   1
-    ##   onset      26  31  17
+    ##   count       5   3   0
+    ##   nucleus    14   7   1
+    ##   onset      27  32  17
     ##   other       3   1   0
     ##   stress      3   2   1
     ##   syllable    5   3   0
@@ -12424,6 +12969,7 @@ table(type_countour)
     ##           Contour
     ## Type       falling level rising rising-falling
     ##   coda          26     5      7              0
+    ##   count          5     0      2              1
     ##   nucleus        1     0      1              1
     ##   onset          9     9     11              0
     ##   other          1     0      0              0
@@ -12508,12 +13054,12 @@ onset
 
 <td style="text-align:right;">
 
-26
+27
 </td>
 
 <td style="text-align:right;">
 
-31
+32
 </td>
 
 <td style="text-align:right;">
@@ -12596,12 +13142,12 @@ nucleus
 
 <td style="text-align:right;">
 
-12
+14
 </td>
 
 <td style="text-align:right;">
 
-5
+7
 </td>
 
 <td style="text-align:right;">
@@ -12622,6 +13168,50 @@ nucleus
 <td style="text-align:right;">
 
 1
+</td>
+
+<td style="text-align:right;">
+
+1
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0
+</td>
+
+<td style="text-align:right;">
+
+2
 </td>
 
 <td style="text-align:right;">
@@ -12775,16 +13365,17 @@ tmp <- tmp %>% rowwise() %>% mutate(contour = sum(c(falling, level, rising, risi
 tmp
 ```
 
-    ## # A tibble: 6 × 10
+    ## # A tibble: 7 × 10
     ## # Rowwise: 
     ##   Type      high   low   mid falling level rising rising.falling height contour
     ##   <chr>    <int> <int> <int>   <int> <int>  <int>          <int>  <int>   <int>
-    ## 1 onset       26    31    17       9     9     11              0     74      29
+    ## 1 onset       27    32    17       9     9     11              0     76      29
     ## 2 coda        14    10     0      26     5      7              0     24      38
-    ## 3 nucleus     12     5     1       1     0      1              1     18       3
-    ## 4 syllable     5     3     0       5     0      2              1      8       8
-    ## 5 other        3     1     0       1     0      0              0      4       1
-    ## 6 stress       3     2     1       0     0      3              0      6       3
+    ## 3 nucleus     14     7     1       1     0      1              1     22       3
+    ## 4 count        5     3     0       5     0      2              1      8       8
+    ## 5 syllable     5     3     0       5     0      2              1      8       8
+    ## 6 other        3     1     0       1     0      0              0      4       1
+    ## 7 stress       3     2     1       0     0      3              0      6       3
 
 ``` r
 t <- tmp %>% select(Type, height, contour)
@@ -12827,7 +13418,7 @@ onset
 
 <td style="text-align:right;">
 
-74
+76
 </td>
 
 <td style="text-align:right;">
@@ -12865,12 +13456,31 @@ nucleus
 
 <td style="text-align:right;">
 
-18
+22
 </td>
 
 <td style="text-align:right;">
 
 3
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+8
 </td>
 
 </tr>
@@ -12941,20 +13551,570 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Mon Sep 16 10:04:15 2024
+    ## % Thu Oct  3 12:54:00 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
     ##   \hline
     ## Type & height & contour \\ 
     ##   \hline
-    ## onset &  74 &  29 \\ 
+    ## onset &  76 &  29 \\ 
     ##   coda &  24 &  38 \\ 
-    ##   nucleus &  18 &   3 \\ 
+    ##   nucleus &  22 &   3 \\ 
+    ##   count &   8 &   8 \\ 
     ##   syllable &   8 &   8 \\ 
     ##   other &   4 &   1 \\ 
     ##   stress &   6 &   3 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{} 
+    ## \end{table}
+
+# New tables for revise resubmit
+
+``` r
+# Fix the mistakes
+tonodb$Ordering <- str_replace(tonodb$Ordering, "broad", "Broad")
+tonodb$Ordering <- str_replace(tonodb$Ordering, "strict", "Strict")
+tonodb %>% filter(Ordering=="broad")
+```
+
+    ## # A tibble: 0 × 54
+    ## # ℹ 54 variables: ID <dbl>, Parameter_ID <chr>, Value <chr>, Language_ID <chr>,
+    ## #   Inventory_ID <dbl>, LanguageVariety <chr>, Ordering <chr>, Ongoing <chr>,
+    ## #   TriggeringContext <chr>, Tone <chr>, Extra <chr>, Height <chr>,
+    ## #   Contour <chr>, Phonation <chr>, ToneDescription <chr>, ChaoNumerals <chr>,
+    ## #   RestrictedEnviroment <chr>, Notes <chr>, EffectOnPitch <chr>,
+    ## #   ResultantSystem <chr>, Type <chr>, Onset <chr>, OnsetManner <chr>,
+    ## #   OnsetVoicing <chr>, OnsetAspiration <chr>, Coda <chr>, …
+
+``` r
+tonodb %>% filter(is.na(Ordering))
+```
+
+    ## # A tibble: 1 × 54
+    ##      ID Parameter_ID     Value Language_ID Inventory_ID LanguageVariety Ordering
+    ##   <dbl> <chr>            <chr> <chr>              <dbl> <chr>           <chr>   
+    ## 1   259 8D966B2253A9170… high  <NA>                  NA <NA>            <NA>    
+    ## # ℹ 47 more variables: Ongoing <chr>, TriggeringContext <chr>, Tone <chr>,
+    ## #   Extra <chr>, Height <chr>, Contour <chr>, Phonation <chr>,
+    ## #   ToneDescription <chr>, ChaoNumerals <chr>, RestrictedEnviroment <chr>,
+    ## #   Notes <chr>, EffectOnPitch <chr>, ResultantSystem <chr>, Type <chr>,
+    ## #   Onset <chr>, OnsetManner <chr>, OnsetVoicing <chr>, OnsetAspiration <chr>,
+    ## #   Coda <chr>, CodaPhonation <chr>, CodaGlottal <chr>, CodaManner <chr>,
+    ## #   Stress <chr>, SyllableCount <chr>, NucleusATR <chr>, NucleusLength <chr>, …
+
+Strict vs broad.
+
+``` r
+# table(tonodb$Ordering, exclude = FALSE)
+table(tonodb$Ordering)
+```
+
+    ## 
+    ##           Broad   Broad - split Possibly Strict          Strict         Unclear 
+    ##              20             116              43              17              62
+
+``` r
+t <- data.frame(table(tonodb$Ordering))
+t <- t %>% rename(Ordering = Var1, Count = Freq)
+t
+```
+
+    ##          Ordering Count
+    ## 1           Broad    20
+    ## 2   Broad - split   116
+    ## 3 Possibly Strict    43
+    ## 4          Strict    17
+    ## 5         Unclear    62
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lr}
+    ##   \hline
+    ## Ordering & Count \\ 
+    ##   \hline
+    ## Broad &  20 \\ 
+    ##   Broad - split & 116 \\ 
+    ##   Possibly Strict &  43 \\ 
+    ##   Strict &  17 \\ 
+    ##   Unclear &  62 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis} 
+    ## \end{table}
+
+Plus something like this, where the numbers outside the parenthesis
+represent cases, and numbers in parenthesis are languages.
+
+``` r
+tonodb %>% select(Type, Ordering)
+```
+
+    ## # A tibble: 259 × 2
+    ##    Type                 Ordering       
+    ##    <chr>                <chr>          
+    ##  1 onset                Broad - split  
+    ##  2 onset                Broad - split  
+    ##  3 coda                 Possibly Strict
+    ##  4 coda                 Unclear        
+    ##  5 coda                 Strict         
+    ##  6 coda, onset          Possibly Strict
+    ##  7 coda                 Broad          
+    ##  8 coda, syllable-count Unclear        
+    ##  9 coda                 Possibly Strict
+    ## 10 coda, syllable-count Unclear        
+    ## # ℹ 249 more rows
+
+``` r
+table(tonodb$Type, tonodb$Ordering)
+```
+
+    ##                          
+    ##                           Broad Broad - split Possibly Strict Strict Unclear
+    ##   coda                        6             7              10     10      24
+    ##   coda, nucleus               0             0               4      0       2
+    ##   coda, onset                 0             0               1      0       1
+    ##   coda, syllable-count        0             1               0      0       3
+    ##   nucleus                     3             8               2      0       5
+    ##   nucleus, coda               0             0               1      0       0
+    ##   nucleus, onset              1             0               0      0       0
+    ##   onset                       4            98              14      5       7
+    ##   onset, other                0             0               2      0       0
+    ##   other                       0             0               1      0       3
+    ##   stress                      2             0               4      0       6
+    ##   syllable-count              4             2               3      2      11
+    ##   syllable-count, nucleus     0             0               1      0       0
+
+``` r
+t <- data.frame(unclass(table(tonodb$Type, tonodb$Ordering))) %>% rownames_to_column()
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Broad Broad...split Possibly.Strict Strict Unclear
+    ## 1                     coda     6             7              10     10      24
+    ## 2            coda, nucleus     0             0               4      0       2
+    ## 3              coda, onset     0             0               1      0       1
+    ## 4     coda, syllable-count     0             1               0      0       3
+    ## 5                  nucleus     3             8               2      0       5
+    ## 6            nucleus, coda     0             0               1      0       0
+    ## 7           nucleus, onset     1             0               0      0       0
+    ## 8                    onset     4            98              14      5       7
+    ## 9             onset, other     0             0               2      0       0
+    ## 10                   other     0             0               1      0       3
+    ## 11                  stress     2             0               4      0       6
+    ## 12          syllable-count     4             2               3      2      11
+    ## 13 syllable-count, nucleus     0             0               1      0       0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Broad & Broad...split & Possibly.Strict & Strict & Unclear \\ 
+    ##   \hline
+    ## coda &   6 &   7 &  10 &  10 &  24 \\ 
+    ##   coda, nucleus &   0 &   0 &   4 &   0 &   2 \\ 
+    ##   coda, onset &   0 &   0 &   1 &   0 &   1 \\ 
+    ##   coda, syllable-count &   0 &   1 &   0 &   0 &   3 \\ 
+    ##   nucleus &   3 &   8 &   2 &   0 &   5 \\ 
+    ##   nucleus, coda &   0 &   0 &   1 &   0 &   0 \\ 
+    ##   nucleus, onset &   1 &   0 &   0 &   0 &   0 \\ 
+    ##   onset &   4 &  98 &  14 &   5 &   7 \\ 
+    ##   onset, other &   0 &   0 &   2 &   0 &   0 \\ 
+    ##   other &   0 &   0 &   1 &   0 &   3 \\ 
+    ##   stress &   2 &   0 &   4 &   0 &   6 \\ 
+    ##   syllable-count &   4 &   2 &   3 &   2 &  11 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis by class} 
+    ## \end{table}
+
+Numbers in parenthesis are languages.
+
+``` r
+tmp <- tonodb %>% select(Type, Ordering, Language_ID) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Ordering))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Broad Broad...split Possibly.Strict Strict Unclear
+    ## 1                     coda     6             3               7      3      19
+    ## 2            coda, nucleus     0             0               1      0       1
+    ## 3              coda, onset     0             0               1      0       1
+    ## 4     coda, syllable-count     0             1               0      0       3
+    ## 5                  nucleus     2             4               1      0       4
+    ## 6            nucleus, coda     0             0               1      0       0
+    ## 7           nucleus, onset     1             0               0      0       0
+    ## 8                    onset     3            17               7      3       5
+    ## 9             onset, other     0             0               1      0       0
+    ## 10                   other     0             0               1      0       3
+    ## 11                  stress     1             0               2      0       5
+    ## 12          syllable-count     4             1               3      1       7
+    ## 13 syllable-count, nucleus     0             0               1      0       0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by language"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Broad & Broad...split & Possibly.Strict & Strict & Unclear \\ 
+    ##   \hline
+    ## coda &   6 &   3 &   7 &   3 &  19 \\ 
+    ##   coda, nucleus &   0 &   0 &   1 &   0 &   1 \\ 
+    ##   coda, onset &   0 &   0 &   1 &   0 &   1 \\ 
+    ##   coda, syllable-count &   0 &   1 &   0 &   0 &   3 \\ 
+    ##   nucleus &   2 &   4 &   1 &   0 &   4 \\ 
+    ##   nucleus, coda &   0 &   0 &   1 &   0 &   0 \\ 
+    ##   nucleus, onset &   1 &   0 &   0 &   0 &   0 \\ 
+    ##   onset &   3 &  17 &   7 &   3 &   5 \\ 
+    ##   onset, other &   0 &   0 &   1 &   0 &   0 \\ 
+    ##   other &   0 &   0 &   1 &   0 &   3 \\ 
+    ##   stress &   1 &   0 &   2 &   0 &   5 \\ 
+    ##   syllable-count &   4 &   1 &   3 &   1 &   7 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis by class by language} 
+    ## \end{table}
+
+Class by type by area.
+
+``` r
+tmp <- tonodb %>% select(Type, Ordering, Macroarea)
+t <- data.frame(unclass(table(tmp$Type, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Africa Eurasia North.America Papunesia South.America
+    ## 1                     coda      0      39            14         0             4
+    ## 2            coda, nucleus      0       0             4         0             2
+    ## 3              coda, onset      0       0             1         1             0
+    ## 4     coda, syllable-count      0       4             0         0             0
+    ## 5                  nucleus      7       5             3         2             1
+    ## 6            nucleus, coda      0       0             0         0             0
+    ## 7           nucleus, onset      0       0             0         1             0
+    ## 8                    onset      7      91             0         7             0
+    ## 9             onset, other      0       2             0         0             0
+    ## 10                   other      1       1             2         0             0
+    ## 11                  stress      0       7             4         1             0
+    ## 12          syllable-count      6       7             4         4             1
+    ## 13 syllable-count, nucleus      0       0             1         0             0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by macroarea"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Africa & Eurasia & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## coda &   0 &  39 &  14 &   0 &   4 \\ 
+    ##   coda, nucleus &   0 &   0 &   4 &   0 &   2 \\ 
+    ##   coda, onset &   0 &   0 &   1 &   1 &   0 \\ 
+    ##   coda, syllable-count &   0 &   4 &   0 &   0 &   0 \\ 
+    ##   nucleus &   7 &   5 &   3 &   2 &   1 \\ 
+    ##   nucleus, coda &   0 &   0 &   0 &   0 &   0 \\ 
+    ##   nucleus, onset &   0 &   0 &   0 &   1 &   0 \\ 
+    ##   onset &   7 &  91 &   0 &   7 &   0 \\ 
+    ##   onset, other &   0 &   2 &   0 &   0 &   0 \\ 
+    ##   other &   1 &   1 &   2 &   0 &   0 \\ 
+    ##   stress &   0 &   7 &   4 &   1 &   0 \\ 
+    ##   syllable-count &   6 &   7 &   4 &   4 &   1 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis by class by macroarea} 
+    ## \end{table}
+
+Strict vs broad cases of tonogenesis by class by macroarea (macroarea
+collapses Asia and Europe). All rows.
+
+``` r
+tmp <- tonodb %>% select(Type, Area)
+t <- data.frame(unclass(table(tmp$Type, tmp$Area))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Africa Asia Europe North.America Papunesia
+    ## 1                     coda      0   32      7            14         0
+    ## 2            coda, nucleus      0    0      0             4         0
+    ## 3              coda, onset      0    0      0             1         1
+    ## 4     coda, syllable-count      0    3      1             0         0
+    ## 5                  nucleus      7    4      1             3         2
+    ## 6            nucleus, coda      0    0      0             0         0
+    ## 7           nucleus, onset      0    0      0             0         1
+    ## 8                    onset      7  114      0             0         7
+    ## 9             onset, other      0    2      0             0         0
+    ## 10                   other      1    0      1             2         0
+    ## 11                  stress      0    2      5             4         1
+    ## 12          syllable-count      6    0      7             4         4
+    ## 13 syllable-count, nucleus      0    0      0             1         0
+    ##    South.America
+    ## 1              4
+    ## 2              2
+    ## 3              0
+    ## 4              0
+    ## 5              1
+    ## 6              0
+    ## 7              0
+    ## 8              0
+    ## 9              0
+    ## 10             0
+    ## 11             0
+    ## 12             1
+    ## 13             0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis per macroarea"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrrr}
+    ##   \hline
+    ## Type & Africa & Asia & Europe & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## coda &   0 &  32 &   7 &  14 &   0 &   4 \\ 
+    ##   coda, nucleus &   0 &   0 &   0 &   4 &   0 &   2 \\ 
+    ##   coda, onset &   0 &   0 &   0 &   1 &   1 &   0 \\ 
+    ##   coda, syllable-count &   0 &   3 &   1 &   0 &   0 &   0 \\ 
+    ##   nucleus &   7 &   4 &   1 &   3 &   2 &   1 \\ 
+    ##   nucleus, coda &   0 &   0 &   0 &   0 &   0 &   0 \\ 
+    ##   nucleus, onset &   0 &   0 &   0 &   0 &   1 &   0 \\ 
+    ##   onset &   7 & 114 &   0 &   0 &   7 &   0 \\ 
+    ##   onset, other &   0 &   2 &   0 &   0 &   0 &   0 \\ 
+    ##   other &   1 &   0 &   1 &   2 &   0 &   0 \\ 
+    ##   stress &   0 &   2 &   5 &   4 &   1 &   0 \\ 
+    ##   syllable-count &   6 &   0 &   7 &   4 &   4 &   1 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis per macroarea} 
+    ## \end{table}
+
+Strict vs broad cases of tonogenesis by class by macroarea (macroarea
+collapses Asia and Europe). Per language.
+
+``` r
+tmp <- tonodb %>% select(Type, LanguageVariety, Area) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Area))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Africa Asia Europe North.America Papunesia
+    ## 1                     coda      0   15      5            13         0
+    ## 2            coda, nucleus      0    0      0             2         0
+    ## 3              coda, onset      0    0      0             1         1
+    ## 4     coda, syllable-count      0    3      1             0         0
+    ## 5                  nucleus      4    2      1             2         1
+    ## 6            nucleus, coda      0    0      0             0         0
+    ## 7           nucleus, onset      0    0      0             0         1
+    ## 8                    onset      5   28      0             0         4
+    ## 9             onset, other      0    1      0             0         0
+    ## 10                   other      1    0      1             2         0
+    ## 11                  stress      0    1      4             2         1
+    ## 12          syllable-count      4    0      5             3         3
+    ## 13 syllable-count, nucleus      0    0      0             1         0
+    ##    South.America
+    ## 1              4
+    ## 2              1
+    ## 3              0
+    ## 4              0
+    ## 5              1
+    ## 6              0
+    ## 7              0
+    ## 8              0
+    ## 9              0
+    ## 10             0
+    ## 11             0
+    ## 12             1
+    ## 13             0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by language by macroarea"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrrr}
+    ##   \hline
+    ## Type & Africa & Asia & Europe & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## coda &   0 &  15 &   5 &  13 &   0 &   4 \\ 
+    ##   coda, nucleus &   0 &   0 &   0 &   2 &   0 &   1 \\ 
+    ##   coda, onset &   0 &   0 &   0 &   1 &   1 &   0 \\ 
+    ##   coda, syllable-count &   0 &   3 &   1 &   0 &   0 &   0 \\ 
+    ##   nucleus &   4 &   2 &   1 &   2 &   1 &   1 \\ 
+    ##   nucleus, coda &   0 &   0 &   0 &   0 &   0 &   0 \\ 
+    ##   nucleus, onset &   0 &   0 &   0 &   0 &   1 &   0 \\ 
+    ##   onset &   5 &  28 &   0 &   0 &   4 &   0 \\ 
+    ##   onset, other &   0 &   1 &   0 &   0 &   0 &   0 \\ 
+    ##   other &   1 &   0 &   1 &   2 &   0 &   0 \\ 
+    ##   stress &   0 &   1 &   4 &   2 &   1 &   0 \\ 
+    ##   syllable-count &   4 &   0 &   5 &   3 &   3 &   1 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis by language by macroarea} 
+    ## \end{table}
+
+Strict vs broad cases of tonogenesis by class by language by macroarea.
+
+``` r
+tmp <- tonodb %>% select(Type, Ordering, Macroarea) %>% distinct()
+t <- data.frame(unclass(table(tmp$Type, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##                       Type Africa Eurasia North.America Papunesia South.America
+    ## 1                     coda      0       5             2         0             1
+    ## 2            coda, nucleus      0       0             1         0             1
+    ## 3              coda, onset      0       0             1         1             0
+    ## 4     coda, syllable-count      0       2             0         0             0
+    ## 5                  nucleus      2       2             2         1             1
+    ## 6            nucleus, coda      0       0             0         0             0
+    ## 7           nucleus, onset      0       0             0         1             0
+    ## 8                    onset      2       5             0         2             0
+    ## 9             onset, other      0       1             0         0             0
+    ## 10                   other      1       1             2         0             0
+    ## 11                  stress      0       3             2         1             0
+    ## 12          syllable-count      3       3             3         2             1
+    ## 13 syllable-count, nucleus      0       0             1         0             0
+
+``` r
+print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by class by language by macroarea"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Africa & Eurasia & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## coda &   0 &   5 &   2 &   0 &   1 \\ 
+    ##   coda, nucleus &   0 &   0 &   1 &   0 &   1 \\ 
+    ##   coda, onset &   0 &   0 &   1 &   1 &   0 \\ 
+    ##   coda, syllable-count &   0 &   2 &   0 &   0 &   0 \\ 
+    ##   nucleus &   2 &   2 &   2 &   1 &   1 \\ 
+    ##   nucleus, coda &   0 &   0 &   0 &   0 &   0 \\ 
+    ##   nucleus, onset &   0 &   0 &   0 &   1 &   0 \\ 
+    ##   onset &   2 &   5 &   0 &   2 &   0 \\ 
+    ##   onset, other &   0 &   1 &   0 &   0 &   0 \\ 
+    ##   other &   1 &   1 &   2 &   0 &   0 \\ 
+    ##   stress &   0 &   3 &   2 &   1 &   0 \\ 
+    ##   syllable-count &   3 &   3 &   3 &   2 &   1 \\ 
+    ##   syllable-count, nucleus &   0 &   0 &   1 &   0 &   0 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Strict vs broad cases of tonogenesis by class by language by macroarea} 
+    ## \end{table}
+
+Type by rows by area.
+
+``` r
+tmp <- tonodb %>% select(Ordering, Macroarea)
+t <- data.frame(unclass(table(tmp$Ordering, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##              Type Africa Eurasia North.America Papunesia South.America
+    ## 1           Broad      5       8             0         3             4
+    ## 2   Broad - split     13      80             0         0             0
+    ## 3 Possibly Strict      0      17            18         7             0
+    ## 4          Strict      0      15             2         0             0
+    ## 5         Unclear      3      36            13         6             4
+
+``` r
+print(xtable(t, type = "latex", caption="Type by rows by area"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Africa & Eurasia & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## Broad &   5 &   8 &   0 &   3 &   4 \\ 
+    ##   Broad - split &  13 &  80 &   0 &   0 &   0 \\ 
+    ##   Possibly Strict &   0 &  17 &  18 &   7 &   0 \\ 
+    ##   Strict &   0 &  15 &   2 &   0 &   0 \\ 
+    ##   Unclear &   3 &  36 &  13 &   6 &   4 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Type by rows by area} 
+    ## \end{table}
+
+Type by distinct languages.
+
+``` r
+tmp <- tonodb %>% select(Language_ID, Ordering, Macroarea) %>% distinct()
+t <- data.frame(unclass(table(tmp$Ordering, tmp$Macroarea))) %>% rownames_to_column() 
+t <- t %>% rename(Type = rowname)
+t
+```
+
+    ##              Type Africa Eurasia North.America Papunesia South.America
+    ## 1           Broad      5       6             0         2             4
+    ## 2   Broad - split      6      17             0         0             0
+    ## 3 Possibly Strict      0       8            11         4             0
+    ## 4          Strict      0       6             1         0             0
+    ## 5         Unclear      2      19             9         4             2
+
+``` r
+print(xtable(t, type = "latex", caption="Type by distinct languages"), include.rownames=FALSE)
+```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Thu Oct  3 12:54:00 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{lrrrrr}
+    ##   \hline
+    ## Type & Africa & Eurasia & North.America & Papunesia & South.America \\ 
+    ##   \hline
+    ## Broad &   5 &   6 &   0 &   2 &   4 \\ 
+    ##   Broad - split &   6 &  17 &   0 &   0 &   0 \\ 
+    ##   Possibly Strict &   0 &   8 &  11 &   4 &   0 \\ 
+    ##   Strict &   0 &   6 &   1 &   0 &   0 \\ 
+    ##   Unclear &   2 &  19 &   9 &   4 &   2 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Type by distinct languages} 
     ## \end{table}
