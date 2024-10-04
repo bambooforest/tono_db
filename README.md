@@ -2,7 +2,7 @@ TonoDB analyses
 ================
 Steven Moran and Lilja Maria Sæbø
 
-03 October, 2024
+04 October, 2024
 
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
@@ -68,10 +68,6 @@ Steven Moran and Lilja Maria Sæbø
 - [Patterns in level vs contour
   height](#patterns-in-level-vs-contour-height)
 - [New tables for revise resubmit](#new-tables-for-revise-resubmit)
-
-Todos:
-
-- syllable-count (instead of wordtype)
 
 # Setup
 
@@ -1442,7 +1438,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:53:58 2024
+    ## % Fri Oct  4 10:41:35 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -2246,7 +2242,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:53:58 2024
+    ## % Fri Oct  4 10:41:35 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -2295,8 +2291,23 @@ tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>%
 t <- data.frame(unclass(table(tmp$OnsetVoicing, tmp$EffectOnPitch)))
 t <- t %>% select(lowering, mid, elevating, rising, falling)
 
-# print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
+print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
 ```
+
+    ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
+    ## % Fri Oct  4 10:41:35 2024
+    ## \begin{table}[ht]
+    ## \centering
+    ## \begin{tabular}{rrrrrr}
+    ##   \hline
+    ##  & lowering & mid & elevating & rising & falling \\ 
+    ##   \hline
+    ## Voiced &  37 &   0 &  10 &   2 &   2 \\ 
+    ##   Voiceless &  11 &   8 &  35 &   0 &   1 \\ 
+    ##    \hline
+    ## \end{tabular}
+    ## \caption{Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents} 
+    ## \end{table}
 
 ## Tonogenesis triggered by coda consonants
 
@@ -5592,7 +5603,7 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:53:58 2024
+    ## % Fri Oct  4 10:41:35 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -5779,7 +5790,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:53:58 2024
+    ## % Fri Oct  4 10:41:35 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -13551,7 +13562,7 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -13633,7 +13644,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis"),
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lr}
@@ -13718,7 +13729,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13772,7 +13783,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13826,7 +13837,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13895,7 +13906,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis pe
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -13964,7 +13975,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -14018,7 +14029,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -14064,7 +14075,7 @@ print(xtable(t, type = "latex", caption="Type by rows by area"), include.rowname
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -14102,7 +14113,7 @@ print(xtable(t, type = "latex", caption="Type by distinct languages"), include.r
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Thu Oct  3 12:54:00 2024
+    ## % Fri Oct  4 10:41:37 2024
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}

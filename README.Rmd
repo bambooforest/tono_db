@@ -7,10 +7,6 @@ output:
     toc: true
 ---
 
-Todos:
-
-- syllable-count (instead of wordtype)
-
 # Setup
 
 Load the libraries.
@@ -237,7 +233,7 @@ tmp <- tonodb %>% select(OnsetVoicing, EffectOnPitch) %>%
 t <- data.frame(unclass(table(tmp$OnsetVoicing, tmp$EffectOnPitch)))
 t <- t %>% select(lowering, mid, elevating, rising, falling)
 
-# print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
+print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and voiceless (unaspirated) obstruents"))
 ```
 
 ## Tonogenesis triggered by coda consonants
