@@ -1,9 +1,10 @@
-TonoDB analyses
+Supplementary materials for: ‘Tonogenesis: a diachronic typology’
 ================
-Steven Moran and Lilja Maria Sæbø
+Steven Moran, Etian Grossman and Lilja Maria Sæbø
 
-04 October, 2024
+26 February, 2025
 
+- [Overview](#overview)
 - [Setup](#setup)
 - [Basics of the database contents](#basics-of-the-database-contents)
 - [Tables for the paper](#tables-for-the-paper)
@@ -67,7 +68,18 @@ Steven Moran and Lilja Maria Sæbø
   result](#multiple-paths-to-the-same-result)
 - [Patterns in level vs contour
   height](#patterns-in-level-vs-contour-height)
-- [New tables for revise resubmit](#new-tables-for-revise-resubmit)
+- [New tables for revise and
+  resubmit](#new-tables-for-revise-and-resubmit)
+
+# Overview
+
+Supplementary materials for “Tonogenesis: a diachronic typology” by
+Lilja Maria Sæbø, Eitan Grossman and Steven Moran, accepted in
+*Diachronica*.
+
+The [CLDF data]() are available here:
+
+- <https://github.com/cldf-datasets/tonodb>
 
 # Setup
 
@@ -1001,7 +1013,7 @@ table(contributions$Area, exclude=FALSE)
 
 # Tables for the paper
 
-Recreate some of the tables. First merge the tonodb tables.
+Create tables for the paper. First merge the tonodb tables.
 
 ``` r
 tonodb <- left_join(values, languages, by=c("Language_ID"="ID"))
@@ -1014,7 +1026,37 @@ tonodb <- left_join(tonodb, tmp, by=c("Inventory_ID"="ID"))
 
 # Rename wordtype to syllable-count -- TODO replace when database is updated
 tonodb <- tonodb %>% mutate(Type = str_replace(Type, "wordtype", "syllable"))
+
+# Fix the mistakes (TODO: rerun the CLDF creation script, which will fix these typos below)
+tonodb$Ordering <- str_replace(tonodb$Ordering, "broad", "Broad")
+tonodb$Ordering <- str_replace(tonodb$Ordering, "strict", "Strict")
+tonodb %>% filter(Ordering=="broad")
 ```
+
+    ## # A tibble: 0 × 54
+    ## # ℹ 54 variables: ID <dbl>, Parameter_ID <chr>, Value <chr>, Language_ID <chr>,
+    ## #   Inventory_ID <dbl>, LanguageVariety <chr>, Ordering <chr>, Ongoing <chr>,
+    ## #   TriggeringContext <chr>, Tone <chr>, Extra <chr>, Height <chr>,
+    ## #   Contour <chr>, Phonation <chr>, ToneDescription <chr>, ChaoNumerals <chr>,
+    ## #   RestrictedEnviroment <chr>, Notes <chr>, EffectOnPitch <chr>,
+    ## #   ResultantSystem <chr>, Type <chr>, Onset <chr>, OnsetManner <chr>,
+    ## #   OnsetVoicing <chr>, OnsetAspiration <chr>, Coda <chr>, …
+
+``` r
+tonodb %>% filter(is.na(Ordering))
+```
+
+    ## # A tibble: 1 × 54
+    ##      ID Parameter_ID     Value Language_ID Inventory_ID LanguageVariety Ordering
+    ##   <dbl> <chr>            <chr> <chr>              <dbl> <chr>           <chr>   
+    ## 1   259 8D966B2253A9170… high  <NA>                  NA <NA>            <NA>    
+    ## # ℹ 47 more variables: Ongoing <chr>, TriggeringContext <chr>, Tone <chr>,
+    ## #   Extra <chr>, Height <chr>, Contour <chr>, Phonation <chr>,
+    ## #   ToneDescription <chr>, ChaoNumerals <chr>, RestrictedEnviroment <chr>,
+    ## #   Notes <chr>, EffectOnPitch <chr>, ResultantSystem <chr>, Type <chr>,
+    ## #   Onset <chr>, OnsetManner <chr>, OnsetVoicing <chr>, OnsetAspiration <chr>,
+    ## #   Coda <chr>, CodaPhonation <chr>, CodaGlottal <chr>, CodaManner <chr>,
+    ## #   Stress <chr>, SyllableCount <chr>, NucleusATR <chr>, NucleusLength <chr>, …
 
 ## Distribution of the languages, families and cases of tonogenesis across different areas
 
@@ -1438,7 +1480,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:35 2024
+    ## % Wed Feb 26 14:35:23 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -2242,7 +2284,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:35 2024
+    ## % Wed Feb 26 14:35:23 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -2295,7 +2337,7 @@ print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and v
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:35 2024
+    ## % Wed Feb 26 14:35:23 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -5603,7 +5645,7 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:35 2024
+    ## % Wed Feb 26 14:35:23 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -5790,7 +5832,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:35 2024
+    ## % Wed Feb 26 14:35:23 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -11805,6 +11847,36 @@ ggplot(data=m, aes(x=Longitude, y=Latitude, color=Type)) +
 
 # Multiple paths to the same result
 
+Chord diagrams showing the relative frequencies between type of
+tonogenetic events (left) and their effect on various factors.
+
+``` r
+x <- tonodb %>% select(Type, Height, Ordering) %>% filter(!is.na(Height)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, Height, Ordering) %>% summarize(Count = n())
+```
+
+    ## `summarise()` has grouped output by 'Type', 'Height'. You can override using
+    ## the `.groups` argument.
+
+``` r
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+```
+
+``` r
+ggplot(data = x,
+       aes(axis1 = Type, axis2 = Height, y = Count)) +
+  geom_alluvium(aes(fill = Ordering)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+
 ``` r
 x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
 x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
@@ -11830,12 +11902,1171 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
 
 ``` r
-ggplot(data = x,
-       aes(axis1 = Type, axis2 = Height, y = Count)) +
-  geom_alluvium(aes(fill = Height)) +
+x <- tonodb %>% select(Type, EffectOnPitch, Ordering) %>% filter(!is.na(EffectOnPitch)) %>% separate_rows(Type)
+x <- x %>% group_by(Type, EffectOnPitch, Ordering) %>% summarize(Count = n())
+```
+
+    ## `summarise()` has grouped output by 'Type', 'EffectOnPitch'. You can override
+    ## using the `.groups` argument.
+
+``` r
+x <- x %>% mutate(Freq = Count / sum(x$Count))
+x <- x %>% arrange(desc(Count))
+x <- x %>% filter(Count > 1) %>% filter(Type != "other")
+x %>% kable()
+```
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Type
+</th>
+
+<th style="text-align:left;">
+
+EffectOnPitch
+</th>
+
+<th style="text-align:left;">
+
+Ordering
+</th>
+
+<th style="text-align:right;">
+
+Count
+</th>
+
+<th style="text-align:right;">
+
+Freq
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+39
+</td>
+
+<td style="text-align:right;">
+
+0.1529412
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+39
+</td>
+
+<td style="text-align:right;">
+
+0.1529412
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+14
+</td>
+
+<td style="text-align:right;">
+
+0.0549020
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+mid
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+10
+</td>
+
+<td style="text-align:right;">
+
+0.0392157
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+0.0313725
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+8
+</td>
+
+<td style="text-align:right;">
+
+0.0313725
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+5
+</td>
+
+<td style="text-align:right;">
+
+0.0196078
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+4
+</td>
+
+<td style="text-align:right;">
+
+0.0156863
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Broad
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Broad
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+3
+</td>
+
+<td style="text-align:right;">
+
+0.0117647
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+falling
+</td>
+
+<td style="text-align:left;">
+
+Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+level
+</td>
+
+<td style="text-align:left;">
+
+Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+level
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Possibly Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+coda
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+count
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Broad
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nucleus
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Broad
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Strict
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+lowering
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Broad - split
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+onset
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+stress
+</td>
+
+<td style="text-align:left;">
+
+rising
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+syllable
+</td>
+
+<td style="text-align:left;">
+
+elevating
+</td>
+
+<td style="text-align:left;">
+
+Unclear
+</td>
+
+<td style="text-align:right;">
+
+2
+</td>
+
+<td style="text-align:right;">
+
+0.0078431
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+x %>% filter(!(Type %in% c("count", "stress", "syllable"))) %>%
+  filter(!(EffectOnPitch %in% c("level", "mid"))) %>%
+ggplot(aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
+  geom_alluvium(aes(fill = Ordering)) +
   geom_stratum() +
   geom_text(stat = "stratum",
             aes(label = after_stat(stratum))) +
@@ -11844,7 +13075,7 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](README_files/figure-gfm/Chord_type_effectOnPitch_Ordering-1.png)<!-- -->
 
 ``` r
 x <- tonodb %>% select(Type, Contour) %>% filter(!is.na(Contour)) %>% separate_rows(Type)
@@ -12316,7 +13547,7 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
 
 ``` r
 ggplot(data = x,
@@ -12330,7 +13561,7 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-59-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
 
 ``` r
 x <- tonodb %>% select(Type, EffectOnPitch) %>% filter(!is.na(EffectOnPitch)) %>% separate_rows(Type)
@@ -12899,7 +14130,7 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-65-1.png)<!-- -->
 
 ``` r
 ggplot(data = x,
@@ -12913,7 +14144,7 @@ ggplot(data = x,
   theme_void()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-60-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
 
 ``` r
 x <- tonodb %>% select(Type, Height) %>% filter(!is.na(Height)) %>% separate_rows(Type)
@@ -12926,7 +14157,9 @@ x <- x %>% group_by(Type, Height) %>% summarize(Count = n())
 ``` r
 x <- x %>% mutate(Freq = Count / sum(x$Count))
 x <- x %>% arrange(desc(Count))
+```
 
+``` r
 ggplot(x, aes(x=Height, y=Type, fill = Freq)) + 
   geom_tile() +
   theme_bw() +
@@ -12936,7 +14169,7 @@ ggplot(x, aes(x=Height, y=Type, fill = Freq)) +
     ## Warning: Removed 4 rows containing missing values or values outside the scale range
     ## (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-68-1.png)<!-- -->
 
 ``` r
 ggplot(x, aes(x=Type, y=Height, fill = Freq)) + 
@@ -12949,13 +14182,13 @@ ggplot(x, aes(x=Type, y=Height, fill = Freq)) +
     ## Warning: Removed 4 rows containing missing values or values outside the scale range
     ## (`geom_tile()`).
 
-![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-69-1.png)<!-- -->
 
 # Patterns in level vs contour height
 
-it is more common for onset tonogenesis to have a elevating or lowering
+It is more common for onset tonogenesis to have a elevating or lowering
 effect, and more common for coda tonogenesis to have a rising or falling
-effect
+effect.
 
 ``` r
 type_height <- tonodb %>% select(Type, Height) %>% separate_rows(Type)
@@ -13562,7 +14795,7 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -13581,39 +14814,7 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
     ## \caption{} 
     ## \end{table}
 
-# New tables for revise resubmit
-
-``` r
-# Fix the mistakes
-tonodb$Ordering <- str_replace(tonodb$Ordering, "broad", "Broad")
-tonodb$Ordering <- str_replace(tonodb$Ordering, "strict", "Strict")
-tonodb %>% filter(Ordering=="broad")
-```
-
-    ## # A tibble: 0 × 54
-    ## # ℹ 54 variables: ID <dbl>, Parameter_ID <chr>, Value <chr>, Language_ID <chr>,
-    ## #   Inventory_ID <dbl>, LanguageVariety <chr>, Ordering <chr>, Ongoing <chr>,
-    ## #   TriggeringContext <chr>, Tone <chr>, Extra <chr>, Height <chr>,
-    ## #   Contour <chr>, Phonation <chr>, ToneDescription <chr>, ChaoNumerals <chr>,
-    ## #   RestrictedEnviroment <chr>, Notes <chr>, EffectOnPitch <chr>,
-    ## #   ResultantSystem <chr>, Type <chr>, Onset <chr>, OnsetManner <chr>,
-    ## #   OnsetVoicing <chr>, OnsetAspiration <chr>, Coda <chr>, …
-
-``` r
-tonodb %>% filter(is.na(Ordering))
-```
-
-    ## # A tibble: 1 × 54
-    ##      ID Parameter_ID     Value Language_ID Inventory_ID LanguageVariety Ordering
-    ##   <dbl> <chr>            <chr> <chr>              <dbl> <chr>           <chr>   
-    ## 1   259 8D966B2253A9170… high  <NA>                  NA <NA>            <NA>    
-    ## # ℹ 47 more variables: Ongoing <chr>, TriggeringContext <chr>, Tone <chr>,
-    ## #   Extra <chr>, Height <chr>, Contour <chr>, Phonation <chr>,
-    ## #   ToneDescription <chr>, ChaoNumerals <chr>, RestrictedEnviroment <chr>,
-    ## #   Notes <chr>, EffectOnPitch <chr>, ResultantSystem <chr>, Type <chr>,
-    ## #   Onset <chr>, OnsetManner <chr>, OnsetVoicing <chr>, OnsetAspiration <chr>,
-    ## #   Coda <chr>, CodaPhonation <chr>, CodaGlottal <chr>, CodaManner <chr>,
-    ## #   Stress <chr>, SyllableCount <chr>, NucleusATR <chr>, NucleusLength <chr>, …
+# New tables for revise and resubmit
 
 Strict vs broad.
 
@@ -13644,7 +14845,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis"),
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lr}
@@ -13729,7 +14930,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13783,7 +14984,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13837,7 +15038,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -13906,7 +15107,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis pe
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -13975,7 +15176,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -14029,7 +15230,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -14057,36 +15258,36 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 Type by rows by area.
 
 ``` r
-tmp <- tonodb %>% select(Ordering, Macroarea)
-t <- data.frame(unclass(table(tmp$Ordering, tmp$Macroarea))) %>% rownames_to_column() 
+tmp <- tonodb %>% select(Ordering, Area)
+t <- data.frame(unclass(table(tmp$Ordering, tmp$Area))) %>% rownames_to_column() 
 t <- t %>% rename(Type = rowname)
 t
 ```
 
-    ##              Type Africa Eurasia North.America Papunesia South.America
-    ## 1           Broad      5       8             0         3             4
-    ## 2   Broad - split     13      80             0         0             0
-    ## 3 Possibly Strict      0      17            18         7             0
-    ## 4          Strict      0      15             2         0             0
-    ## 5         Unclear      3      36            13         6             4
+    ##              Type Africa Asia Europe North.America Papunesia South.America
+    ## 1           Broad      5    4      4             0         3             4
+    ## 2   Broad - split     13  102      1             0         0             0
+    ## 3 Possibly Strict      0   16      1            18         7             0
+    ## 4          Strict      0   15      0             2         0             0
+    ## 5         Unclear      3   20     16            13         6             4
 
 ``` r
 print(xtable(t, type = "latex", caption="Type by rows by area"), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
-    ## \begin{tabular}{lrrrrr}
+    ## \begin{tabular}{lrrrrrr}
     ##   \hline
-    ## Type & Africa & Eurasia & North.America & Papunesia & South.America \\ 
+    ## Type & Africa & Asia & Europe & North.America & Papunesia & South.America \\ 
     ##   \hline
-    ## Broad &   5 &   8 &   0 &   3 &   4 \\ 
-    ##   Broad - split &  13 &  80 &   0 &   0 &   0 \\ 
-    ##   Possibly Strict &   0 &  17 &  18 &   7 &   0 \\ 
-    ##   Strict &   0 &  15 &   2 &   0 &   0 \\ 
-    ##   Unclear &   3 &  36 &  13 &   6 &   4 \\ 
+    ## Broad &   5 &   4 &   4 &   0 &   3 &   4 \\ 
+    ##   Broad - split &  13 & 102 &   1 &   0 &   0 &   0 \\ 
+    ##   Possibly Strict &   0 &  16 &   1 &  18 &   7 &   0 \\ 
+    ##   Strict &   0 &  15 &   0 &   2 &   0 &   0 \\ 
+    ##   Unclear &   3 &  20 &  16 &  13 &   6 &   4 \\ 
     ##    \hline
     ## \end{tabular}
     ## \caption{Type by rows by area} 
@@ -14113,7 +15314,7 @@ print(xtable(t, type = "latex", caption="Type by distinct languages"), include.r
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Fri Oct  4 10:41:37 2024
+    ## % Wed Feb 26 14:35:26 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
