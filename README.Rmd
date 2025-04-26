@@ -800,6 +800,23 @@ ggplot(aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
   theme_void()
 ```
 
+```{r Chord_type_effectOnPitch_Ordering2}
+w <- x %>% filter(!(Type %in% c("count", "stress", "syllable"))) %>%
+  filter(!(EffectOnPitch %in% c("level", "mid")))
+w$Type <- factor(w$Type, levels=c("onset", "nucleus", "coda"))
+w$EffectOnPitch <- factor(w$EffectOnPitch, levels=c("elevating", "lowering", "rising", "falling"))
+
+w %>%
+ggplot(aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
+  geom_alluvium(aes(fill = Ordering)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
 ```{r}
 x <- tonodb %>% select(Type, Contour) %>% filter(!is.na(Contour)) %>% separate_rows(Type)
 x <- x %>% group_by(Type, Contour) %>% summarize(Count = n())

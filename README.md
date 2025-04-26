@@ -2,7 +2,7 @@ Supplementary materials for: ‘Tonogenesis: a diachronic typology’
 ================
 Steven Moran, Etian Grossman and Lilja Maria Sæbø
 
-26 February, 2025
+26 April, 2025
 
 - [Overview](#overview)
 - [Setup](#setup)
@@ -1480,7 +1480,7 @@ print(xtable(tmp, type = "latex", caption="Distribution of the languages, famili
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:23 2025
+    ## % Sat Apr 26 08:51:40 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrr}
@@ -2284,7 +2284,7 @@ print(xtable(tmp, type = "latex", caption="Cases of tonogenesis by category"), i
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:23 2025
+    ## % Sat Apr 26 08:51:41 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -2337,7 +2337,7 @@ print(xtable(t, type = "latex", caption="Tonogenesis conditioned by voiced and v
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:23 2025
+    ## % Sat Apr 26 08:51:41 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -5645,7 +5645,7 @@ print(xtable(t, type = "latex", caption="The effect of voicing on tone"))
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:23 2025
+    ## % Sat Apr 26 08:51:41 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrrrr}
@@ -5832,7 +5832,7 @@ print(xtable(table(tmp), type = "latex", caption="The effect of voice on pitch")
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:23 2025
+    ## % Sat Apr 26 08:51:41 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{rrrr}
@@ -13078,6 +13078,25 @@ ggplot(aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
 ![](README_files/figure-gfm/Chord_type_effectOnPitch_Ordering-1.png)<!-- -->
 
 ``` r
+w <- x %>% filter(!(Type %in% c("count", "stress", "syllable"))) %>%
+  filter(!(EffectOnPitch %in% c("level", "mid")))
+w$Type <- factor(w$Type, levels=c("onset", "nucleus", "coda"))
+w$EffectOnPitch <- factor(w$EffectOnPitch, levels=c("elevating", "lowering", "rising", "falling"))
+
+w %>%
+ggplot(aes(axis1 = Type, axis2 = EffectOnPitch, y = Count)) +
+  geom_alluvium(aes(fill = Ordering)) +
+  geom_stratum() +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Survey", "Response"),
+                   expand = c(0.15, 0.05)) +
+  theme_void()
+```
+
+![](README_files/figure-gfm/Chord_type_effectOnPitch_Ordering2-1.png)<!-- -->
+
+``` r
 x <- tonodb %>% select(Type, Contour) %>% filter(!is.na(Contour)) %>% separate_rows(Type)
 x <- x %>% group_by(Type, Contour) %>% summarize(Count = n())
 ```
@@ -14795,7 +14814,7 @@ print(xtable(t, type = "latex", caption=""), include.rownames=FALSE)
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrr}
@@ -14845,7 +14864,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis"),
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lr}
@@ -14930,7 +14949,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -14984,7 +15003,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -15038,7 +15057,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -15107,7 +15126,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis pe
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -15176,7 +15195,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -15230,7 +15249,7 @@ print(xtable(t, type = "latex", caption="Strict vs broad cases of tonogenesis by
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
@@ -15276,7 +15295,7 @@ print(xtable(t, type = "latex", caption="Type by rows by area"), include.rowname
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrrr}
@@ -15314,7 +15333,7 @@ print(xtable(t, type = "latex", caption="Type by distinct languages"), include.r
 ```
 
     ## % latex table generated in R 4.3.2 by xtable 1.8-4 package
-    ## % Wed Feb 26 14:35:26 2025
+    ## % Sat Apr 26 08:51:45 2025
     ## \begin{table}[ht]
     ## \centering
     ## \begin{tabular}{lrrrrr}
