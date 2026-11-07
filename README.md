@@ -1,6 +1,8 @@
 Supplementary materials for: ‘Tonogenesis: a diachronic typology’
 ================
-[https://doi.org/10.1075/dia.24022.sae](https://doi.org/10.1075/dia.24022.sae)
+The paper is published as:
+
+>>> Sæbø, Lilja Maria, Eitan Grossman and Steven Moran. 2025. Tonogenesis: a diachronic typology. Diachronica, 42(3–4), 451–478. [https://doi.org/10.1075/dia.24022.sae](https://doi.org/10.1075/dia.24022.sae).
 
 Steven Moran, Etian Grossman and Lilja Maria Sæbø
 
